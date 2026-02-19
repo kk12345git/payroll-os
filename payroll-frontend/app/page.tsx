@@ -30,6 +30,15 @@ export default function LandingPage() {
   const [activeFaq, setActiveFaq] = React.useState<number | null>(null);
   const [waitlistEmail, setWaitlistEmail] = React.useState('');
   const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 });
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    const { clientX, clientY } = e;
+    const { innerWidth, innerHeight } = window;
+    const x = (clientX / innerWidth - 0.5) * 2;
+    const y = (clientY / innerHeight - 0.5) * 2;
+    setMousePos({ x, y });
+  };
 
   const handleWaitlistSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,7 +51,19 @@ export default function LandingPage() {
     setIsSubmitting(false);
   };
   return (
-    <div className="min-h-screen bg-white text-slate-900 selection:bg-indigo-100 font-sans border-t-8 border-indigo-600">
+    <div
+      onMouseMove={handleMouseMove}
+      className="min-h-screen bg-white text-slate-900 selection:bg-indigo-100 font-sans border-t-8 border-indigo-600 overflow-hidden"
+    >
+      {/* Cursor Glow */}
+      <motion.div
+        animate={{
+          x: (mousePos.x + 0.5) * (typeof window !== 'undefined' ? window.innerWidth : 1000) - 150,
+          y: (mousePos.y + 0.5) * (typeof window !== 'undefined' ? window.innerHeight : 1000) - 150,
+        }}
+        transition={{ type: "spring", damping: 30, stiffness: 200 }}
+        className="fixed top-0 left-0 w-[300px] h-[300px] bg-indigo-500/10 rounded-full blur-[100px] pointer-events-none z-0"
+      />
       {/* Navigation */}
       <nav className="fixed top-2 left-0 right-0 z-50 flex justify-center px-4">
         <motion.div
@@ -120,13 +141,17 @@ export default function LandingPage() {
           </motion.div>
 
           <motion.h1
+            style={{
+              rotateX: mousePos.y * -10,
+              rotateY: mousePos.x * 10,
+            }}
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ type: "spring", damping: 10, stiffness: 100 }}
-            className="text-7xl md:text-[10rem] font-black tracking-[-0.05em] leading-[0.85] text-slate-900 mb-12"
+            className="text-7xl md:text-[10rem] font-black tracking-[-0.05em] leading-[0.85] text-slate-900 mb-12 perspective-1000"
           >
-            THE <span className="text-indigo-600 italic">OS</span> <br />
-            OF EVERY<span className="text-gradient-extreme">THING.</span>
+            THE <span className="text-indigo-600 italic text-glitch" data-text="OS">OS</span> <br />
+            OF EVERY<span className="text-gradient-extreme text-glitch" data-text="THING.">THING.</span>
           </motion.h1>
 
           <motion.p
@@ -140,22 +165,32 @@ export default function LandingPage() {
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6 }}
-            className="flex flex-col md:flex-row items-center justify-center gap-8"
+            className="flex flex-col md:flex-row items-center justify-center gap-8 perspective-1000"
           >
-            <Link href="/register" className="group relative px-12 py-7 bg-slate-900 text-white rounded-[2.5rem] font-black text-xl flex items-center gap-4 hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-slate-900/40">
-              <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 to-pink-600 rounded-[2.5rem] opacity-0 group-hover:opacity-100 transition-opacity -z-10 blur-xl" />
-              Launch Enterprise
-              <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
-            </Link>
+            <div
+              className="magnetic-wrap"
+              style={{ '--mx': mousePos.x, '--my': mousePos.y } as any}
+            >
+              <Link href="/register" className="group relative px-12 py-7 bg-slate-900 text-white rounded-[2.5rem] font-black text-xl flex items-center gap-4 hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-slate-900/40 magnetic-btn">
+                <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 to-pink-600 rounded-[2.5rem] opacity-0 group-hover:opacity-100 transition-opacity -z-10 blur-xl" />
+                Launch Enterprise
+                <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
+              </Link>
+            </div>
 
-            <a href="#faq" className="px-12 py-7 glass-card-premium text-slate-900 rounded-[2.5rem] font-black text-xl flex items-center gap-4 hover:bg-white transition-all border-slate-200/60 shadow-xl">
-              <div className="w-10 h-10 bg-indigo-600 rounded-full flex items-center justify-center shadow-lg shadow-indigo-600/30">
-                <Play className="w-5 h-5 text-white fill-white ml-0.5" />
-              </div>
-              See it in Action
-            </a>
+            <div
+              className="magnetic-wrap"
+              style={{ '--mx': mousePos.x, '--my': mousePos.y } as any}
+            >
+              <a href="#faq" className="px-12 py-7 glass-card-premium text-slate-900 rounded-[2.5rem] font-black text-xl flex items-center gap-4 hover:bg-white transition-all border-slate-200/60 shadow-xl magnetic-btn">
+                <div className="w-10 h-10 bg-indigo-600 rounded-full flex items-center justify-center shadow-lg shadow-indigo-600/30">
+                  <Play className="w-5 h-5 text-white fill-white ml-0.5" />
+                </div>
+                See it in Action
+              </a>
+            </div>
           </motion.div>
         </div>
       </section>
@@ -203,16 +238,27 @@ export default function LandingPage() {
             ].map((feature, idx) => (
               <motion.div
                 key={idx}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
+                initial={{ opacity: 0, scale: 0.8, y: 50 }}
+                whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                whileHover={{
+                  y: -15,
+                  rotateX: mousePos.y * 15,
+                  rotateY: mousePos.x * 15,
+                  transition: { type: "spring", damping: 10, stiffness: 100 }
+                }}
+                transition={{
+                  type: "spring",
+                  damping: 12,
+                  stiffness: 100,
+                  delay: idx * 0.05
+                }}
                 viewport={{ once: true }}
-                className="group p-10 glass-card-premium rounded-[3.5rem] hover:bg-slate-900 transition-all duration-700"
+                className="group p-10 glass-card-premium rounded-[3.5rem] hover:bg-slate-900 transition-all duration-700 perspective-1000 tilt-inner"
               >
-                <div className="w-20 h-20 bg-slate-50 rounded-3xl flex items-center justify-center mb-10 group-hover:bg-indigo-600 transition-colors">
+                <div className="w-20 h-20 bg-slate-50 rounded-3xl flex items-center justify-center mb-10 group-hover:bg-indigo-600 transition-all group-hover:rotate-[360deg] duration-1000">
                   <feature.icon className="w-10 h-10 group-hover:text-white transition-colors" />
                 </div>
-                <h3 className="text-3xl font-black text-slate-900 mb-6 group-hover:text-white transition-colors uppercase tracking-tight">{feature.title}</h3>
+                <h3 className="text-3xl font-black text-slate-900 mb-6 group-hover:text-white transition-colors uppercase tracking-tight italic">{feature.title}</h3>
                 <p className="text-slate-500 font-bold leading-relaxed group-hover:text-slate-400 transition-colors">{feature.desc}</p>
               </motion.div>
             ))}
@@ -245,16 +291,21 @@ export default function LandingPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             <motion.div
-              whileHover={{ y: -10 }}
-              className="p-16 bg-slate-900 rounded-[4rem] text-white relative group overflow-hidden shadow-2xl"
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              whileHover={{
+                rotateX: mousePos.y * 5,
+                rotateY: mousePos.x * 5,
+              }}
+              className="p-16 bg-slate-900 rounded-[4rem] text-white relative group overflow-hidden shadow-2xl perspective-1000"
             >
               <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-600/20 blur-3xl" />
-              <MessageSquare className="w-16 h-16 text-indigo-500 mb-12" />
+              <MessageSquare className="w-16 h-16 text-indigo-500 mb-12 animate-bounce" />
               <p className="text-3xl font-black leading-tight mb-16 tracking-tight">
                 "AutoPay-OS changed how we handle payroll across 4 countries. The WhatsApp integration is a game-changer for our remote workers."
               </p>
               <div className="flex items-center gap-6">
-                <div className="w-16 h-16 bg-indigo-600 rounded-[1.5rem] flex items-center justify-center font-black text-xl">SA</div>
+                <div className="w-16 h-16 bg-indigo-600 rounded-[1.5rem] flex items-center justify-center font-black text-xl group-hover:rotate-12 transition-transform">SA</div>
                 <div>
                   <div className="font-black text-2xl">Sarah Ahmed</div>
                   <div className="text-sm font-black text-slate-500 uppercase tracking-[0.2em]">Head of People, Global Logistics</div>
@@ -269,10 +320,17 @@ export default function LandingPage() {
                 { label: "120+", desc: "Enterprises Signed" },
                 { label: "₹4.2bn", desc: "Total Processed" }
               ].map((stat, i) => (
-                <div key={i} className="p-10 glass-card-premium rounded-[3rem] group hover:bg-slate-900 transition-all duration-500 border-none shadow-xl">
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: i * 0.1, type: "spring" }}
+                  whileHover={{ scale: 1.1, rotateZ: i % 2 === 0 ? 2 : -2 }}
+                  className="p-10 glass-card-premium rounded-[3rem] group hover:bg-slate-900 transition-all duration-500 border-none shadow-xl cursor-none"
+                >
                   <div className="text-4xl font-black text-slate-900 group-hover:text-white mb-2 transition-colors">{stat.label}</div>
                   <div className="text-[10px] font-black text-indigo-600 group-hover:text-indigo-400 uppercase tracking-[0.2em] transition-colors">{stat.desc}</div>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
@@ -295,7 +353,12 @@ export default function LandingPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-6xl mx-auto items-center">
             {/* Startup */}
-            <div className="p-12 glass-card-premium rounded-[4rem] flex flex-col justify-between h-full border-none shadow-xl hover:scale-105 transition-transform duration-500">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              whileHover={{ rotateY: -10, y: -10 }}
+              className="p-12 glass-card-premium rounded-[4rem] flex flex-col justify-between h-full border-none shadow-xl transition-all duration-500 perspective-1000"
+            >
               <div>
                 <h3 className="text-xs font-black text-slate-400 uppercase tracking-[0.3em] mb-12">Startup</h3>
                 <div className="text-7xl font-black text-slate-900 mb-10">FREE</div>
@@ -312,15 +375,24 @@ export default function LandingPage() {
               <Link href="/register" className="w-full py-7 bg-white text-slate-900 rounded-[2rem] font-black text-lg text-center border-2 border-slate-200 hover:bg-slate-900 hover:text-white transition-all shadow-lg">
                 Get Started
               </Link>
-            </div>
+            </motion.div>
 
             {/* Enterprise - PRO */}
-            <div className="p-16 bg-slate-900 text-white rounded-[5rem] flex flex-col justify-between relative transform md:scale-110 shadow-[0_50px_100px_-20px_rgba(79,70,229,0.3)] min-h-[850px]">
-              <div className="absolute top-0 right-16 -translate-y-1/2 px-8 py-3 bg-gradient-to-r from-indigo-600 to-pink-600 rounded-full text-[10px] font-black uppercase tracking-[0.4em]">Most Popular</div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              whileHover={{
+                scale: 1.15,
+                rotateX: mousePos.y * 10,
+                rotateY: mousePos.x * 10,
+              }}
+              className="p-16 bg-slate-900 text-white rounded-[5rem] flex flex-col justify-between relative transform md:scale-110 shadow-[0_50px_100px_-20px_rgba(79,70,229,0.3)] min-h-[850px] perspective-1000 z-20"
+            >
+              <div className="absolute top-0 right-16 -translate-y-1/2 px-8 py-3 bg-gradient-to-r from-indigo-600 to-pink-600 rounded-full text-[10px] font-black uppercase tracking-[0.4em] animate-pulse">Most Popular</div>
               <div>
                 <h3 className="text-xs font-black text-indigo-400 uppercase tracking-[0.3em] mb-16">Pro Enterprise</h3>
                 <div className="text-8xl font-black mb-12 flex flex-col items-center">
-                  <span className="text-gradient-extreme text-7xl md:text-8xl">
+                  <span className="text-gradient-extreme text-7xl md:text-8xl text-glitch" data-text={typeof window !== 'undefined' && (window.navigator.language === 'en-IN' || Intl.DateTimeFormat().resolvedOptions().timeZone === 'Asia/Calcutta') ? '₹4,999' : '$99'}>
                     {typeof window !== 'undefined' && (window.navigator.language === 'en-IN' || Intl.DateTimeFormat().resolvedOptions().timeZone === 'Asia/Calcutta') ? '₹4,999' : '$99'}
                   </span>
                   <span className="text-sm text-slate-500 mt-2 uppercase tracking-widest">Per Month</span>
@@ -338,10 +410,15 @@ export default function LandingPage() {
               <Link href="/register" className="w-full py-8 bg-indigo-600 text-white rounded-[2.5rem] font-black text-center text-xl hover:bg-white hover:text-slate-900 transition-all shadow-2xl shadow-indigo-600/50">
                 Select Trajectory
               </Link>
-            </div>
+            </motion.div>
 
             {/* Custom - GLOBAL */}
-            <div className="p-12 glass-card-premium rounded-[4rem] flex flex-col justify-between h-full border-none shadow-xl hover:scale-105 transition-transform duration-500 text-left">
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              whileHover={{ rotateY: 10, y: -10 }}
+              className="p-12 glass-card-premium rounded-[4rem] flex flex-col justify-between h-full border-none shadow-xl transition-all duration-500 text-left perspective-1000"
+            >
               <div>
                 <h3 className="text-xs font-black text-slate-400 uppercase tracking-[0.3em] mb-12">Global</h3>
                 <div className="text-6xl font-black text-slate-900 mb-10 uppercase italic">CUSTOM</div>
@@ -358,7 +435,7 @@ export default function LandingPage() {
               <button className="w-full py-7 bg-white text-slate-900 rounded-[2rem] font-black text-lg text-center border-2 border-slate-200 hover:bg-slate-900 hover:text-white transition-all shadow-lg">
                 Contact Sales
               </button>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>

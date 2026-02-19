@@ -202,7 +202,10 @@ export default function LandingPage() {
               <div className="absolute top-0 right-10 -translate-y-1/2 px-6 py-2 bg-indigo-600 rounded-full text-[10px] font-black uppercase tracking-[0.2em]">Most Popular</div>
               <div>
                 <h3 className="text-xl font-black text-indigo-400 uppercase tracking-widest mb-2">Enterprise</h3>
-                <div className="text-5xl font-black mb-6">$49<span className="text-lg text-slate-500 ml-1">/mo</span></div>
+                <div className="text-5xl font-black mb-6">
+                  {typeof window !== 'undefined' && (window.navigator.language === 'en-IN' || Intl.DateTimeFormat().resolvedOptions().timeZone === 'Asia/Calcutta') ? '₹4,999' : '$99'}
+                  <span className="text-lg text-slate-500 ml-1">/mo</span>
+                </div>
                 <p className="text-slate-400 font-bold mb-8">Unlimited employees.</p>
                 <ul className="space-y-4 mb-12">
                   {['AI Admin Copilot', 'Self-Service WhatsApp', 'Stripe Global Billing', 'Form 16 Automations', 'Priority Support'].map((feat, i) => (

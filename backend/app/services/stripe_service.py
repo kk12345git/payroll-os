@@ -8,13 +8,16 @@ stripe.api_key = STRIPE_API_KEY
 
 class StripeService:
     @staticmethod
-    def create_checkout_session(company_id: int, company_email: str, plan: str) -> Dict[str, Any]:
+    def create_checkout_session(company_id: int, company_email: str, plan: str, country: str = "India") -> Dict[str, Any]:
         """
-        Creates a Stripe Checkout Session for a subscription.
+        Creates a Stripe Checkout Session for a subscription with geographic pricing.
         """
+        # Determine Price ID based on Plan & Region (Purchasing Power Parity)
+        is_india = country.lower() == "india"
+        
         price_ids = {
-            "pro": "price_pro_subscription", # Replace with real Stripe Price ID
-            "enterprise": "price_enterprise_subscription"
+            "pro": settings.STRIPE_PRICE_ID_INDIA if is_india else settings.STRIPE_PRICE_ID_GLOBAL,
+            "enterprise": "price_enterprise_custom" # Custom logic for Enterprise
         }
         
         try:

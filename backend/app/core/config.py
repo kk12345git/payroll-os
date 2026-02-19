@@ -27,6 +27,8 @@ class Settings(BaseSettings):
     # Global SaaS
     FRONTEND_URL: str = "http://localhost:3000"
     STRIPE_API_KEY: Optional[str] = None
+    STRIPE_PRICE_ID_INDIA: str = "price_india_4999"  # ₹4,999
+    STRIPE_PRICE_ID_GLOBAL: str = "price_global_99"   # $99
     
     # Indian Compliance Settings
     PF_EMPLOYEE_RATE: float = 0.12

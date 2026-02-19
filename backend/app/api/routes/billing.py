@@ -24,7 +24,8 @@ async def create_checkout_session(
     session_data = StripeService.create_checkout_session(
         company_id=company.id,
         company_email=current_user.email,
-        plan=plan
+        plan=plan,
+        country=company.country or "India"
     )
     
     return session_data

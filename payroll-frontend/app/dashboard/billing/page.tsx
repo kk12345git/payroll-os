@@ -116,7 +116,10 @@ export default function BillingPage() {
                         )}
                     </div>
                     <h3 className="text-2xl font-black text-slate-900 mb-2">Pro Plan</h3>
-                    <div className="text-4xl font-black mb-6">$49<span className="text-sm text-slate-400 font-bold">/mo</span></div>
+                    <div className="text-4xl font-black mb-6">
+                        {typeof window !== 'undefined' && (window.navigator.language === 'en-IN' || Intl.DateTimeFormat().resolvedOptions().timeZone === 'Asia/Calcutta') ? '₹4,999' : '$99'}
+                        <span className="text-sm text-slate-400 font-bold">/mo</span>
+                    </div>
 
                     <ul className="space-y-4 mb-10">
                         {['AI Admin Copilot', 'Earned Wage Access', 'WhatsApp Integration', 'Compliance PDFs'].map((f, i) => (
@@ -155,7 +158,7 @@ export default function BillingPage() {
                         )}
                     </div>
                     <h3 className="text-2xl font-black text-slate-900 mb-2">Enterprise</h3>
-                    <div className="text-4xl font-black mb-6">$199<span className="text-sm text-slate-400 font-bold">/mo</span></div>
+                    <div className="text-4xl font-black mb-6">Custom<span className="text-sm text-slate-400 font-bold">/year</span></div>
 
                     <ul className="space-y-4 mb-10">
                         {['Custom API Access', 'SLA Guarantees', 'Dedicated Account Manager', 'Multi-Office Control'].map((f, i) => (

@@ -28,8 +28,28 @@
   --font-sans: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
 }
 
---ring: hsl(230 85% 60%);
+:root {
+  --background: hsl(210 50% 99%);
+  --foreground: hsl(224 71% 4%);
+  --card: hsl(0 0% 100%);
+  --card-foreground: hsl(224 71% 4%);
+  --popover: hsl(0 0% 100%);
+  --popover-foreground: hsl(224 71% 4%);
+  --primary: hsl(230 85% 60%);
+  --primary-foreground: hsl(210 40% 98%);
+  --secondary: hsl(210 40% 96.1%);
+  --secondary-foreground: hsl(222.2 47.4% 11.2%);
+  --muted: hsl(210 40% 96.1%);
+  --muted-foreground: hsl(215.4 16.3% 46.9%);
+  --accent: hsl(230 85% 95%);
+  --accent-foreground: hsl(230 85% 40%);
+  --destructive: hsl(0 84.2% 60.2%);
+  --destructive-foreground: hsl(210 40% 98%);
+  --border: hsl(214.3 31.8% 91.4%);
+  --input: hsl(214.3 31.8% 91.4%);
+  --ring: hsl(230 85% 60%);
 }
+
 
 /* PWA Mobile Optimization */
 @supports (padding: env(safe-area-inset-top)) {

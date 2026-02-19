@@ -1,0 +1,39 @@
+# Node
+node_modules/
+.next/
+out/
+build/
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv
+venv/
+ENV/
+.env
+*.db
+*.sqlite3
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project Specific
+backend/payroll.db
+backend/test_copilot.db
+backend/test_forecast.db
+backend/test_whatsapp.db
+*.pdf
+commercial_audit.py
+master_audit.py
+verify_*.py
+debug_*.py
+deep_debug.py
+test_api_connection.js
+test_user_creation.py

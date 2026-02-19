@@ -1,0 +1,53 @@
+from pydantic_settings import BaseSettings
+from typing import Optional
+
+
+class Settings(BaseSettings):
+    # Database
+    DATABASE_URL: str = "sqlite:///./payroll.db"
+    
+    # JWT
+    SECRET_KEY: str = "your-secret-key-change-this-in-production"
+    ALGORITHM: str = "HS256"
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
+    
+    # Email
+    SENDGRID_API_KEY: Optional[str] = None
+    FROM_EMAIL: str = "noreply@yourcompany.com"
+    
+    # Celery & Redis
+    CELERY_BROKER_URL: str = "redis://localhost:6379/0"
+    CELERY_RESULT_BACKEND: str = "redis://localhost:6379/0"
+    
+    # Application
+    APP_NAME: str = "Payroll Management System"
+    APP_VERSION: str = "1.0.0"
+    ENVIRONMENT: str = "development"
+    
+    # Global SaaS
+    FRONTEND_URL: str = "http://localhost:3000"
+    STRIPE_API_KEY: Optional[str] = None
+    
+    # Indian Compliance Settings
+    PF_EMPLOYEE_RATE: float = 0.12
+    PF_EMPLOYER_EPF_RATE: float = 0.0367
+    PF_EMPLOYER_EPS_RATE: float = 0.0833
+    PF_WAGE_CEILING: int = 15000
+    PF_INTEREST_RATE: float = 0.0825
+    
+    ESI_EMPLOYEE_RATE: float = 0.0075
+    ESI_EMPLOYER_RATE: float = 0.0325
+    ESI_WAGE_CEILING: int = 21000
+    ESI_DAILY_WAGE_EXEMPTION: int = 176
+    
+    PT_MAX_ANNUAL: int = 2500
+    PT_STATE: str = "TAMIL_NADU"
+    
+    CURRENT_FY: str = "2025-26"
+    
+    class Config:
+        env_file = ".env"
+        case_sensitive = True
+
+
+settings = Settings()

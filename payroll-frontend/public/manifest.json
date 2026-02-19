@@ -1,6 +1,6 @@
 {
-    "name": "Antigravity AI Payroll",
-    "short_name": "Antigravity",
+    "name": "AutoPay-OS Payroll",
+    "short_name": "AutoPay-OS",
     "description": "Premium Global AI Payroll & HR Platform",
     "start_url": "/",
     "display": "standalone",

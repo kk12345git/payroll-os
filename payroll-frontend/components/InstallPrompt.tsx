@@ -54,7 +54,7 @@ export default function InstallPrompt() {
                             <Download className="w-7 h-7" />
                         </div>
                         <div className="space-y-1 pr-6">
-                            <h3 className="text-xl font-black tracking-tight leading-none">Install Antigravity AI</h3>
+                            <h3 className="text-xl font-black tracking-tight leading-none">Install AutoPay-OS</h3>
                             <p className="text-sm font-medium text-slate-400 leading-relaxed">
                                 Get a faster, dedicated experience by adding this to your {platform === 'desktop' ? 'computer' : 'home screen'}.
                             </p>

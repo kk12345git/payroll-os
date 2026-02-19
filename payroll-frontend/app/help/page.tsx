@@ -92,7 +92,7 @@ export default function HelpCenterPage() {
             {/* Footer */}
             <footer className="py-20 border-t bg-slate-50 px-6 text-center">
                 <p className="text-slate-400 font-black uppercase tracking-widest text-xs">
-                    Antigravity Global SaaS • World-Class Documentation Engine
+                    AutoPay-OS Global SaaS • World-Class Documentation Engine
                 </p>
             </footer>
         </div>

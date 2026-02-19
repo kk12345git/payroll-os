@@ -95,7 +95,7 @@ export default function OnboardingWizard() {
                                     <input
                                         type="text"
                                         className="w-full p-4 bg-slate-50 border-none rounded-2xl focus:ring-2 focus:ring-indigo-600 outline-none font-bold"
-                                        placeholder="e.g. Antigravity Global"
+                                        placeholder="e.g. AutoPay Global"
                                         value={data.name}
                                         onChange={e => setData({ ...data, name: e.target.value })}
                                     />
@@ -209,7 +209,7 @@ export default function OnboardingWizard() {
                 </motion.div>
 
                 <p className="mt-8 text-center text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 italic">
-                    Antigravity Global SaaS Engine v2.4 • Trusted by enterprises worldwide
+                    AutoPay-OS Global SaaS Engine v2.4 • Trusted by enterprises worldwide
                 </p>
             </div>
         </div>

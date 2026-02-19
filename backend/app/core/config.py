@@ -20,7 +20,7 @@ class Settings(BaseSettings):
     CELERY_RESULT_BACKEND: str = "redis://localhost:6379/0"
     
     # Application
-    APP_NAME: str = "Payroll Management System"
+    APP_NAME: str = "AutoPay-OS Payroll System"
     APP_VERSION: str = "1.0.0"
     ENVIRONMENT: str = "development"
     

@@ -33,7 +33,7 @@ export default function LandingPage() {
               <Brain className="text-white w-6 h-6" />
             </div>
             <span className="text-2xl font-black tracking-tighter text-slate-900">
-              Antigravity<span className="text-indigo-600">AI</span>
+              AutoPay-<span className="text-indigo-600">OS</span>
             </span>
           </div>
 
@@ -249,12 +249,12 @@ export default function LandingPage() {
               <Brain className="text-white w-6 h-6" />
             </div>
             <span className="text-2xl font-black tracking-tighter text-slate-900">
-              Antigravity<span className="text-indigo-600">AI</span>
+              AutoPay-<span className="text-indigo-600">OS</span>
             </span>
           </div>
 
           <div className="flex items-center gap-12 text-sm font-bold text-slate-400">
-            <span>© 2026 Antigravity Global Ltd.</span>
+            <span>© 2026 AutoPay-OS Global Ltd.</span>
             <a href="#" className="hover:text-slate-900 transition-colors">Privacy</a>
             <a href="#" className="hover:text-slate-900 transition-colors">Terms</a>
             <a href="#" className="hover:text-slate-900 transition-colors">Global Support</a>

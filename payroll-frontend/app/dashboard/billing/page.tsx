@@ -188,7 +188,7 @@ export default function BillingPage() {
                 <div>
                     <h4 className="font-black text-amber-900 mb-1 leading-none pt-1">Automatic Renewals</h4>
                     <p className="text-sm font-medium text-amber-700 leading-relaxed">
-                        Subscriptions are billed automatically and appear on your card statement as <b>ANTIGRAVITY AI</b>. You can cancel at any time under the management settings.
+                        Subscriptions are billed automatically and appear on your card statement as <b>AUTOPAY-OS</b>. You can cancel at any time under the management settings.
                     </p>
                 </div>
             </div>

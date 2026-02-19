@@ -1,4 +1,4 @@
-const CACHE_NAME = 'antigravity-v1';
+const CACHE_NAME = 'autopay-os-v1';
 const ASSETS_TO_CACHE = [
     '/',
     '/manifest.json',

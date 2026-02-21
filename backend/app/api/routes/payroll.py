@@ -137,6 +137,17 @@ def process_payroll(
         total_deductions = pf_deduction + esi_deduction + pt_deduction
         net_pay = gross_earnings - total_deductions
         
+        # 4.5. Employer Contributions (Advanced Compliance)
+        employer_pf = Decimal("0.0")
+        if structure.employer_pf_enabled:
+            # Employer contribution is also 12% of Basic
+            employer_pf = basic_earned * Decimal("0.12")
+            
+        employer_esi = Decimal("0.0")
+        if structure.employer_esi_enabled and gross_earnings <= Decimal("21000"):
+            # Employer contribution is 3.25%
+            employer_esi = gross_earnings * Decimal("0.0325")
+
         # 5. Create or Update Payroll Record
         db_record = db.query(PayrollRecord).filter(
             PayrollRecord.employee_id == emp_id,
@@ -152,14 +163,20 @@ def process_payroll(
             db_record.net_pay = net_pay
             db_record.basic_earned = basic_earned
             db_record.hra_earned = hra_earned
+            db_record.conveyance_earned = conv_earned
+            db_record.medical_earned = med_earned
+            db_record.special_earned = special_earned
             db_record.pf_deduction = pf_deduction
             db_record.esi_deduction = esi_deduction
             db_record.pt_deduction = pt_deduction
+            db_record.employer_pf_contribution = employer_pf
+            db_record.employer_esi_contribution = employer_esi
             db_record.status = PayrollStatus.PROCESSED
             db_record.processed_at = datetime.now()
         else:
             db_record = PayrollRecord(
                 employee_id=emp_id,
+                company_id=employee.company_id,
                 month=request.month,
                 year=request.year,
                 paid_days=paid_days,
@@ -169,9 +186,14 @@ def process_payroll(
                 net_pay=net_pay,
                 basic_earned=basic_earned,
                 hra_earned=hra_earned,
+                conveyance_earned=conv_earned,
+                medical_earned=med_earned,
+                special_earned=special_earned,
                 pf_deduction=pf_deduction,
                 esi_deduction=esi_deduction,
                 pt_deduction=pt_deduction,
+                employer_pf_contribution=employer_pf,
+                employer_esi_contribution=employer_esi,
                 status=PayrollStatus.PROCESSED,
                 processed_at=datetime.now()
             )

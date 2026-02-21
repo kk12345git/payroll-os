@@ -34,7 +34,7 @@ async def download_form_16(
     
     data = {
         "gross": f"{float(gross):,.2f}",
-        "taxable": f"{float(gross - 50000):,.2f}",
+        "taxable": f"{float(gross - 75000):,.2f}",
         "tax": f"{float(tax):,.2f}"
     }
     

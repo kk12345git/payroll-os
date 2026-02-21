@@ -14,6 +14,8 @@ class SalaryStructureBase(BaseModel):
     esi_enabled: bool = True
     pt_enabled: bool = True
     tds_enabled: bool = True
+    employer_pf_enabled: bool = True
+    employer_esi_enabled: bool = True
 
 class SalaryStructureCreate(SalaryStructureBase):
     employee_id: int
@@ -28,6 +30,8 @@ class SalaryStructureUpdate(BaseModel):
     esi_enabled: Optional[bool] = None
     pt_enabled: Optional[bool] = None
     tds_enabled: Optional[bool] = None
+    employer_pf_enabled: Optional[bool] = None
+    employer_esi_enabled: Optional[bool] = None
 
 class SalaryStructure(SalaryStructureBase):
     id: int
@@ -55,6 +59,8 @@ class PayrollRecordBase(BaseModel):
     esi_deduction: Decimal
     pt_deduction: Decimal
     income_tax_deduction: Decimal
+    employer_pf_contribution: Decimal = Decimal("0.0")
+    employer_esi_contribution: Decimal = Decimal("0.0")
     status: PayrollStatus = PayrollStatus.DRAFT
 
 class PayrollSummary(BaseModel):

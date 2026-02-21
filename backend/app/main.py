@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
-from app.api.routes import auth, employees, departments, attendance, leaves, payroll, companies, anomalies, ewa, tax_optimizer, whatsapp, copilot, analytics, compliance, billing, admin, invitations
+from app.api.routes import auth, employees, departments, attendance, leaves, payroll, companies, anomalies, ewa, tax_optimizer, whatsapp, copilot, analytics, compliance, billing, admin, invitations, me
 from app.core.database import engine, Base
 from app.core.security_middleware import SecurityHardeningMiddleware
 
@@ -48,6 +48,7 @@ app.include_router(compliance.router, prefix="/api/compliance", tags=["Complianc
 app.include_router(billing.router, prefix="/api/billing", tags=["Payments & Billing"])
 app.include_router(admin.router, prefix="/api/admin", tags=["Internal Admin"])
 app.include_router(invitations.router, prefix="/api/invites", tags=["Staff Invitations"])
+app.include_router(me.router, prefix="/api/me", tags=["Employee Self-Service"])
 
 
 @app.get("/")

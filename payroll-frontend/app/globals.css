@@ -24,8 +24,13 @@
   --radius-xl: 1rem;
   --radius-2xl: 1.5rem;
   --radius-3xl: 2rem;
+  --radius-4xl: 3rem;
 
   --font-sans: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+
+  --perspective-2000: 2000px;
+  --perspective-origin-top: 50% 0%;
+  --perspective-origin-center: 50% 50%;
 }
 
 :root {
@@ -293,4 +298,72 @@ body {
   box-shadow:
     0 25px 50px -12px rgba(0, 0, 0, 0.08),
     0 0 0 1px rgba(79, 70, 229, 0.05);
+}
+
+.perspective-2000 {
+  perspective: 2000px;
+}
+
+.perspective-origin-center {
+  perspective-origin: center;
+}
+
+.text-gradient-extreme {
+  background: linear-gradient(135deg, #4f46e5 0%, #ec4899 50%, #f43f5e 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  background-size: 200% auto;
+}
+
+.mesh-gradient-premium {
+  background-color: #ffffff;
+  background-image:
+    radial-gradient(at 0% 0%, hsla(230, 85%, 60%, 0.1) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, hsla(280, 85%, 60%, 0.1) 0px, transparent 50%),
+    radial-gradient(at 50% 50%, hsla(230, 85%, 60%, 0.05) 0px, transparent 50%);
+}
+
+.dark .mesh-gradient-premium {
+  background-color: #020617;
+  background-image:
+    radial-gradient(at 0% 0%, hsla(230, 85%, 60%, 0.2) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, hsla(280, 85%, 60%, 0.15) 0px, transparent 50%),
+    radial-gradient(at 50% 50%, hsla(230, 85%, 60%, 0.1) 0px, transparent 50%);
+}
+
+.glass-card-premium {
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+}
+
+.dark .glass-card-premium {
+  background: rgba(15, 23, 42, 0.4);
+  border-color: rgba(255, 255, 255, 0.05);
+}
+
+@keyframes float-3d {
+
+  0%,
+  100% {
+    transform: translateY(0) rotateX(0deg) rotateY(0deg);
+  }
+
+  25% {
+    transform: translateY(-20px) rotateX(5deg) rotateY(5deg);
+  }
+
+  50% {
+    transform: translateY(0) rotateX(0deg) rotateY(0deg);
+  }
+
+  75% {
+    transform: translateY(20px) rotateX(-5deg) rotateY(-5deg);
+  }
+}
+
+.animate-float-3d {
+  animation: float-3d 10s ease-in-out infinite;
 }

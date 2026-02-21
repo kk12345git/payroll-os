@@ -37,6 +37,7 @@ import { useThemeStore } from '@/store/themeStore';
 import dynamic from 'next/dynamic';
 import Logo from '@/components/Logo';
 import { LoadingOverlay } from '@/components/Loading';
+import { AIFloatingChat } from '@/components/ai/AIFloatingChat';
 
 const CommandPalette = dynamic(() => import('@/components/CommandPalette'), {
     ssr: false,
@@ -94,24 +95,34 @@ export default function DashboardLayout({
     }, [isAuthenticated, loading, router]);
 
     const navItems = [
-        { title: 'Overview', icon: LayoutDashboard, href: '/dashboard' },
-        { title: 'AI Copilot', icon: Brain, href: '/dashboard/copilot' },
-        { title: 'Cash Flow AI', icon: TrendingUp, href: '/dashboard/analytics/forecast' },
-        { title: 'Compliance', icon: ShieldCheck, href: '/dashboard/compliance' },
-        { title: 'Billing', icon: CreditCard, href: '/dashboard/billing' },
-        { title: 'Sales Admin', icon: TrendingUp, href: '/admin/sales' },
-        { title: 'Recruit & Invite', icon: UserPlus, href: '/dashboard/settings/invites' },
-        { title: 'Employees', icon: Users, href: '/dashboard/employees' },
-        { title: 'Departments', icon: Building2, href: '/dashboard/departments' },
-        { title: 'Payroll', icon: Wallet, href: '/dashboard/payroll' },
-        { title: 'Attendance', icon: ClipboardCheck, href: '/dashboard/attendance' },
-        { title: 'Reports', icon: PieChart, href: '/dashboard/reports' },
-        { title: 'EWA (Salary Access)', icon: Wallet, href: '/dashboard/ewa' },
-        { title: 'Tax Optimizer (AI)', icon: Brain, href: '/dashboard/payroll/tax-optimizer' },
-        { title: 'WhatsApp (Beta)', icon: MessageSquare, href: '/dashboard/integrations/whatsapp' },
-        { title: 'Subscription', icon: Gem, href: '/dashboard/settings/subscription' },
-        { title: 'Control Panel', icon: Settings, href: '/dashboard/settings' },
+        // Admin/HR Items
+        { title: 'Overview', icon: LayoutDashboard, href: '/dashboard', roles: ['admin', 'hr_manager'] },
+        { title: 'AI Copilot', icon: Brain, href: '/dashboard/copilot', roles: ['admin', 'hr_manager'] },
+        { title: 'Cash Flow AI', icon: TrendingUp, href: '/dashboard/analytics/forecast', roles: ['admin', 'hr_manager'] },
+        { title: 'Compliance', icon: ShieldCheck, href: '/dashboard/compliance', roles: ['admin', 'hr_manager'] },
+        { title: 'Billing', icon: CreditCard, href: '/dashboard/billing', roles: ['admin', 'hr_manager'] },
+        { title: 'Sales Admin', icon: TrendingUp, href: '/admin/sales', roles: ['admin'] },
+        { title: 'Recruit & Invite', icon: UserPlus, href: '/dashboard/settings/invites', roles: ['admin', 'hr_manager'] },
+        { title: 'Employees', icon: Users, href: '/dashboard/employees', roles: ['admin', 'hr_manager'] },
+        { title: 'Departments', icon: Building2, href: '/dashboard/departments', roles: ['admin', 'hr_manager'] },
+        { title: 'Payroll', icon: Wallet, href: '/dashboard/payroll', roles: ['admin', 'hr_manager', 'accountant'] },
+        { title: 'Attendance', icon: ClipboardCheck, href: '/dashboard/attendance', roles: ['admin', 'hr_manager'] },
+        { title: 'Reports', icon: PieChart, href: '/dashboard/reports', roles: ['admin', 'hr_manager', 'accountant'] },
+
+        // Universal / Employee Items
+        { title: 'Employee Portal', icon: UserIcon, href: '/dashboard/ess', roles: ['admin', 'hr_manager', 'employee', 'accountant'] },
+        { title: 'EWA (Salary Access)', icon: Wallet, href: '/dashboard/ewa', roles: ['admin', 'hr_manager', 'employee'] },
+        { title: 'Tax Optimizer (AI)', icon: Brain, href: '/dashboard/payroll/tax-optimizer', roles: ['admin', 'hr_manager', 'employee'] },
+
+        // Admin Settings
+        { title: 'WhatsApp (Beta)', icon: MessageSquare, href: '/dashboard/integrations/whatsapp', roles: ['admin'] },
+        { title: 'Subscription', icon: Gem, href: '/dashboard/settings/subscription', roles: ['admin'] },
+        { title: 'Control Panel', icon: Settings, href: '/dashboard/settings', roles: ['admin'] },
     ];
+
+    const filteredNavItems = navItems.filter(item =>
+        !item.roles || item.roles.includes(user?.role || 'employee')
+    );
 
     if (loading) {
         return <LoadingOverlay message="Synchronizing payroll data..." />;
@@ -163,7 +174,7 @@ export default function DashboardLayout({
 
                         {/* Navigation Items */}
                         <nav className="flex-1 px-4 space-y-2 py-8">
-                            {navItems.map((item) => {
+                            {filteredNavItems.map((item) => {
                                 const isActive = pathname === item.href;
                                 return (
                                     <Link
@@ -228,7 +239,7 @@ export default function DashboardLayout({
 
                             {/* Mobile Navigation */}
                             <nav className="flex-1 px-4 space-y-2 py-8">
-                                {navItems.map((item) => {
+                                {filteredNavItems.map((item) => {
                                     const isActive = pathname === item.href;
                                     return (
                                         <Link
@@ -346,6 +357,8 @@ export default function DashboardLayout({
                 isOpen={commandPaletteOpen}
                 onClose={() => setCommandPaletteOpen(false)}
             />
+
+            <AIFloatingChat />
         </div>
     );
 }

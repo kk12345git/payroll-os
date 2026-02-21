@@ -28,9 +28,33 @@ import { useAnomalyStore } from '@/store/anomalyStore';
 
 import { DashboardCharts } from '@/components/DashboardCharts';
 import { LoadingOverlay } from '@/components/Loading';
+import { Skeleton, CardSkeleton } from '@/components/ui/Skeleton';
 import { cn } from '@/lib/utils';
 
+const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+        opacity: 1,
+        transition: {
+            staggerChildren: 0.1,
+            delayChildren: 0.2
+        }
+    }
+};
+
+const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+        opacity: 1,
+        y: 0,
+        transition: { type: "spring", stiffness: 300, damping: 24 }
+    }
+};
+
 export default function DashboardPage() {
+    // ... (rest of the logic remains same until return) ...
+    // ...
+    // (I will apply variants in the next block)
     // Get live data from stores
     const { employees } = useEmployeeStore();
     const { departments } = useDepartmentStore();
@@ -122,12 +146,38 @@ export default function DashboardPage() {
         { action: "Department created", user: "Admin", time: "2 days ago", icon: Building2, color: "text-orange-500" },
     ];
 
-    if (payrollLoading && monthlySummaries.length === 0) return <LoadingOverlay />;
+    if (payrollLoading && monthlySummaries.length === 0) {
+        return (
+            <div className="space-y-8 pb-12">
+                <div className="flex justify-between items-end">
+                    <div className="space-y-2">
+                        <Skeleton variant="text" className="w-24" />
+                        <Skeleton variant="text" className="w-48 h-8" />
+                    </div>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <CardSkeleton />
+                    <CardSkeleton />
+                    <CardSkeleton />
+                    <CardSkeleton />
+                </div>
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <Skeleton className="lg:col-span-2 h-[300px]" />
+                    <Skeleton className="lg:col-span-1 h-[300px]" />
+                </div>
+            </div>
+        );
+    }
 
     return (
-        <div className="space-y-8 pb-12">
+        <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="space-y-8 pb-12"
+        >
             {/* Header */}
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <motion.div variants={itemVariants} className="flex flex-col md:flex-row md:items-end justify-between gap-6">
                 <div>
                     <nav className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-400 mb-4">
                         <span className="text-indigo-600">Command Center</span>
@@ -141,16 +191,17 @@ export default function DashboardPage() {
                     <Sparkles className="w-4 h-4 mr-2" />
                     Generate Report
                 </button>
-            </div>
+            </motion.div>
 
-            {/* AI Intelligence Center - NEW FOR SAAS DOMINANCE */}
+            {/* AI Intelligence Center */}
             {anomalies.length > 0 && (
                 <motion.div
-                    initial={{ opacity: 0, scale: 0.98 }}
-                    animate={{ opacity: 1, scale: 1 }}
+                    variants={itemVariants}
                     className="p-1 rounded-[2rem] bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 shadow-2xl shadow-indigo-500/10"
                 >
+                    {/* ... (rest of AI Center stays same) ... */}
                     <div className="bg-card/95 backdrop-blur-xl rounded-[1.85rem] p-8">
+                        {/* (I'll keep the inner content for brevity or replace carefully) */}
                         <div className="flex items-center justify-between mb-8">
                             <div className="flex items-center gap-4">
                                 <div className="w-14 h-14 rounded-2xl bg-indigo-600 flex items-center justify-center text-white shadow-lg shadow-indigo-600/30">
@@ -169,11 +220,8 @@ export default function DashboardPage() {
 
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             {anomalies.slice(0, 3).map((anomaly, idx) => (
-                                <motion.div
+                                <div
                                     key={anomaly.id}
-                                    initial={{ opacity: 0, x: 20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    transition={{ delay: idx * 0.1 }}
                                     className="p-6 rounded-2xl bg-muted/40 border-2 border-transparent hover:border-indigo-500/30 transition-all group overflow-hidden relative"
                                 >
                                     <div className="relative z-10">
@@ -197,7 +245,7 @@ export default function DashboardPage() {
                                         </Link>
                                     </div>
                                     <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-indigo-500/5 blur-2xl rounded-full" />
-                                </motion.div>
+                                </div>
                             ))}
                         </div>
                     </div>
@@ -205,19 +253,22 @@ export default function DashboardPage() {
             )}
 
             {/* Stats Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {stats.map((stat, index) => (
-                    <motion.div
+                    <div
                         key={stat.label}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: index * 0.1 }}
-                        className="card-extreme group hover:scale-105 transition-transform duration-300"
+                        className="card-extreme group hover:scale-105 transition-transform duration-300 relative overflow-hidden"
                     >
+                        {/* Glow Effect */}
+                        <div className={cn(
+                            "absolute -inset-1 bg-gradient-to-r opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-500",
+                            stat.gradient
+                        )} />
+
                         <div className={`absolute inset-0 bg-gradient-to-br ${stat.bgGradient} opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl`} />
                         <div className="relative">
                             <div className="flex items-center justify-between mb-4">
-                                <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${stat.gradient} flex items-center justify-center shadow-lg`}>
+                                <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${stat.gradient} flex items-center justify-center shadow-lg shadow-indigo-500/20`}>
                                     <stat.icon className="w-6 h-6 text-white" />
                                 </div>
                                 <span className="text-xs font-black text-green-600 flex items-center gap-1">
@@ -230,12 +281,12 @@ export default function DashboardPage() {
                                 <div className="text-3xl font-black text-slate-900 tracking-tighter">{stat.value}</div>
                             </div>
                         </div>
-                    </motion.div>
+                    </div>
                 ))}
-            </div>
+            </motion.div>
 
             {/* Charts Section */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <motion.div variants={itemVariants} className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <div className="lg:col-span-2">
                     <DashboardCharts
                         type="line"
@@ -250,10 +301,10 @@ export default function DashboardPage() {
                         title="Department Allocation"
                     />
                 </div>
-            </div>
+            </motion.div>
 
             {/* Quick Actions */}
-            <div>
+            <motion.div variants={itemVariants}>
                 <h2 className="text-xl font-black text-slate-900 mb-6 flex items-center gap-2">
                     <Zap className="w-5 h-5 text-indigo-600" />
                     Quick Actions
@@ -261,25 +312,20 @@ export default function DashboardPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     {quickActions.map((action, index) => (
                         <Link key={action.title} href={action.href}>
-                            <motion.div
-                                initial={{ opacity: 0, scale: 0.9 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                transition={{ delay: 0.4 + index * 0.1 }}
-                                className="card-extreme group hover:scale-105 transition-all duration-300 cursor-pointer"
-                            >
+                            <div className="card-extreme group hover:scale-105 transition-all duration-300 cursor-pointer">
                                 <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${action.color} flex items-center justify-center mb-3 group-hover:scale-110 transition-transform`}>
                                     <action.icon className="w-5 h-5 text-white" />
                                 </div>
                                 <div className="text-sm font-black text-slate-900">{action.title}</div>
                                 <ArrowUpRight className="w-4 h-4 text-slate-400 group-hover:text-indigo-600 transition-colors absolute top-4 right-4" />
-                            </motion.div>
+                            </div>
                         </Link>
                     ))}
                 </div>
-            </div>
+            </motion.div>
 
             {/* Recent Activity */}
-            <div>
+            <motion.div variants={itemVariants}>
                 <h2 className="text-xl font-black text-slate-900 mb-6 flex items-center gap-2">
                     <Clock className="w-5 h-5 text-indigo-600" />
                     Recent Activity
@@ -287,11 +333,8 @@ export default function DashboardPage() {
                 <div className="card-extreme">
                     <div className="space-y-4">
                         {recentActivity.map((activity, index) => (
-                            <motion.div
+                            <div
                                 key={index}
-                                initial={{ opacity: 0, x: -20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ delay: 0.8 + index * 0.1 }}
                                 className="flex items-center gap-4 p-4 rounded-xl hover:bg-slate-50/50 transition-colors group"
                             >
                                 <div className={`w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center ${activity.color} group-hover:scale-110 transition-transform`}>
@@ -302,11 +345,11 @@ export default function DashboardPage() {
                                     <div className="text-xs text-slate-500">{activity.user}</div>
                                 </div>
                                 <div className="text-xs font-bold text-slate-400">{activity.time}</div>
-                            </motion.div>
+                            </div>
                         ))}
                     </div>
                 </div>
-            </div>
-        </div>
+            </motion.div>
+        </motion.div>
     );
 }

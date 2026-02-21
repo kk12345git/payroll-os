@@ -1,13 +1,40 @@
-from typing import List, Optional
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, UploadFile, File
 from sqlalchemy.orm import Session
 from app.core.database import get_db
 from app.api.dependencies import get_current_user, require_role
 from app.models.user import User, UserRole
 from app.models.employee import Employee
 from app.schemas.employee import EmployeeCreate, EmployeeUpdate, Employee as EmployeeSchema
+from app.services.bulk_import_service import BulkImportService
 
 router = APIRouter()
+
+@router.post("/bulk-import", status_code=status.HTTP_200_OK)
+async def bulk_import_employees(
+    file: UploadFile = File(...),
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_role(UserRole.HR_MANAGER))
+):
+    """Bulk import employees from Excel"""
+    if not file.filename.endswith(('.xlsx', '.xls')):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid file format. Please upload an Excel file."
+        )
+    
+    content = await file.read()
+    # In a real app, we'd get company_id from current_user or a path param
+    # For now, we'll assume the user's primary company or first one for demo
+    company_id = 1 
+    
+    result = BulkImportService.process_employee_excel(content, company_id, db)
+    if not result["success"]:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=result["error"]
+        )
+    
+    return result
 
 @router.get("/", response_model=List[EmployeeSchema])
 async def list_employees(

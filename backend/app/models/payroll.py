@@ -22,6 +22,8 @@ class SalaryStructure(Base):
     esi_enabled = Column(Boolean, default=True)
     pt_enabled = Column(Boolean, default=True)
     tds_enabled = Column(Boolean, default=True)
+    employer_pf_enabled = Column(Boolean, default=True)
+    employer_esi_enabled = Column(Boolean, default=True)
     
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
@@ -66,6 +68,8 @@ class PayrollRecord(Base):
     esi_deduction = Column(Numeric(precision=15, scale=2))
     pt_deduction = Column(Numeric(precision=15, scale=2))
     income_tax_deduction = Column(Numeric(precision=15, scale=2))
+    employer_pf_contribution = Column(Numeric(precision=15, scale=2))
+    employer_esi_contribution = Column(Numeric(precision=15, scale=2))
     
     status = Column(SQLEnum(PayrollStatus), default=PayrollStatus.DRAFT)
     processed_at = Column(DateTime(timezone=True))

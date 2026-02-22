@@ -1,0 +1,28 @@
+▲ Next.js 16.1.6 (Turbopack)
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 21.1s
+  Running TypeScript ...
+Failed to compile.
+
+./app/dashboard/ess/page.tsx:80:25
+Type error: Type '{ hidden: { opacity: number; y: number; }; visible: { opacity: number; y: number; transition: { type: string; stiffness: number; damping: number; }; }; }' is not assignable to type 'Variants'.
+  Property 'visible' is incompatible with index signature.
+    Type '{ opacity: number; y: number; transition: { type: string; stiffness: number; damping: number; }; }' is not assignable to type 'Variant'.
+      Type '{ opacity: number; y: number; transition: { type: string; stiffness: number; damping: number; }; }' is not assignable to type 'TargetAndTransition'.
+        Type '{ opacity: number; y: number; transition: { type: string; stiffness: number; damping: number; }; }' is not assignable to type '{ transition?: Transition<any> | undefined; transitionEnd?: ResolvedValues$1 | undefined; }'.
+          Types of property 'transition' are incompatible.
+            Type '{ type: string; stiffness: number; damping: number; }' is not assignable to type 'Transition<any> | undefined'.
+              Type '{ type: string; stiffness: number; damping: number; }' is not assignable to type 'TransitionWithValueOverrides<any>'.
+                Type '{ type: string; stiffness: number; damping: number; }' is not assignable to type 'ValueAnimationTransition<any>'.
+                  Types of property 'type' are incompatible.
+                    Type 'string' is not assignable to type 'AnimationGeneratorType | undefined'.
+
+[0m [90m 78 |[39m         [33m>[39m
+ [90m 79 |[39m             {[90m/* Header Section */[39m}
+[31m[1m>[22m[39m[90m 80 |[39m             [33m<[39m[33mmotion[39m[33m.[39mdiv variants[33m=[39m{itemVariants} className[33m=[39m[32m"flex flex-col md:flex-row md:items-end justify-between gap-6"[39m[33m>[39m
+ [90m    |[39m                         [31m[1m^[22m[39m
+ [90m 81 |[39m                 [33m<[39m[33mdiv[39m[33m>[39m
+ [90m 82 |[39m                     [33m<[39m[33mh1[39m className[33m=[39m[32m"text-4xl font-black tracking-tight text-foreground uppercase italic"[39m[33m>[39m
+ [90m 83 |[39m                         [33mEmployee[39m [33m<[39m[33mspan[39m className[33m=[39m[32m"text-primary tracking-tighter not-italic"[39m[33m>[39m[33mPortal[39m[33m<[39m[33m/[39m[33mspan[39m[33m>[39m[0m
+Next.js build worker exited with code: 1 and signal: null

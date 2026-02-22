@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 import {
     Wallet,
     ClipboardCheck,
@@ -15,7 +15,13 @@ import {
 import { useAuth } from '@/contexts/AuthContext';
 import { cn } from '@/lib/utils';
 
-const containerVariants = {
+interface ESSData {
+    employee: { designation: string };
+    stats: { last_net_pay: number; pending_leaves: number; attendance_this_month: number };
+    recent_activity: Array<{ type: string; date: string; status: string }>;
+}
+
+const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
         opacity: 1,
@@ -25,7 +31,7 @@ const containerVariants = {
     }
 };
 
-const itemVariants = {
+const itemVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
         opacity: 1,
@@ -36,7 +42,7 @@ const itemVariants = {
 
 export default function ESSDashboard() {
     const { user } = useAuth();
-    const [stats, setStats] = useState<any>(null);
+    const [stats, setStats] = useState<ESSData | null>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -124,7 +130,7 @@ export default function ESSDashboard() {
                         </button>
                     </div>
                     <div className="p-4">
-                        {stats?.recent_activity?.map((activity: any, i: number) => (
+                        {stats?.recent_activity?.map((activity, i: number) => (
                             <div key={i} className="flex items-center justify-between p-4 hover:bg-accent/5 rounded-2xl transition-colors group">
                                 <div className="flex items-center gap-4">
                                     <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary font-bold">

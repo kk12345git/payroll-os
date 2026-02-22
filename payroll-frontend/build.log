@@ -1,0 +1,10 @@
+
+> payroll-frontend@0.1.0 build
+> next build
+
+▲ Next.js 16.1.6 (Turbopack)
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 19.7s
+  Running TypeScript ...
+Terminate batch job (Y/N)? 

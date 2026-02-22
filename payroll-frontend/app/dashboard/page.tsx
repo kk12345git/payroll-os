@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 import {
     Users,
     TrendingUp,
@@ -11,11 +11,8 @@ import {
     Building2,
     Clock,
     CheckCircle2,
-    AlertCircle,
     Sparkles,
     Zap,
-    Target,
-    Award,
     ChevronRight,
     Brain,
     ShieldAlert
@@ -27,11 +24,10 @@ import { usePayrollStore } from '@/store/payrollStore';
 import { useAnomalyStore } from '@/store/anomalyStore';
 
 import { DashboardCharts } from '@/components/DashboardCharts';
-import { LoadingOverlay } from '@/components/Loading';
 import { Skeleton, CardSkeleton } from '@/components/ui/Skeleton';
 import { cn } from '@/lib/utils';
 
-const containerVariants = {
+const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
         opacity: 1,
@@ -42,7 +38,7 @@ const containerVariants = {
     }
 };
 
-const itemVariants = {
+const itemVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
         opacity: 1,
@@ -59,7 +55,7 @@ export default function DashboardPage() {
     const { employees } = useEmployeeStore();
     const { departments } = useDepartmentStore();
     const { payrollRecords, monthlySummaries, fetchPayrollSummaries, loading: payrollLoading } = usePayrollStore();
-    const { anomalies, fetchAnomalies, loading: anomalyLoading } = useAnomalyStore();
+    const { anomalies, fetchAnomalies } = useAnomalyStore();
 
     React.useEffect(() => {
         fetchPayrollSummaries();
@@ -185,7 +181,7 @@ export default function DashboardPage() {
                     <h1 className="text-4xl font-black tracking-tight text-slate-900 mb-2 shimmer-text">
                         Welcome Back! 👋
                     </h1>
-                    <p className="text-slate-500 font-medium">Here's what's happening with your organization today.</p>
+                    <p className="text-slate-500 font-medium">Here&apos;s what&apos;s happening with your organization today.</p>
                 </div>
                 <button className="btn-extreme">
                     <Sparkles className="w-4 h-4 mr-2" />
@@ -219,7 +215,7 @@ export default function DashboardPage() {
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {anomalies.slice(0, 3).map((anomaly, idx) => (
+                            {anomalies.slice(0, 3).map((anomaly) => (
                                 <div
                                     key={anomaly.id}
                                     className="p-6 rounded-2xl bg-muted/40 border-2 border-transparent hover:border-indigo-500/30 transition-all group overflow-hidden relative"
@@ -254,7 +250,7 @@ export default function DashboardPage() {
 
             {/* Stats Grid */}
             <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {stats.map((stat, index) => (
+                {stats.map((stat) => (
                     <div
                         key={stat.label}
                         className="card-extreme group hover:scale-105 transition-transform duration-300 relative overflow-hidden"
@@ -310,7 +306,7 @@ export default function DashboardPage() {
                     Quick Actions
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    {quickActions.map((action, index) => (
+                    {quickActions.map((action) => (
                         <Link key={action.title} href={action.href}>
                             <div className="card-extreme group hover:scale-105 transition-all duration-300 cursor-pointer">
                                 <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${action.color} flex items-center justify-center mb-3 group-hover:scale-110 transition-transform`}>

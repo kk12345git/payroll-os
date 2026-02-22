@@ -26,4 +26,4 @@ ENV PYTHONUNBUFFERED=1
 ENV ENVIRONMENT=production
 
 # Run migrations and start app
-CMD ["sh", "-c", "python -m app.main"]
+CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}"]

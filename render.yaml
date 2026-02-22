@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: payroll-api
+    env: docker
+    rootDir: backend
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: payroll-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: ENVIRONMENT
+        value: production
+
+databases:
+  - name: payroll-db
+    databaseName: payroll
+    user: payroll_user
+    plan: free

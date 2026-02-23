@@ -37,6 +37,10 @@ class Company(Base):
     logo_url = Column(String)
     is_active = Column(Boolean, default=True)
     
+    # Multi-Entity / Group Company Management
+    parent_id = Column(Integer, ForeignKey("companies.id"), nullable=True)
+    is_parent = Column(Boolean, default=False)
+    
     # SaaS Fields
     plan = Column(SQLEnum(SubscriptionPlan), default=SubscriptionPlan.FREE)
     subscription_status = Column(SQLEnum(SubscriptionStatus), default=SubscriptionStatus.TRIAL)

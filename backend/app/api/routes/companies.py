@@ -96,3 +96,41 @@ async def update_company_settings(
         
     db.commit()
     return {"status": "success", "base_currency": company.base_currency}
+
+class SubsidiaryCreate(BaseModel):
+    name: str
+    registration_number: Optional[str] = None
+
+class SubsidiaryResponse(BaseModel):
+    id: int
+    name: str
+    registration_number: Optional[str] = None
+    is_active: bool
+
+    class Config:
+        from_attributes = True
+
+@router.get("/subsidiaries", response_model=List[SubsidiaryResponse])
+async def list_subsidiaries(
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """List all subsidiary companies for the current parent company"""
+    return db.query(Company).filter(Company.parent_id == current_user.company_id).all()
+
+@router.post("/subsidiaries", response_model=SubsidiaryResponse)
+async def create_subsidiary(
+    subsidiary_data: SubsidiaryCreate,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """Create a new subsidiary linked to the current company"""
+    new_sub = Company(
+        name=subsidiary_data.name,
+        registration_number=subsidiary_data.registration_number,
+        parent_id=current_user.company_id
+    )
+    db.add(new_sub)
+    db.commit()
+    db.refresh(new_sub)
+    return new_sub

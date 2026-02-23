@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
-from app.api.routes import auth, employees, departments, attendance, leaves, payroll, companies, anomalies, ewa, tax_optimizer, whatsapp, copilot, analytics, compliance, billing, admin, invitations, me, investments
+from app.api.routes import auth, employees, departments, attendance, leaves, payroll, companies, anomalies, ewa, tax_optimizer, whatsapp, copilot, analytics, compliance, billing, admin, invitations, me, investments, talent, lifecycle, assets, performance
 from app.core.database import engine, Base
 from app.core.security_middleware import SecurityHardeningMiddleware
 
@@ -57,6 +57,10 @@ app.include_router(admin.router, prefix="/api/admin", tags=["Internal Admin"])
 app.include_router(invitations.router, prefix="/api/invites", tags=["Staff Invitations"])
 app.include_router(me.router, prefix="/api/me", tags=["Employee Self-Service"])
 app.include_router(investments.router, prefix="/api/investments", tags=["Investment Declarations"])
+app.include_router(talent.router, prefix="/api/talent", tags=["Talent Intelligence"])
+app.include_router(lifecycle.router, prefix="/api/lifecycle", tags=["Enterprise Lifecycle"])
+app.include_router(assets.router, prefix="/api/assets", tags=["Enterprise Assets & Vault"])
+app.include_router(performance.router, prefix="/api/performance", tags=["Performance & OKRs"])
 
 
 @app.get("/")

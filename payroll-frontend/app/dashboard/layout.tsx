@@ -28,9 +28,13 @@ import {
     Brain,
     MessageSquare,
     TrendingUp,
+    TrendingDown,
     ShieldCheck,
     CreditCard,
-    UserPlus
+    UserPlus,
+    FileText,
+    Trophy,
+    Globe
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useThemeStore } from '@/store/themeStore';
@@ -102,6 +106,11 @@ export default function DashboardLayout({
         { title: 'AI Copilot', icon: Brain, href: '/dashboard/copilot', roles: ['admin', 'hr_manager'] },
         { title: 'Cash Flow AI', icon: TrendingUp, href: '/dashboard/analytics/forecast', roles: ['admin', 'hr_manager'] },
         { title: 'Compliance', icon: ShieldCheck, href: '/dashboard/compliance', roles: ['admin', 'hr_manager'] },
+        { title: 'Attrition Risk', icon: Brain, href: '/dashboard/talent/attrition', roles: ['admin', 'hr_manager'] },
+        { title: 'Lifecycle', icon: TrendingDown, href: '/dashboard/talent/lifecycle', roles: ['admin', 'hr_manager'] },
+        { title: 'Doc Vault', icon: ShieldCheck, href: '/dashboard/talent/vault', roles: ['admin', 'hr_manager'] },
+        { title: 'Performance', icon: Trophy, href: '/dashboard/talent/performance', roles: ['admin', 'hr_manager'] },
+        { title: 'Group Admin', icon: Globe, href: '/dashboard/admin/group', roles: ['admin'] },
         { title: 'Billing', icon: CreditCard, href: '/dashboard/billing', roles: ['admin', 'hr_manager'] },
         { title: 'Sales Admin', icon: TrendingUp, href: '/admin/sales', roles: ['admin'] },
         { title: 'Recruit & Invite', icon: UserPlus, href: '/dashboard/settings/invites', roles: ['admin', 'hr_manager'] },

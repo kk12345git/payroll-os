@@ -9,7 +9,6 @@ from app.services.forecast_service import ForecastService
 
 router = APIRouter()
 
-@app_router := APIRouter() # Workaround for router variable naming in prompt
 @router.get("/forecast")
 async def get_payroll_forecast(
     months: int = 6,

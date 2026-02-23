@@ -4,10 +4,14 @@ from sqlalchemy.orm import sessionmaker
 from app.core.config import settings
 
 # Create SQLAlchemy engine
-# Create SQLAlchemy engine with specific args for SQLite/PostgreSQL
-is_sqlite = "sqlite" in settings.DATABASE_URL
+# Automatically fix 'postgres://' to 'postgresql://' for SQLAlchemy compatibility
+db_url = settings.DATABASE_URL
+if db_url.startswith("postgres://"):
+    db_url = db_url.replace("postgres://", "postgresql://", 1)
+
+is_sqlite = "sqlite" in db_url
 engine = create_engine(
-    settings.DATABASE_URL,
+    db_url,
     connect_args={"check_same_thread": False} if is_sqlite else {},
     pool_pre_ping=True,
     echo=settings.ENVIRONMENT == "development"

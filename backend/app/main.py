@@ -6,7 +6,14 @@ from app.core.database import engine, Base
 from app.core.security_middleware import SecurityHardeningMiddleware
 
 # Create database tables
-Base.metadata.create_all(bind=engine) # Triggers table creation on startup
+try:
+    print(f"📡 Initializing database connection: {settings.ENVIRONMENT}")
+    Base.metadata.create_all(bind=engine)
+    print("✅ Database tables verified/created.")
+except Exception as e:
+    print(f"❌ DATABASE INITIALIZATION ERROR: {str(e)}")
+    # We don't raise here to allow the app to potentially start and show /health as unhealthy
+    # but the logs will now clearly show why the first DB call failed.
 
 
 # Initialize FastAPI app
@@ -54,9 +61,10 @@ app.include_router(me.router, prefix="/api/me", tags=["Employee Self-Service"])
 @app.get("/")
 async def root():
     return {
-        "message": "Payroll Management System API",
+        "message": "AutoPay-OS API is Online",
+        "status": "active",
         "version": settings.APP_VERSION,
-        "docs": "/docs"
+        "environment": settings.ENVIRONMENT
     }
 
 

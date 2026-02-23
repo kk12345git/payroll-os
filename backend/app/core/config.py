@@ -6,6 +6,25 @@ class Settings(BaseSettings):
     # Database
     DATABASE_URL: str = "sqlite:///./payroll.db"
     
+    # Custom init to debug environment variables in production
+    def __init__(self, **values):
+        super().__init__(**values)
+        import os
+        env_val = os.getenv("DATABASE_URL")
+        if env_val:
+            print(f"--- ENVIRONMENT DIAGNOSTIC ---")
+            print(f"DATABASE_URL found in OS env (length: {len(env_val)})")
+            # If Pydantic didn't pick it up or it's still default
+            if self.DATABASE_URL == "sqlite:///./payroll.db":
+                 self.DATABASE_URL = env_val
+                 print(f"Manually overridden DATABASE_URL with env value")
+            print(f"-----------------------------")
+        else:
+            print("--- ENVIRONMENT DIAGNOSTIC ---")
+            print("DATABASE_URL NOT FOUND in OS environment!")
+            print(f"Current DATABASE_URL in settings: {self.DATABASE_URL}")
+            print(f"-----------------------------")
+    
     # JWT
     SECRET_KEY: str = "your-secret-key-change-this-in-production"
     ALGORITHM: str = "HS256"

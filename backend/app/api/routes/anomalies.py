@@ -15,7 +15,7 @@ class AnomalyResponse(BaseModel):
     id: int
     type: AnomalyType
     severity: AnomalySeverity
-    title: String
+    title: str
     description: Optional[str]
     data: Optional[dict]
     is_resolved: bool

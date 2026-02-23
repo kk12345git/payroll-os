@@ -10,7 +10,8 @@ import {
     TrendingUp,
     ChevronRight,
     ArrowUpRight,
-    Clock
+    Clock,
+    ShieldCheck
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { cn } from '@/lib/utils';
@@ -156,13 +157,13 @@ export default function ESSDashboard() {
                 <motion.div variants={itemVariants} className="space-y-6">
                     <div className="p-8 rounded-[2.5rem] bg-gradient-to-br from-indigo-600 to-purple-600 text-white shadow-2xl shadow-indigo-500/20 relative overflow-hidden group">
                         <div className="absolute top-0 right-0 p-4 opacity-20 group-hover:scale-125 transition-transform duration-700">
-                            <TrendingUp className="w-32 h-32" />
+                            <ShieldCheck className="w-32 h-32" />
                         </div>
                         <h2 className="text-xl font-black tracking-tight mb-2 italic">Ready to optimize your taxes?</h2>
-                        <p className="text-white/70 text-sm mb-6 max-w-[250px] font-bold">Use our AI-driven Tax Optimizer to maximize your savings this month.</p>
-                        <button className="bg-white text-indigo-600 px-6 py-3 rounded-2xl font-black text-[11px] uppercase tracking-widest flex items-center gap-2 hover:bg-indigo-50 transition-colors shadow-xl">
-                            Open Optimizer <ArrowUpRight className="w-4 h-4" />
-                        </button>
+                        <p className="text-white/70 text-sm mb-6 max-w-[250px] font-bold">Declare your tax-saving investments for FY 2025-26 and maximize your home pay.</p>
+                        <a href="/dashboard/ess/investments" className="bg-white text-indigo-600 px-6 py-3 rounded-2xl font-black text-[11px] uppercase tracking-widest flex items-center gap-2 hover:bg-indigo-50 transition-colors shadow-xl w-fit">
+                            Open Portal <ArrowUpRight className="w-4 h-4" />
+                        </a>
                     </div>
 
                     <div className="grid grid-cols-2 gap-4">

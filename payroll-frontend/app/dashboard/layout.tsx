@@ -38,6 +38,8 @@ import dynamic from 'next/dynamic';
 import Logo from '@/components/Logo';
 import { LoadingOverlay } from '@/components/Loading';
 import { AIFloatingChat } from '@/components/ai/AIFloatingChat';
+import OfflineStatus from '@/components/OfflineStatus';
+import InstallPrompt from '@/components/InstallPrompt';
 
 const CommandPalette = dynamic(() => import('@/components/CommandPalette'), {
     ssr: false,
@@ -359,6 +361,8 @@ export default function DashboardLayout({
             />
 
             <AIFloatingChat />
+            <OfflineStatus />
+            <InstallPrompt />
         </div>
     );
 }

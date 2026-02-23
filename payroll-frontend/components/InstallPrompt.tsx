@@ -40,23 +40,26 @@ export default function InstallPrompt() {
                 className="fixed bottom-6 left-6 right-6 md:left-auto md:right-8 md:w-[400px] z-[9999]"
             >
                 <div className="card-extreme p-6 bg-slate-900 text-white border-none shadow-2xl relative overflow-hidden">
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-600/20 blur-3xl rounded-full -mr-16 -mt-16" />
+                    <div className="absolute top-0 right-0 w-48 h-48 bg-indigo-600/30 blur-[80px] rounded-full -mr-24 -mt-24 animate-pulse" />
+                    <div className="absolute bottom-0 left-0 w-32 h-32 bg-purple-600/20 blur-[60px] rounded-full -ml-16 -mb-16" />
 
                     <button
                         onClick={() => setIsVisible(false)}
-                        className="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors"
+                        className="absolute top-4 right-4 text-slate-500 hover:text-white transition-colors bg-white/5 p-2 rounded-full"
                     >
-                        <X className="w-5 h-5" />
+                        <X className="w-4 h-4" />
                     </button>
 
-                    <div className="flex items-start gap-5">
-                        <div className="w-14 h-14 bg-indigo-600 rounded-2xl flex items-center justify-center shrink-0">
-                            <Download className="w-7 h-7" />
+                    <div className="flex items-start gap-6 relative">
+                        <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-indigo-700 rounded-[1.5rem] flex items-center justify-center shrink-0 shadow-2xl shadow-indigo-500/40 border border-white/10 group-hover:scale-110 transition-transform duration-500">
+                            <Smartphone className="w-8 h-8 text-white" />
                         </div>
                         <div className="space-y-1 pr-6">
-                            <h3 className="text-xl font-black tracking-tight leading-none">Install AutoPay-OS</h3>
-                            <p className="text-sm font-medium text-slate-400 leading-relaxed">
-                                Get a faster, dedicated experience by adding this to your {platform === 'desktop' ? 'computer' : 'home screen'}.
+                            <h3 className="text-2xl font-black tracking-tighter leading-none italic uppercase">
+                                Take it <span className="text-indigo-400 not-italic">Mobile</span>
+                            </h3>
+                            <p className="text-[11px] font-bold text-slate-400 leading-relaxed uppercase tracking-widest mt-2">
+                                Add AutoPay-OS to your {platform === 'desktop' ? 'computer' : 'home screen'} for instant payroll access.
                             </p>
                         </div>
                     </div>

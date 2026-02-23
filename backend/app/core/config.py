@@ -14,14 +14,18 @@ class Settings(BaseSettings):
         if env_val:
             print(f"--- ENVIRONMENT DIAGNOSTIC ---")
             print(f"DATABASE_URL found in OS env (length: {len(env_val)})")
-            # If Pydantic didn't pick it up or it's still default
-            if self.DATABASE_URL == "sqlite:///./payroll.db":
+            # If Pydantic didn't pick it up or it's still default or empty
+            if not self.DATABASE_URL or self.DATABASE_URL == "sqlite:///./payroll.db" or self.DATABASE_URL.strip() == "":
                  self.DATABASE_URL = env_val
                  print(f"Manually overridden DATABASE_URL with env value")
             print(f"-----------------------------")
         else:
             print("--- ENVIRONMENT DIAGNOSTIC ---")
             print("DATABASE_URL NOT FOUND in OS environment!")
+            # Ensure it's not empty even if env is missing
+            if not self.DATABASE_URL or self.DATABASE_URL.strip() == "":
+                self.DATABASE_URL = "sqlite:///./payroll.db"
+                print("Restored default sqlite path")
             print(f"Current DATABASE_URL in settings: {self.DATABASE_URL}")
             print(f"-----------------------------")
     

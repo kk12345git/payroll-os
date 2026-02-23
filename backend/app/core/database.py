@@ -24,9 +24,9 @@ else:
     print(f"📡 Database URL configured (scheme: {SQLALCHEMY_DATABASE_URL.split(':')[0]})")
 print(f"---------------------------")
 
-is_sqlite = "sqlite" in db_url
+is_sqlite = "sqlite" in SQLALCHEMY_DATABASE_URL
 engine = create_engine(
-    db_url,
+    SQLALCHEMY_DATABASE_URL,
     connect_args={"check_same_thread": False} if is_sqlite else {},
     pool_pre_ping=True,
     echo=settings.ENVIRONMENT == "development"

@@ -11,6 +11,7 @@ from app.models.employee import Employee
 from app.models.payroll import PayrollRecord
 from app.models.company import Company
 from app.services.pdf_service import PDFService
+from app.services.compliance_service import ComplianceService
 
 router = APIRouter()
 
@@ -82,3 +83,45 @@ async def download_form_24q(
         media_type="application/pdf",
         headers={"Content-Disposition": f"attachment; filename=Form24Q_{company.name}.pdf"}
     )
+
+@router.get("/pf-ecr")
+async def download_pf_ecr(
+    month: int,
+    year: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(dependencies.get_current_user)
+):
+    """Generates and returns PF ECR text file for the company."""
+    ecr_text = ComplianceService.generate_pf_ecr(db, current_user.company_id, month, year)
+    
+    return Response(
+        content=ecr_text,
+        media_type="text/plain",
+        headers={"Content-Disposition": f"attachment; filename=PF_ECR_{month}_{year}.txt"}
+    )
+
+@router.get("/esi-json")
+async def download_esi_json(
+    month: int,
+    year: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(dependencies.get_current_user)
+):
+    """Generates and returns ESI Monthly JSON for the company."""
+    esi_json = ComplianceService.generate_esi_json(db, current_user.company_id, month, year)
+    
+    return Response(
+        content=esi_json,
+        media_type="application/json",
+        headers={"Content-Disposition": f"attachment; filename=ESI_Monthly_{month}_{year}.json"}
+    )
+
+@router.get("/pt-summary")
+async def get_pt_summary(
+    month: int,
+    year: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(dependencies.get_current_user)
+):
+    """Returns PT state-wise summary data."""
+    return ComplianceService.generate_pt_summary(db, current_user.company_id, month, year)

@@ -8,569 +8,482 @@ import {
   Zap,
   ShieldCheck,
   Globe,
-  MessageSquare,
   ChevronRight,
   Play,
   Star,
   ArrowRight,
   Check,
-  Cpu,
   Menu,
   X,
   Plus,
   Minus,
-  Send,
-  Loader2
+  Building2,
+  Users,
+  CreditCard,
+  PieChart,
+  Lock
 } from 'lucide-react';
-import { toast } from 'sonner';
 
 import HeroBackground from '@/components/ui/HeroBackground';
-import FeatureCard from '@/components/ui/FeatureCard';
-
-const FEATURES = [
-  {
-    title: "AI Compliance Core",
-    description: "Automated tax logic that updates itself. Stay 100% compliant without lifting a finger.",
-    icon: <Cpu className="w-10 h-10 text-white" />
-  },
-  {
-    title: "Global Scalability",
-    description: "Multi-currency, multi-jurisdiction. Manage 10 or 10,000 employees with the same precision.",
-    icon: <Globe className="w-10 h-10 text-white" />
-  },
-  {
-    title: "Predictive Analytics",
-    description: "Know your attrition risks and budget forecasts before they happen. Data-driven peace of mind.",
-    icon: <Zap className="w-10 h-10 text-white" />
-  },
-  {
-    title: "Hyper-Secure",
-    description: "Military-grade encryption for your most sensitive data. Bank-level security, redefined.",
-    icon: <ShieldCheck className="w-10 h-10 text-white" />
-  },
-  {
-    title: "Instant ESS Portal",
-    description: "Empower your workforce with a premium self-service experience on any device.",
-    icon: <Plus className="w-10 h-10 text-white" />
-  },
-  {
-    title: "Dynamic Reporting",
-    description: "Generate boardroom-ready insights with a single click. Every metric at your fingertips.",
-    icon: <ArrowRight className="w-10 h-10 text-white" />
-  }
-];
 
 export default function LandingPage() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [activeFaq, setActiveFaq] = React.useState<number | null>(null);
-  const [waitlistEmail, setWaitlistEmail] = React.useState('');
-  const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 });
 
   const handleMouseMove = (e: React.MouseEvent) => {
     const { clientX, clientY } = e;
     const { innerWidth, innerHeight } = window;
-    const x = (clientX / innerWidth - 0.5) * 2;
-    const y = (clientY / innerHeight - 0.5) * 2;
-    setMousePos({ x, y });
-  };
-
-  const handleWaitlistSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!waitlistEmail) return;
-    setIsSubmitting(true);
-    // Simulate API call
-    await new Promise(r => setTimeout(r, 1500));
-    toast.success("Welcome to the elite! You're on the list. 🚀");
-    setWaitlistEmail('');
-    setIsSubmitting(false);
+    setMousePos({
+      x: (clientX / innerWidth - 0.5) * 2,
+      y: (clientY / innerHeight - 0.5) * 2
+    });
   };
 
   return (
     <div
       onMouseMove={handleMouseMove}
-      className="min-h-screen bg-white dark:bg-[#020617] text-slate-900 dark:text-white selection:bg-indigo-100 dark:selection:bg-indigo-900/30 font-sans border-t-8 border-indigo-600 overflow-x-hidden"
+      className="min-h-screen bg-[#020617] text-white selection:bg-primary/30 font-sans overflow-x-hidden"
     >
       <HeroBackground />
 
-      {/* Navigation */}
-      <nav className="fixed top-2 left-0 right-0 z-50 flex justify-center px-4">
-        <motion.div
-          initial={{ y: -100, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ type: "spring", stiffness: 100, damping: 20 }}
-          className="max-w-7xl w-full hyper-glass dark:bg-slate-900/40 border-slate-200/50 dark:border-white/5 rounded-3xl px-8 py-4 flex items-center justify-between shadow-2xl"
-        >
-          <div className="flex items-center gap-3 group cursor-pointer">
-            <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center transition-transform group-hover:rotate-12 group-hover:scale-110">
-              <Brain className="text-white w-6 h-6" />
+      {/* Modern SaaS Navigation */}
+      <nav className="fixed top-0 left-0 right-0 z-50 px-6 py-4">
+        <div className="max-w-7xl mx-auto backdrop-blur-md bg-[#020617]/50 border border-white/5 rounded-2xl px-6 py-3 flex items-center justify-between shadow-2xl">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+              <Brain className="text-white w-5 h-5" />
             </div>
-            <span className="text-2xl font-black tracking-tighter">
-              AutoPay-<span className="text-indigo-600">OS</span>
-            </span>
+            <span className="text-xl font-bold tracking-tight">AutoPay-OS</span>
           </div>
 
-          <div className="hidden md:flex items-center gap-10 font-black text-[10px] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
-            <a href="#features" className="hover:text-indigo-600 transition-colors">Features</a>
-            <a href="#ai" className="hover:text-indigo-600 transition-colors">AI Engine</a>
-            <a href="#pricing" className="hover:text-indigo-600 transition-colors">Pricing</a>
-            <a href="#faq" className="hover:text-indigo-600 transition-colors">FAQ</a>
+          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+            <a href="#features" className="hover:text-white transition-colors">Platform</a>
+            <a href="#solutions" className="hover:text-white transition-colors">Solutions</a>
+            <a href="#customers" className="hover:text-white transition-colors">Customers</a>
+            <a href="#pricing" className="hover:text-white transition-colors">Pricing</a>
           </div>
 
-          <div className="flex items-center gap-4">
-            <div className="hidden md:flex items-center gap-4">
-              <Link href="/login" className="px-6 py-2.5 text-[10px] font-black uppercase tracking-widest text-slate-900 dark:text-white border-2 border-slate-900 dark:border-white/20 rounded-2xl hover:bg-slate-900 dark:hover:bg-white hover:text-white dark:hover:text-slate-900 transition-all">
-                Client Login
-              </Link>
-              <Link href="/register" className="px-6 py-2.5 text-[10px] font-black uppercase tracking-widest bg-indigo-600 text-white rounded-2xl hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-600/25">
-                Start Free Trial
-              </Link>
-            </div>
-
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden p-3 bg-slate-900 text-white rounded-xl active:scale-95 transition-all"
-            >
-              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
+          <div className="hidden md:flex items-center gap-4">
+            <Link href="/login" className="text-sm font-medium text-slate-300 hover:text-white transition-colors">
+              Sign in
+            </Link>
+            <Link href="/register" className="px-4 py-2 text-sm font-semibold bg-white text-slate-900 rounded-lg hover:bg-slate-200 transition-all flex items-center gap-2">
+              Get started <ArrowRight className="w-4 h-4" />
+            </Link>
           </div>
-        </motion.div>
+
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="md:hidden text-slate-300 hover:text-white"
+          >
+            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+        </div>
       </nav>
 
-      {/* Hero Section */}
-      <section className="relative pt-64 pb-32 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 text-center relative z-10">
+      {/* SaaS Hero Section */}
+      <section className="relative pt-40 pb-20 px-6">
+        <div className="max-w-5xl mx-auto text-center relative z-10 flex flex-col items-center">
+
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-3 px-6 py-2 glass-card-premium rounded-full text-[10px] font-black uppercase tracking-[0.4em] mb-12 text-primary dark:text-primary border-primary/20 bg-primary/5"
+            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold mb-8"
           >
-            <div className="w-2 h-2 rounded-full bg-primary animate-pulse shadow-[0_0_10px_rgba(124,58,237,0.5)]" />
-            V2: THE INTELLIGENCE AGE IS HERE
+            <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+            AutoPay-OS 2.0 is now live
+            <ChevronRight className="w-3 h-3" />
           </motion.div>
 
-          <motion.div
-            style={{
-              rotateX: mousePos.y * -8,
-              rotateY: mousePos.x * 8,
-              transformStyle: "preserve-3d"
-            }}
-            transition={{ type: "spring", damping: 40, stiffness: 80 }}
-            className="perspective-2000"
+          <motion.h1
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="text-6xl md:text-[5.5rem] font-bold tracking-tight leading-[1.05] mb-8 font-display"
           >
-            <motion.h1
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="text-7xl md:text-[12rem] font-black tracking-[-0.06em] leading-[0.75] mb-16 perspective-origin-center font-display"
-            >
-              <span className="block text-slate-900 dark:text-white drop-shadow-2xl">PRECISION</span>
-              <span className="block italic font-light text-slate-400 dark:text-slate-600">is</span>
-              <span className="text-gradient-extreme [text-shadow:_0_20px_60px_rgba(124,58,237,0.4)]">LEGENDARY.</span>
-            </motion.h1>
-          </motion.div>
+            The payroll platform <br className="hidden md:block" />
+            <span className="text-slate-400">built for modern teams.</span>
+          </motion.h1>
 
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
-            className="text-xl md:text-2xl text-slate-500 dark:text-slate-400 font-medium max-w-3xl mx-auto mb-20 leading-tight tracking-tight px-4"
+            transition={{ delay: 0.2 }}
+            className="text-xl md:text-2xl text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed font-light"
           >
-            Experience the definitive enterprise core. AutoPay-OS V2 combines hyper-precision with predictive intelligence for the world&apos;s most ambitious teams.
+            Automate compliance, forecast cash flow, and manage global talent from a single, intelligent workspace.
           </motion.p>
 
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, type: "spring" }}
-            className="flex flex-col md:flex-row items-center justify-center gap-8 perspective-2000"
+            transition={{ delay: 0.3 }}
+            className="flex flex-col sm:flex-row items-center gap-4 mb-20"
           >
-            <Link
-              href="/register"
-              className="group relative px-14 py-8 bg-slate-900 dark:bg-white dark:text-slate-900 text-white rounded-[2.5rem] font-black text-xl flex items-center gap-4 hover:scale-110 active:scale-95 transition-all shadow-2xl shadow-indigo-600/20"
-              style={{
-                transform: `translateX(${mousePos.x * 10}px) translateY(${mousePos.y * 10}px)`
-              }}
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 to-pink-600 rounded-[2.5rem] opacity-0 group-hover:opacity-100 transition-opacity -z-10 blur-2xl" />
-              Launch Enterprise
-              <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
+            <Link href="/register" className="w-full sm:w-auto px-8 py-4 bg-primary hover:bg-primary/90 text-white rounded-xl font-semibold text-lg transition-all flex items-center justify-center gap-2 shadow-[0_0_40px_rgba(124,58,237,0.3)]">
+              Start Free Trial
+              <ArrowRight className="w-5 h-5" />
             </Link>
-
-            <a
-              href="#faq"
-              className="group px-14 py-8 glass-card-premium rounded-[2.5rem] font-black text-xl flex items-center gap-4 hover:bg-white dark:hover:bg-slate-800 transition-all border-slate-200/60 shadow-xl"
-              style={{
-                transform: `translateX(${mousePos.x * -10}px) translateY(${mousePos.y * -10}px)`
-              }}
-            >
-              <div className="w-12 h-12 bg-indigo-600 rounded-full flex items-center justify-center shadow-lg group-hover:rotate-[360deg] transition-transform duration-700">
-                <Play className="w-5 h-5 text-white fill-white ml-0.5" />
-              </div>
-              Live Demo
+            <a href="#demo" className="w-full sm:w-auto px-8 py-4 bg-white/5 hover:bg-white/10 text-white rounded-xl font-semibold text-lg transition-all flex items-center justify-center gap-2 border border-white/10">
+              <Play className="w-5 h-5 fill-current opacity-70" />
+              Book a Demo
             </a>
           </motion.div>
-        </div>
-      </section>
 
-      {/* Features Section */}
-      <section id="features" className="py-40 relative">
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="grid grid-cols-1 md:grid-cols-12 md:grid-rows-2 gap-8 h-auto">
-            {/* Main Feature - Large */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              className="md:col-span-12 lg:col-span-8 p-16 hyper-glass rounded-[4rem] group overflow-hidden relative"
-            >
-              <div className="absolute top-0 right-0 w-80 h-80 bg-primary/20 blur-[100px] -translate-y-1/2 translate-x-1/2 group-hover:scale-125 transition-transform duration-700" />
-              <div className="relative z-10 max-w-2xl">
-                <div className="w-16 h-16 bg-primary/20 rounded-3xl flex items-center justify-center mb-10 group-hover:rotate-12 transition-transform duration-500">
-                  <Brain className="w-8 h-8 text-primary font-bold" />
-                </div>
-                <h3 className="text-5xl md:text-7xl font-black mb-8 font-display tracking-tighter">AI TALENT <br /><span className="text-primary italic">INTELLIGENCE.</span></h3>
-                <p className="text-2xl text-slate-500 font-medium leading-relaxed mb-12">
-                  Our proprietary neural core analyzes attrition patterns and predicts compliance risks before they emerge. Stay ahead of the global workforce curve with sub-second insights.
-                </p>
-                <div className="flex items-center gap-6">
-                  <div className="px-6 py-2 rounded-full border border-primary text-[10px] font-black uppercase tracking-widest text-primary">Neural Core V2</div>
-                  <div className="px-6 py-2 rounded-full border border-slate-200 text-[10px] font-black uppercase tracking-widest text-slate-500">Enterprise Ready</div>
+          {/* Hero Product Screenshot */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, type: "spring", damping: 20 }}
+            style={{
+              rotateX: mousePos.y * -5,
+              rotateY: mousePos.x * 5,
+              transformStyle: "preserve-3d"
+            }}
+            className="w-full max-w-6xl mx-auto perspective-2000 relative"
+          >
+            <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-[#020617]/50 to-transparent z-10 bottom-0 top-[60%]" />
+            <div className="rounded-t-2xl border-t border-x border-white/10 bg-[#0B1120] p-4 shadow-2xl overflow-hidden relative" style={{ height: '500px' }}>
+              {/* Fake UI Chrome */}
+              <div className="flex items-center gap-2 mb-4 border-b border-white/5 pb-4">
+                <div className="w-3 h-3 rounded-full bg-slate-700/80" />
+                <div className="w-3 h-3 rounded-full bg-slate-700/80" />
+                <div className="w-3 h-3 rounded-full bg-slate-700/80" />
+                <div className="w-64 h-6 rounded-md bg-white/5 ml-4 flex items-center px-4">
+                  <Lock className="w-3 h-3 text-slate-500 mr-2" />
+                  <span className="text-[10px] text-slate-500">app.autopay.ai</span>
                 </div>
               </div>
-            </motion.div>
 
-            {/* Sidebar Feature 1 */}
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.2 }}
-              className="md:col-span-6 lg:col-span-4 p-12 bg-slate-950 rounded-[4rem] text-white overflow-hidden relative group"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-indigo-600/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-              <Globe className="w-12 h-12 text-indigo-400 mb-8" />
-              <h4 className="text-4xl font-black mb-6 font-display">GLOBAL <br />TENANCY.</h4>
-              <p className="font-medium text-slate-400 text-lg">Multi-currency, multi-jurisdiction logic for the hyper-scaled enterprise.</p>
-            </motion.div>
-
-            {/* Sidebar Feature 2 */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="md:col-span-6 lg:col-span-4 p-12 glass-card-premium rounded-[4rem] border-primary/20 relative group overflow-hidden"
-            >
-              <Zap className="w-12 h-12 text-primary mb-8" />
-              <h4 className="text-4xl font-black mb-6 font-display text-slate-900 dark:text-white">PREDICTIVE <br /><span className="text-primary italic">CASH FLOW.</span></h4>
-              <p className="font-medium text-slate-500 dark:text-slate-400 text-lg">Real-time liability forecasting with 99.8% precision across all regions.</p>
-            </motion.div>
-
-            {/* Bottom Large Feature */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-              className="md:col-span-12 lg:col-span-8 p-16 hyper-glass rounded-[4rem] flex flex-col md:flex-row items-center gap-16"
-            >
-              <div className="flex-1">
-                <ShieldCheck className="w-16 h-16 text-emerald-500 mb-8" />
-                <h3 className="text-5xl font-black mb-6 font-display tracking-tighter">IRONCLAD <br />GOVERNANCE.</h3>
-                <p className="text-xl text-slate-500 font-medium leading-relaxed">
-                  Military-grade encryption for PII and automated statutory filings. We handle the complexity, you keep the control.
-                </p>
-              </div>
-              <div className="flex-1 grid grid-cols-2 gap-4">
-                {[1, 2, 3, 4].map(i => (
-                  <div key={i} className="h-24 bg-primary/5 border border-primary/10 rounded-3xl animate-pulse" />
-                ))}
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Trust Section */}
-      <section className="py-40 bg-white relative overflow-hidden mesh-gradient-premium">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-12 mb-28">
-            <div className="max-w-2xl">
-              <div className="w-20 h-2 bg-indigo-600 rounded-full mb-8" />
-              <h2 className="text-5xl md:text-8xl font-black tracking-tight text-slate-900 dark:text-white mb-8 leading-[0.9]">Trusted by the <br /> 1% of Global Tech.</h2>
-              <div className="flex items-center gap-2">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-6 h-6 text-amber-500 fill-amber-500" />
-                ))}
-                <span className="ml-4 font-black text-slate-900 dark:text-white uppercase tracking-widest text-[10px]">Verified Excellence</span>
-              </div>
-            </div>
-            <div className="hidden md:flex items-center gap-8">
-              <div className="glass-card-premium p-10 rounded-[2.5rem] flex items-center gap-6 shadow-2xl">
-                <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-blue-600 rounded-full flex items-center justify-center text-white font-black text-xl">JD</div>
-                <div>
-                  <div className="font-black text-2xl text-slate-900 dark:text-white">John Doe</div>
-                  <div className="text-sm font-bold text-indigo-600 uppercase tracking-widest">HR Director, TechCorp</div>
+              {/* Fake Dashboard View */}
+              <div className="grid grid-cols-12 gap-6 h-full">
+                {/* Sidebar */}
+                <div className="col-span-3 border-r border-white/5 pr-4 flex flex-col gap-2">
+                  <div className="h-8 rounded-lg bg-primary/20 border border-primary/30 w-full mb-4 flex items-center px-3 gap-2">
+                    <div className="w-4 h-4 rounded-full bg-primary" />
+                    <div className="h-3 bg-white/40 rounded-full w-1/2" />
+                  </div>
+                  <div className="h-6 rounded-lg bg-white/5 w-3/4" />
+                  <div className="h-6 rounded-lg bg-white/5 w-5/6" />
+                  <div className="h-6 rounded-lg bg-white/5 w-2/3" />
+                  <div className="h-6 rounded-lg bg-white/5 w-4/5 mt-8" />
+                  <div className="h-6 rounded-lg bg-white/5 w-full" />
                 </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              className="p-16 bg-slate-900 rounded-[4rem] text-white relative group overflow-hidden shadow-2xl perspective-1000"
-            >
-              <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-600/20 blur-3xl" />
-              <MessageSquare className="w-16 h-16 text-indigo-500 mb-12" />
-              <p className="text-3xl font-black leading-tight mb-16 tracking-tight">
-                "AutoPay-OS changed how we handle payroll across 4 countries. The WhatsApp integration is a game-changer for our remote workers."
-              </p>
-              <div className="flex items-center gap-6">
-                <div className="w-16 h-16 bg-indigo-600 rounded-[1.5rem] flex items-center justify-center font-black text-xl group-hover:rotate-12 transition-transform">SA</div>
-                <div>
-                  <div className="font-black text-2xl">Sarah Ahmed</div>
-                  <div className="text-sm font-black text-slate-500 uppercase tracking-[0.2em]">Head of People, Global Logistics</div>
-                </div>
-              </div>
-            </motion.div>
-
-            <div className="grid grid-cols-2 gap-8">
-              {[
-                { label: "15k+", desc: "Monthly Transactions" },
-                { label: "99.9%", desc: "Uptime Guaranteed" },
-                { label: "120+", desc: "Enterprises Signed" },
-                { label: "₹4.2bn", desc: "Total Processed" }
-              ].map((stat, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, scale: 0.5 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: i * 0.1, type: "spring" }}
-                  className="p-10 glass-card-premium rounded-[3rem] group hover:bg-slate-950 transition-all duration-500 border-none shadow-xl"
-                >
-                  <div className="text-4xl font-black text-slate-900 dark:text-white group-hover:text-white mb-2 transition-colors">{stat.label}</div>
-                  <div className="text-[10px] font-black text-indigo-600 group-hover:text-indigo-400 uppercase tracking-[0.2em] transition-colors">{stat.desc}</div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* AI Engine Section */}
-      <section id="ai" className="py-40 relative overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-indigo-600/5 rounded-full blur-[160px] -z-10" />
-
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="hyper-glass dark:bg-slate-900/60 rounded-[4rem] p-12 md:p-24 border border-slate-200/50 dark:border-white/5 shadow-2xl overflow-hidden relative group">
-            <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:scale-125 transition-transform duration-1000" />
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-              <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                className="relative"
-              >
-                <div className="inline-flex items-center gap-2 px-5 py-2 bg-indigo-100 dark:bg-indigo-900/30 rounded-full text-[10px] font-black uppercase tracking-widest text-indigo-600 mb-8">
-                  <Brain className="w-4 h-4" />
-                  PROPRIETARY AI CORE
-                </div>
-                <h2 className="text-5xl md:text-7xl font-black mb-8 leading-[0.9] tracking-tighter">
-                  THE BRAIN BEHIND <br />
-                  <span className="text-gradient-extreme">THE BUSINESS.</span>
-                </h2>
-                <p className="text-xl text-slate-600 dark:text-slate-400 font-bold mb-12 leading-relaxed">
-                  Our neural network processes millions of data points to predict compliance shifts, attrition trends, and budget variances before they impact your bottom line.
-                </p>
-                <div className="space-y-6">
-                  {[
-                    "Self-evolving compliance engine",
-                    "Predictive attrition modeling",
-                    "Automated tax optimization routes"
-                  ].map((item, i) => (
-                    <motion.div
-                      key={i}
-                      initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ delay: i * 0.1 }}
-                      className="flex items-center gap-4 text-lg font-black"
-                    >
-                      <div className="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center">
-                        <Check className="text-white w-4 h-4" />
-                      </div>
-                      {item}
-                    </motion.div>
-                  ))}
-                </div>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                className="relative"
-              >
-                <div className="relative z-10 glass-card-premium dark:bg-slate-900/80 rounded-[3rem] p-8 shadow-2xl border-white/20 animate-float-3d">
-                  <div className="absolute -top-10 -right-10 w-32 h-32 bg-pink-500 rounded-full blur-3xl opacity-20" />
-                  <div className="p-6 bg-slate-900 rounded-[2rem] mb-6">
-                    <div className="h-2 w-24 bg-indigo-500 rounded-full mb-4" />
-                    <div className="h-2 w-48 bg-slate-800 rounded-full mb-8" />
-                    <div className="grid grid-cols-3 gap-2">
-                      {[1, 2, 3, 4, 5, 6].map(i => (
-                        <div key={i} className="h-20 bg-slate-800/50 rounded-xl" />
-                      ))}
+                {/* Main Content */}
+                <div className="col-span-9 flex flex-col gap-6">
+                  {/* Stats Row */}
+                  <div className="grid grid-cols-3 gap-4">
+                    <div className="h-24 rounded-xl bg-white/5 border border-white/5 p-4 flex flex-col justify-between">
+                      <div className="w-20 h-3 bg-slate-600 rounded-full" />
+                      <div className="w-32 h-6 bg-white rounded-full" />
+                    </div>
+                    <div className="h-24 rounded-xl bg-primary/10 border border-primary/20 p-4 flex flex-col justify-between relative overflow-hidden">
+                      <div className="absolute top-0 right-0 p-3 opacity-20"><Zap className="w-12 h-12 text-primary" /></div>
+                      <div className="w-20 h-3 bg-primary/50 rounded-full relative z-10" />
+                      <div className="w-32 h-6 bg-primary rounded-full relative z-10" />
+                    </div>
+                    <div className="h-24 rounded-xl bg-white/5 border border-white/5 p-4 flex flex-col justify-between">
+                      <div className="w-20 h-3 bg-slate-600 rounded-full" />
+                      <div className="w-32 h-6 bg-white rounded-full" />
                     </div>
                   </div>
-                  <div className="text-center">
-                    <span className="text-xs font-black uppercase tracking-widest text-slate-400">Processing real-time insights...</span>
+                  {/* Chart Area */}
+                  <div className="flex-1 rounded-xl bg-white/5 border border-white/5 p-6 relative overflow-hidden">
+                    <div className="w-32 h-4 bg-slate-600 rounded-full mb-8" />
+                    {/* Fake Chart Lines */}
+                    <svg className="absolute inset-x-0 bottom-0 w-full h-48" preserveAspectRatio="none" viewBox="0 0 100 100">
+                      <path d="M0,100 L0,50 Q25,20 50,60 T100,30 L100,100 Z" fill="url(#grad)" opacity="0.3" />
+                      <path d="M0,50 Q25,20 50,60 T100,30" fill="none" stroke="#7C3AED" strokeWidth="2" vectorEffect="non-scaling-stroke" />
+                      <defs>
+                        <linearGradient id="grad" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0%" stopColor="#7C3AED" />
+                          <stop offset="100%" stopColor="transparent" />
+                        </linearGradient>
+                      </defs>
+                    </svg>
                   </div>
                 </div>
-              </motion.div>
+              </div>
+            </div>
+            {/* Glow behind image */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-primary/10 blur-[100px] -z-10 rounded-full" />
+          </motion.div>
+
+        </div>
+      </section>
+
+      {/* Social Proof Strip */}
+      <section className="pb-32 pt-10 border-b border-white/5 bg-transparent relative z-20">
+        <div className="max-w-7xl mx-auto px-6 text-center">
+          <p className="text-sm font-semibold text-slate-500 mb-8 uppercase tracking-widest">Trusted by innovative teams worldwide</p>
+          <div className="flex flex-wrap items-center justify-center gap-8 md:gap-20 opacity-40 grayscale hover:grayscale-0 transition-opacity duration-700">
+            <div className="flex items-center gap-2 font-black text-2xl text-slate-300"><Building2 className="w-6 h-6" /> ACME Corp</div>
+            <div className="flex items-center gap-2 font-black text-2xl tracking-tighter text-slate-300"><Globe className="w-6 h-6" /> VANGUARD</div>
+            <div className="flex items-center gap-2 font-black text-2xl font-serif italic text-slate-300">Pinnacle</div>
+            <div className="flex items-center gap-2 font-black text-xl tracking-widest uppercase text-slate-300"><ShieldCheck className="w-5 h-5" /> SENTINEL</div>
+            <div className="flex items-center gap-2 font-black text-2xl text-slate-300"><Zap className="w-6 h-6" /> Nexus</div>
+          </div>
+        </div>
+      </section>
+
+      {/* Features Grid */}
+      <section id="features" className="py-32 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="mb-20">
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">Built for scale.<br />Designed for speed.</h2>
+            <p className="text-xl text-slate-400 max-w-2xl">Everything you need to manage modern workforce compensation, without the antiquated spreadsheets.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Real Feature Card 1 */}
+            <div className="bg-white/5 border border-white/10 p-8 rounded-3xl hover:bg-white/[0.07] transition-colors group flex flex-col">
+              <div className="w-12 h-12 bg-primary/20 rounded-xl flex items-center justify-center mb-6">
+                <Globe className="w-6 h-6 text-primary" />
+              </div>
+              <h3 className="text-xl font-bold mb-3">Global Compliance</h3>
+              <p className="text-slate-400 leading-relaxed mb-8">Automatically calculate taxes, benefits, and deductions across 150+ countries with our localized engines.</p>
+
+              <div className="mt-auto h-40 rounded-xl bg-[#020617] border border-white/5 p-4 relative overflow-hidden group-hover:border-primary/30 transition-colors">
+                <div className="flex items-center justify-between mb-3 text-xs w-full text-slate-500">
+                  <span>Region</span>
+                  <span>Status</span>
+                </div>
+                <div className="flex items-center justify-between mb-2 p-2 bg-white/5 border border-white/5 rounded-lg">
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 rounded-full bg-blue-500" /> <span className="text-xs font-semibold">USA (Federal)</span>
+                  </div>
+                  <Check className="w-3 h-3 text-emerald-500" />
+                </div>
+                <div className="flex items-center justify-between p-2 bg-white/5 border border-white/5 rounded-lg">
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 rounded-full bg-orange-500" /> <span className="text-xs font-semibold">UK (HMRC)</span>
+                  </div>
+                  <Check className="w-3 h-3 text-emerald-500" />
+                </div>
+              </div>
+            </div>
+
+            {/* Real Feature Card 2 */}
+            <div className="bg-white/5 border border-white/10 p-8 rounded-3xl hover:bg-white/[0.07] transition-colors group flex flex-col">
+              <div className="w-12 h-12 bg-emerald-500/20 rounded-xl flex items-center justify-center mb-6">
+                <CreditCard className="w-6 h-6 text-emerald-500" />
+              </div>
+              <h3 className="text-xl font-bold mb-3">Instant Dispersal</h3>
+              <p className="text-slate-400 leading-relaxed mb-8">Execute payroll runs in milliseconds. Connect your corporate treasury for 1-click global payouts.</p>
+
+              <div className="mt-auto h-40 rounded-xl bg-[#020617] border border-white/5 p-4 relative overflow-hidden flex flex-col items-center justify-center group-hover:border-emerald-500/30 transition-colors">
+                <div className="text-3xl font-bold text-white mb-1 tracking-tighter">$2,450,000</div>
+                <div className="text-xs text-slate-500 mb-4 font-semibold uppercase tracking-widest">Total Payroll Run</div>
+                <button className="px-6 py-2 bg-emerald-500/10 text-emerald-500 hover:bg-emerald-500 hover:text-white border border-emerald-500/20 text-xs font-bold rounded-lg w-full flex justify-center items-center gap-2 transition-all">
+                  Approve Run <Check className="w-3 h-3" />
+                </button>
+              </div>
+            </div>
+
+            {/* Real Feature Card 3 */}
+            <div className="bg-white/5 border border-white/10 p-8 rounded-3xl hover:bg-white/[0.07] transition-colors group flex flex-col">
+              <div className="w-12 h-12 bg-pink-500/20 rounded-xl flex items-center justify-center mb-6">
+                <PieChart className="w-6 h-6 text-pink-500" />
+              </div>
+              <h3 className="text-xl font-bold mb-3">Live Forecasting</h3>
+              <p className="text-slate-400 leading-relaxed mb-8">Predictive models map your runway, attrition costs, and compensation burn months in advance.</p>
+
+              <div className="mt-auto h-40 rounded-xl bg-[#020617] border border-white/5 p-4 relative overflow-hidden group-hover:border-pink-500/30 transition-colors flex items-end gap-2">
+                {[40, 60, 45, 80, 55, 90, 75].map((h, i) => (
+                  <div key={i} className={`w-full rounded-t-sm transition-all duration-500 ${i === 5 ? 'bg-pink-500 group-hover:bg-pink-400' : 'bg-slate-800'}`} style={{ height: `${h}%` }} />
+                ))}
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Pricing Section */}
-      <section id="pricing" className="py-40 bg-slate-50 dark:bg-slate-900/20 relative">
-        <div className="max-w-7xl mx-auto px-6 relative z-10 text-center">
-          <motion.h2
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            className="text-5xl md:text-8xl font-black mb-12 tracking-tighter"
-          >
-            SELECT YOUR <br />
-            <span className="text-indigo-600">INTELOCITY.</span>
-          </motion.h2>
+      {/* How it Works Section */}
+      <section className="py-32 bg-white/[0.02] border-y border-white/5 relative">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="mb-20 text-center">
+            <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-6">From complex to complete.</h2>
+          </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 mt-20 text-left">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 relative">
+            {/* Connecting line for desktop */}
+            <div className="hidden md:block absolute top-[28px] left-[15%] right-[15%] h-px bg-white/10" />
+
             {[
-              { name: "Starter", price: "₹2,499", desc: "For teams up to 50", features: ["Basic AI Core", "Compliant Payslips", "Mobile ESS"], color: "slate" },
-              { name: "Enterprise", price: "₹9,999", desc: "For global operations", features: ["Full Neural Suite", "Multi-Jurisdiction", "White-glove Support"], color: "indigo", highlight: true },
-              { name: "Custom", price: "Quote", desc: "Bespoke engineering", features: ["Dedicated Instance", "API Priority", "Custom Integrations"], color: "slate" }
-            ].map((plan, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 }}
-                className={`relative p-12 rounded-[3.5rem] flex flex-col justify-between transition-all hover:scale-105 ${plan.highlight ? 'bg-slate-900 text-white shadow-2xl shadow-indigo-600/40 z-10' : 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/5'}`}
-              >
-                {plan.highlight && (
-                  <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-indigo-600 text-white px-8 py-2 rounded-full text-[10px] font-black uppercase tracking-widest shadow-xl animate-pulse">
-                    Most Power
-                  </div>
-                )}
-                <div>
-                  <h3 className="text-2xl font-black mb-2 uppercase tracking-tighter">{plan.name}</h3>
-                  <div className="text-6xl font-black mb-6 tracking-tighter">{plan.price}</div>
-                  <p className={`font-bold mb-10 ${plan.highlight ? 'text-slate-400' : 'text-slate-500'}`}>{plan.desc}</p>
-                  <div className="space-y-6 mb-12">
-                    {plan.features.map((feat, j) => (
-                      <div key={j} className="flex items-center gap-4 font-bold uppercase text-[10px] tracking-[0.2em]">
-                        <div className={`w-6 h-6 rounded-full flex items-center justify-center ${plan.highlight ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-900'}`}>
-                          <Check className="w-3 h-3" />
-                        </div>
-                        {feat}
-                      </div>
-                    ))}
-                  </div>
+              { step: "1", title: "Connect systems", desc: "Integrate your HRIS and treasury with a single API key." },
+              { step: "2", title: "Set logic", desc: "Define rules, statutory requirements, and approval chains." },
+              { step: "3", title: "Auto-pilot", desc: "Runs execute automatically with precision auditing." }
+            ].map((s, i) => (
+              <div key={i} className="relative text-center">
+                <div className="w-14 h-14 bg-[#020617] border border-primary/30 rounded-full flex items-center justify-center mx-auto mb-8 relative z-10 font-bold text-primary shadow-[0_0_20px_rgba(124,58,237,0.2)]">
+                  {s.step}
                 </div>
-                <Link
-                  href="/register"
-                  className={`block w-full py-6 rounded-3xl font-black text-center text-lg transition-all active:scale-95 ${plan.highlight ? 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-xl' : 'bg-slate-900 dark:bg-white dark:text-slate-900 text-white hover:bg-slate-800 shadow-xl'}`}
-                >
-                  Get Started
-                </Link>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ Section */}
-      <section id="faq" className="py-40 relative">
-        <div className="max-w-4xl mx-auto px-6 relative z-10">
-          <div className="text-center mb-32">
-            <motion.h2
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              className="text-5xl md:text-8xl font-black tracking-tighter mb-8"
-            >
-              COMMON <br />
-              <span className="text-indigo-600 italic">QUESTIONS.</span>
-            </motion.h2>
-          </div>
-
-          <div className="space-y-6">
-            {[
-              { q: "How secure is my payroll data?", a: "We use bank-grade AES-256 encryption. Your data is stored in isolated PostgreSQL instances with SOC2 compliance." },
-              { q: "Do you support all regions?", a: "AutoPay-OS handles complex tax logic for India, UAE, US, and UK natively." },
-              { q: "Can employees access their own data?", a: "Yes. Every employee gets a dedicated portal and a WhatsApp interface for payslips and attendance." }
-            ].map((item, i) => (
-              <div key={i} className="glass-card-premium dark:bg-slate-900/60 rounded-[3rem] border-slate-200/50 dark:border-white/5 overflow-hidden shadow-xl">
-                <button
-                  onClick={() => setActiveFaq(activeFaq === i ? null : i)}
-                  className="w-full px-12 py-10 flex items-center justify-between text-left group"
-                >
-                  <span className="text-2xl font-black group-hover:text-indigo-600 transition-colors uppercase tracking-tight">{item.q}</span>
-                  {activeFaq === i ? <Minus className="w-6 h-6 text-indigo-600" /> : <Plus className="w-6 h-6 text-slate-400" />}
-                </button>
-                {activeFaq === i && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    className="px-12 pb-12 text-slate-600 dark:text-slate-400 font-bold leading-relaxed text-lg"
-                  >
-                    {item.a}
-                  </motion.div>
-                )}
+                <h3 className="text-xl font-bold mb-3">{s.title}</h3>
+                <p className="text-slate-400">{s.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Waitlist Section */}
-      <section className="py-40 bg-slate-900 relative overflow-hidden">
-        <div className="absolute inset-0 mesh-gradient-premium opacity-20" />
-        <div className="max-w-5xl mx-auto px-6 text-center relative z-10">
-          <h2 className="text-6xl md:text-[8rem] font-black tracking-tighter text-white mb-16 leading-[0.85]">
-            READY FOR THE <br />
-            <span className="text-indigo-500 italic">FUTURE?</span>
-          </h2>
-          <form onSubmit={handleWaitlistSubmit} className="flex flex-col md:flex-row gap-6 max-w-3xl mx-auto">
-            <input
-              type="email"
-              required
-              value={waitlistEmail}
-              onChange={(e) => setWaitlistEmail(e.target.value)}
-              placeholder="Enter your work email"
-              className="flex-1 px-10 py-8 bg-white/5 border border-white/10 rounded-[2.5rem] text-white placeholder:text-white/30 font-black italic outline-none focus:ring-4 focus:ring-indigo-500/30 transition-all text-xl"
-            />
-            <button
-              disabled={isSubmitting}
-              className="px-16 py-8 bg-indigo-600 text-white rounded-[2.5rem] font-black text-2xl hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-4 disabled:opacity-50"
-            >
-              {isSubmitting ? <Loader2 className="w-8 h-8 animate-spin" /> : <Send className="w-8 h-8" />}
-              JOIN NOW
-            </button>
-          </form>
+      {/* Testimonials */}
+      <section className="py-32 px-6" id="customers">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-16">Don't just take our word for it.</h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              { quote: "It replaced three different legacy systems within our first month. The automation alone saves us 40 hours per payroll cycle.", author: "Sarah Jenkins", role: "VP People", co: "TechCorp" },
+              { quote: "The forecasting accuracy is unparalleled. We finally have a real-time view into our largest expense line.", author: "Marcus Thorne", role: "CFO", co: "Global Freight" },
+              { quote: "We scaled from 50 to 500 employees across 4 countries, and AutoPay-OS handled the complexity without a hiccup.", author: "Elena Rostova", role: "Founder", co: "Innovate AI" }
+            ].map((t, i) => (
+              <div key={i} className="p-8 rounded-3xl bg-white/5 border border-white/10 hover:border-white/20 transition-colors flex flex-col justify-between">
+                <div className="flex items-center gap-1 mb-6 opacity-80">
+                  {[1, 2, 3, 4, 5].map(s => <Star key={s} className="w-4 h-4 text-primary fill-primary" />)}
+                </div>
+                <p className="text-lg font-medium leading-relaxed mb-10 text-slate-300">"{t.quote}"</p>
+                <div className="flex items-center gap-4 mt-auto">
+                  <div className="w-10 h-10 rounded-full bg-[#0F172A] border border-white/10 flex items-center justify-center font-bold text-sm text-slate-300">
+                    {t.author.charAt(0)}
+                  </div>
+                  <div>
+                    <div className="font-bold text-sm">{t.author}</div>
+                    <div className="text-sm text-slate-500">{t.role}, {t.co}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="py-20 bg-slate-50 dark:bg-[#010413] px-6 border-t border-slate-200 dark:border-white/5">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center">
-              <Brain className="text-white w-6 h-6" />
-            </div>
-            <span className="text-2xl font-black tracking-tighter">
-              AutoPay-<span className="text-indigo-600">OS</span>
-            </span>
+      {/* Pricing Toggle Section */}
+      <section id="pricing" className="py-32 px-6 border-t border-white/5 bg-transparent">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-6">Simple, transparent pricing</h2>
+            <p className="text-xl text-slate-400">Start free, upgrade as you grow.</p>
           </div>
-          <div className="flex items-center gap-12 text-[10px] font-black uppercase tracking-widest text-slate-400">
-            <span>© 2026 AutoPay-OS Global Ltd.</span>
-            <a href="#" className="hover:text-indigo-600 transition-colors">Privacy</a>
-            <a href="#" className="hover:text-indigo-600 transition-colors">Terms</a>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {/* Standard Plan */}
+            <div className="p-10 rounded-3xl bg-white/5 border border-white/10 hover:bg-white/[0.07] transition-colors flex flex-col">
+              <h3 className="text-2xl font-bold mb-2">Growth</h3>
+              <p className="text-slate-400 mb-6 text-sm">Perfect for startups and scaling teams.</p>
+              <div className="flex items-baseline gap-2 mb-8">
+                <span className="text-5xl font-bold">$12</span>
+                <span className="text-slate-500 font-medium">/user/mo</span>
+              </div>
+              <Link href="/register" className="w-full block text-center py-3 bg-white hover:bg-slate-200 text-slate-900 rounded-xl font-semibold mb-8 transition-colors">
+                Start 14-day free trial
+              </Link>
+              <div className="space-y-4 flex-1">
+                {['Up to 100 employees', 'Standard compliance rules', 'Domestic direct deposits', 'Email support', 'Basic reporting'].map((f, i) => (
+                  <div key={i} className="flex items-center gap-3 text-slate-300 text-sm font-medium">
+                    <Check className="w-4 h-4 text-slate-500" /> {f}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Enterprise Plan */}
+            <div className="p-10 rounded-3xl bg-primary/5 border border-primary/20 hover:border-primary/40 transition-colors relative flex flex-col">
+              <div className="absolute top-0 right-8 -translate-y-1/2 px-3 py-1 bg-primary text-white text-[10px] font-bold uppercase tracking-widest rounded-full">
+                Most Popular
+              </div>
+              <h3 className="text-2xl font-bold mb-2">Enterprise</h3>
+              <p className="text-slate-400 mb-6 text-sm">Advanced controls for global organizations.</p>
+              <div className="flex items-baseline gap-2 mb-8 h-[60px] items-end pb-1">
+                <span className="text-4xl font-bold text-white">Custom Pricing</span>
+              </div>
+              <a href="#demo" className="w-full block text-center py-3 bg-primary hover:bg-primary/90 text-white rounded-xl font-semibold mb-8 transition-colors shadow-[0_0_20px_rgba(124,58,237,0.2)]">
+                Contact Sales
+              </a>
+              <div className="space-y-4 flex-1">
+                {['Unlimited employees', '150+ country compliance', 'Global treasury payout', '24/7 dedicated support', 'Custom AI forecasting', 'SSO & Advanced Role Access'].map((f, i) => (
+                  <div key={i} className="flex items-center gap-3 text-slate-300 text-sm font-medium">
+                    <Check className="w-4 h-4 text-primary" /> {f}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Bottom CTA */}
+      <section className="py-32 px-6 relative overflow-hidden">
+        <div className="absolute inset-0 bg-primary/5 border-y border-white/5" />
+        <div className="max-w-3xl mx-auto text-center relative z-10">
+          <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-8">Ready to upgrade your payroll?</h2>
+          <p className="text-xl text-slate-400 mb-10">Join the thousands of forward-thinking companies running on AutoPay-OS.</p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link href="/register" className="w-full sm:w-auto px-6 py-3 bg-white text-slate-900 rounded-lg font-semibold hover:bg-slate-200 transition-colors">
+              Get started for free
+            </Link>
+            <a href="#demo" className="w-full sm:w-auto px-6 py-3 bg-transparent text-white border border-white/20 rounded-lg font-semibold hover:bg-white/5 transition-colors">
+              Talk to Sales
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* 4-Column SaaS Footer */}
+      <footer className="pt-20 pb-10 px-6 bg-[#020617]">
+        <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-5 gap-12 mb-16">
+          <div className="col-span-2 lg:col-span-2">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                <Brain className="text-white w-5 h-5" />
+              </div>
+              <span className="text-xl font-bold tracking-tight">AutoPay-OS</span>
+            </div>
+            <p className="text-slate-400 mb-6 max-w-sm text-sm">The intelligent payroll platform designed to scale with your business natively, anywhere in the world.</p>
+            <div className="flex gap-4">
+              <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/10 cursor-pointer transition-colors text-sm font-bold">X</div>
+              <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/10 cursor-pointer transition-colors text-sm font-bold">in</div>
+              <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/10 cursor-pointer transition-colors text-sm font-bold">gh</div>
+            </div>
+          </div>
+
+          <div>
+            <h4 className="font-semibold mb-4 text-white text-sm">Product</h4>
+            <ul className="space-y-3 text-sm text-slate-500">
+              <li><a href="#" className="hover:text-primary transition-colors">Features</a></li>
+              <li><a href="#" className="hover:text-primary transition-colors">Integrations</a></li>
+              <li><a href="#" className="hover:text-primary transition-colors">Pricing</a></li>
+              <li><a href="#" className="hover:text-primary transition-colors">Changelog</a></li>
+              <li><a href="#" className="hover:text-primary transition-colors">Docs</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-semibold mb-4 text-white text-sm">Company</h4>
+            <ul className="space-y-3 text-sm text-slate-500">
+              <li><a href="#" className="hover:text-primary transition-colors">About Us</a></li>
+              <li><a href="#" className="hover:text-primary transition-colors">Careers</a></li>
+              <li><a href="#" className="hover:text-primary transition-colors">Blog</a></li>
+              <li><a href="#" className="hover:text-primary transition-colors">Contact</a></li>
+              <li><a href="#" className="hover:text-primary transition-colors">Partners</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-semibold mb-4 text-white text-sm">Legal</h4>
+            <ul className="space-y-3 text-sm text-slate-500">
+              <li><a href="#" className="hover:text-primary transition-colors">Privacy Policy</a></li>
+              <li><a href="#" className="hover:text-primary transition-colors">Terms of Service</a></li>
+              <li><a href="#" className="hover:text-primary transition-colors">Data Processing</a></li>
+              <li><a href="#" className="hover:text-primary transition-colors">Security</a></li>
+              <li><a href="#" className="hover:text-primary transition-colors">Compliance</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="max-w-7xl mx-auto pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-slate-500">
+          <div>© 2026 AutoPay-OS Inc. All rights reserved.</div>
+          <div className="flex items-center gap-2 font-medium">
+            <div className="w-2 h-2 rounded-full bg-emerald-500" /> All systems operational
           </div>
         </div>
       </footer>

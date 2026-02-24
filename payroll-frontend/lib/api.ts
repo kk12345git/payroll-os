@@ -392,7 +392,7 @@ class ApiClient {
         formData.append('username', credentials.username);
         formData.append('password', credentials.password);
 
-        const response = await fetch(`${this.baseUrl}/api/auth/login/`, {
+        const response = await fetch(`${this.baseUrl}/api/auth/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -411,70 +411,70 @@ class ApiClient {
     }
 
     async register(userData: RegisterData): Promise<User> {
-        return this.request<User>('/api/auth/register/', {
+        return this.request<User>('/api/auth/register', {
             method: 'POST',
             body: JSON.stringify(userData),
         });
     }
 
     async getCurrentUser(): Promise<User> {
-        return this.request<User>('/api/auth/me/');
+        return this.request<User>('/api/auth/me');
     }
 
     // Employee endpoints
     async getEmployees(): Promise<Employee[]> {
-        return this.request<Employee[]>('/api/employees/');
+        return this.request<Employee[]>('/api/employees');
     }
 
     async getEmployee(id: number): Promise<Employee> {
-        return this.request<Employee>(`/api/employees/${id}/`);
+        return this.request<Employee>(`/api/employees/${id}`);
     }
 
     async createEmployee(data: Partial<Employee>): Promise<Employee> {
-        return this.request<Employee>('/api/employees/', {
+        return this.request<Employee>('/api/employees', {
             method: 'POST',
             body: JSON.stringify(data),
         });
     }
 
     async updateEmployee(id: number, data: Partial<Employee>): Promise<Employee> {
-        return this.request<Employee>(`/api/employees/${id}/`, {
+        return this.request<Employee>(`/api/employees/${id}`, {
             method: 'PUT',
             body: JSON.stringify(data),
         });
     }
 
     async deleteEmployee(id: number): Promise<void> {
-        return this.request<void>(`/api/employees/${id}/`, {
+        return this.request<void>(`/api/employees/${id}`, {
             method: 'DELETE',
         });
     }
 
     // Department endpoints
     async getDepartments(): Promise<Department[]> {
-        return this.request<Department[]>('/api/departments/');
+        return this.request<Department[]>('/api/departments');
     }
 
     async getDepartment(id: number): Promise<Department> {
-        return this.request<Department>(`/api/departments/${id}/`);
+        return this.request<Department>(`/api/departments/${id}`);
     }
 
     async createDepartment(data: DepartmentCreate): Promise<Department> {
-        return this.request<Department>('/api/departments/', {
+        return this.request<Department>('/api/departments', {
             method: 'POST',
             body: JSON.stringify(data),
         });
     }
 
     async updateDepartment(id: number, data: Partial<DepartmentCreate>): Promise<Department> {
-        return this.request<Department>(`/api/departments/${id}/`, {
+        return this.request<Department>(`/api/departments/${id}`, {
             method: 'PUT',
             body: JSON.stringify(data),
         });
     }
 
     async deleteDepartment(id: number): Promise<void> {
-        return this.request<void>(`/api/departments/${id}/`, {
+        return this.request<void>(`/api/departments/${id}`, {
             method: 'DELETE',
         });
     }
@@ -499,28 +499,28 @@ class ApiClient {
 
     // Leave endpoints
     async getLeaveTypes(): Promise<LeaveType[]> {
-        return this.request<LeaveType[]>('/api/leaves/types/');
+        return this.request<LeaveType[]>('/api/leaves/types');
     }
 
     async getLeaves(): Promise<LeaveApplication[]> {
-        return this.request<LeaveApplication[]>('/api/leaves/');
+        return this.request<LeaveApplication[]>('/api/leaves');
     }
 
     async applyLeave(data: LeaveApplicationCreate): Promise<LeaveApplication> {
-        return this.request<LeaveApplication>('/api/leaves/', {
+        return this.request<LeaveApplication>('/api/leaves', {
             method: 'POST',
             body: JSON.stringify(data),
         });
     }
 
     async approveLeave(id: number): Promise<LeaveApplication> {
-        return this.request<LeaveApplication>(`/api/leaves/${id}/approve/`, {
+        return this.request<LeaveApplication>(`/api/leaves/${id}/approve`, {
             method: 'PUT',
         });
     }
 
     async rejectLeave(id: number, reason: string): Promise<LeaveApplication> {
-        return this.request<LeaveApplication>(`/api/leaves/${id}/reject/`, {
+        return this.request<LeaveApplication>(`/api/leaves/${id}/reject`, {
             method: 'PUT',
             body: JSON.stringify({ rejection_reason: reason }),
         });
@@ -528,45 +528,45 @@ class ApiClient {
 
     // Payroll endpoints
     async getSalaryStructure(employeeId: number): Promise<SalaryStructure> {
-        return this.request<SalaryStructure>(`/api/payroll/salary-structures/${employeeId}/`);
+        return this.request<SalaryStructure>(`/api/payroll/salary-structures/${employeeId}`);
     }
 
     async createSalaryStructure(data: SalaryStructureCreate): Promise<SalaryStructure> {
-        return this.request<SalaryStructure>('/api/payroll/salary-structures/', {
+        return this.request<SalaryStructure>('/api/payroll/salary-structures', {
             method: 'POST',
             body: JSON.stringify(data),
         });
     }
 
     async updateSalaryStructure(employeeId: number, data: SalaryStructureUpdate): Promise<SalaryStructure> {
-        return this.request<SalaryStructure>(`/api/payroll/salary-structures/${employeeId}/`, {
+        return this.request<SalaryStructure>(`/api/payroll/salary-structures/${employeeId}`, {
             method: 'PUT',
             body: JSON.stringify(data),
         });
     }
 
     async processPayroll(data: PayrollProcessRequest): Promise<PayrollRecord[]> {
-        return this.request<PayrollRecord[]>('/api/payroll/process/', {
+        return this.request<PayrollRecord[]>('/api/payroll/process', {
             method: 'POST',
             body: JSON.stringify(data),
         });
     }
 
     async getPayrollSummaries(): Promise<PayrollSummary[]> {
-        return this.request<PayrollSummary[]>('/api/payroll/summaries/');
+        return this.request<PayrollSummary[]>('/api/payroll/summaries');
     }
 
     async getPayrollHistory(employeeId: number): Promise<PayrollRecord[]> {
-        return this.request<PayrollRecord[]>(`/api/payroll/history/${employeeId}/`);
+        return this.request<PayrollRecord[]>(`/api/payroll/history/${employeeId}`);
     }
 
     // Subscription endpoints
     async getSubscription(): Promise<Subscription> {
-        return this.request<Subscription>('/api/companies/subscription/');
+        return this.request<Subscription>('/api/companies/subscription');
     }
 
     async upgradePlan(plan: string): Promise<Subscription> {
-        return this.request<Subscription>('/api/companies/subscription/upgrade/', {
+        return this.request<Subscription>('/api/companies/subscription/upgrade', {
             method: 'POST',
             body: JSON.stringify({ plan }),
         });

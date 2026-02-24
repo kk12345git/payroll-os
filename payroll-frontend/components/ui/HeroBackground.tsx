@@ -6,7 +6,6 @@ import { useEffect, useState } from 'react';
 export default function HeroBackground() {
     const { scrollY } = useScroll();
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-
     const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
@@ -28,75 +27,83 @@ export default function HeroBackground() {
         };
     }, []);
 
-    const springX = useSpring(mousePos.x, { stiffness: 50, damping: 30 });
-    const springY = useSpring(mousePos.y, { stiffness: 50, damping: 30 });
+    const springX = useSpring(mousePos.x, { stiffness: 40, damping: 40 });
+    const springY = useSpring(mousePos.y, { stiffness: 40, damping: 40 });
 
-    const gridRotateX = useTransform(springY, [-1, 1], [isMobile ? 0 : 20, isMobile ? 0 : -20]);
-    const gridRotateY = useTransform(springX, [-1, 1], [isMobile ? 0 : -20, isMobile ? 0 : 20]);
-    const gridOpacity = useTransform(scrollY, [0, 500], [0.5, 0]);
+    const meshOpacity = useTransform(scrollY, [0, 800], [0.8, 0]);
+    const scrollParallax = useTransform(scrollY, [0, 1000], [0, 200]);
 
     return (
-        <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none perspective-2000">
-            {/* Animated Grid */}
+        <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
+            {/* Liquid Mesh Base */}
             <motion.div
-                style={{
-                    rotateX: gridRotateX,
-                    rotateY: gridRotateY,
-                    opacity: gridOpacity,
-                    backgroundImage: `
-                        linear-gradient(to right, currentColor 1px, transparent 1px),
-                        linear-gradient(to bottom, currentColor 1px, transparent 1px)
-                    `,
-                    backgroundSize: isMobile ? '40px 40px' : '80px 80px',
-                    maskImage: 'radial-gradient(circle at 50% 50%, black, transparent 80%)'
-                }}
-                className="absolute inset-[-100%] text-indigo-500/10 dark:text-indigo-400/5 [transform-style:preserve-3d]"
-            />
+                style={{ opacity: meshOpacity, y: scrollParallax }}
+                className="absolute inset-0 bg-transparent"
+            >
+                {/* Dynamic Primary Blob */}
+                <motion.div
+                    animate={{
+                        x: [0, 50, -50, 0],
+                        y: [0, -50, 50, 0],
+                        scale: [1, 1.1, 0.9, 1],
+                    }}
+                    transition={{
+                        duration: 20,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                    }}
+                    style={{
+                        translateX: useTransform(springX, [-1, 1], [-100, 100]),
+                        translateY: useTransform(springY, [-1, 1], [-100, 100]),
+                    }}
+                    className="absolute top-[-10%] left-[-10%] w-[80%] h-[80%] bg-primary/20 rounded-full blur-[140px]"
+                />
 
-            {/* Floating Particles - Reduced for Mobile */}
-            {[...Array(isMobile ? 8 : 20)].map((_, i) => (
+                {/* Dynamic Secondary Blob */}
+                <motion.div
+                    animate={{
+                        x: [0, -60, 60, 0],
+                        y: [0, 60, -60, 0],
+                        scale: [1.1, 0.9, 1.1, 1.1],
+                    }}
+                    transition={{
+                        duration: 25,
+                        repeat: Infinity,
+                        ease: "linear"
+                    }}
+                    style={{
+                        translateX: useTransform(springX, [-1, 1], [100, -100]),
+                        translateY: useTransform(springY, [-1, 1], [100, -100]),
+                    }}
+                    className="absolute bottom-[-10%] right-[-10%] w-[70%] h-[70%] bg-secondary/15 rounded-full blur-[120px]"
+                />
+
+                {/* Center Glow */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] radial-gradient-center opacity-40 dark:opacity-20" />
+            </motion.div>
+
+            {/* Micro-Particles */}
+            {!isMobile && [...Array(30)].map((_, i) => (
                 <motion.div
                     key={i}
                     initial={{
                         x: Math.random() * 100 + "%",
                         y: Math.random() * 100 + "%",
-                        z: Math.random() * 500,
                         opacity: 0
                     }}
                     animate={{
-                        y: [null, "-20%"],
-                        opacity: [0, 0.3, 0],
-                        transition: {
-                            duration: Math.random() * 10 + 10,
-                            repeat: Infinity,
-                            ease: "linear"
-                        }
+                        y: [null, "-30%"],
+                        opacity: [0, 0.4, 0],
                     }}
-                    className="absolute w-1 h-1 bg-indigo-600 dark:bg-indigo-400 rounded-full blur-[1px]"
+                    transition={{
+                        duration: Math.random() * 15 + 10,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                        delay: Math.random() * 5
+                    }}
+                    className="absolute w-1 h-1 bg-primary/40 rounded-full blur-[1px]"
                 />
             ))}
-
-            {/* Glowing Orbs - Static on Mobile for performance */}
-            <motion.div
-                animate={isMobile ? {} : {
-                    scale: [1, 1.2, 1],
-                    opacity: [0.1, 0.2, 0.1],
-                    x: springX.get() * 50,
-                    y: springY.get() * 50
-                }}
-                transition={{ duration: 8, repeat: Infinity }}
-                className="absolute top-1/4 left-1/4 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-indigo-500/20 rounded-full blur-[80px] md:blur-[120px]"
-            />
-            <motion.div
-                animate={isMobile ? {} : {
-                    scale: [1.2, 1, 1.2],
-                    opacity: [0.1, 0.15, 0.1],
-                    x: springX.get() * -50,
-                    y: springY.get() * -50
-                }}
-                transition={{ duration: 10, repeat: Infinity }}
-                className="absolute bottom-1/4 right-1/4 w-[250px] md:w-[500px] h-[250px] md:h-[500px] bg-pink-500/10 rounded-full blur-[60px] md:blur-[100px]"
-            />
         </div>
     );
 }

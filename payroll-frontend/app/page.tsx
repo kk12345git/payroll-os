@@ -143,28 +143,29 @@ export default function LandingPage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-3 px-6 py-2 glass-card-premium rounded-full text-[10px] font-black uppercase tracking-[0.3em] mb-12 text-indigo-600 dark:text-indigo-400 border-indigo-200/50"
+            className="inline-flex items-center gap-3 px-6 py-2 glass-card-premium rounded-full text-[10px] font-black uppercase tracking-[0.4em] mb-12 text-primary dark:text-primary border-primary/20 bg-primary/5"
           >
-            <div className="w-2 h-2 rounded-full bg-indigo-600 animate-pulse" />
-            2024 AI UPGRADE IS LIVE
+            <div className="w-2 h-2 rounded-full bg-primary animate-pulse shadow-[0_0_10px_rgba(124,58,237,0.5)]" />
+            V2: THE INTELLIGENCE AGE IS HERE
           </motion.div>
 
           <motion.div
             style={{
-              rotateX: mousePos.y * -15,
-              rotateY: mousePos.x * 15,
+              rotateX: mousePos.y * -8,
+              rotateY: mousePos.x * 8,
               transformStyle: "preserve-3d"
             }}
-            transition={{ type: "spring", damping: 30, stiffness: 100 }}
+            transition={{ type: "spring", damping: 40, stiffness: 80 }}
             className="perspective-2000"
           >
             <motion.h1
-              initial={{ opacity: 0, scale: 0.9 }}
+              initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="text-7xl md:text-[11rem] font-black tracking-[-0.05em] leading-[0.8] mb-12 perspective-origin-center"
+              className="text-7xl md:text-[12rem] font-black tracking-[-0.06em] leading-[0.75] mb-16 perspective-origin-center font-display"
             >
-              <span className="block italic text-slate-900 dark:text-white transition-colors duration-500">THE LEVEL</span>
-              <span className="text-gradient-extreme [text-shadow:_0_20px_40px_rgba(79,70,229,0.3)]">ABOVE.</span>
+              <span className="block text-slate-900 dark:text-white drop-shadow-2xl">PRECISION</span>
+              <span className="block italic font-light text-slate-400 dark:text-slate-600">is</span>
+              <span className="text-gradient-extreme [text-shadow:_0_20px_60px_rgba(124,58,237,0.4)]">LEGENDARY.</span>
             </motion.h1>
           </motion.div>
 
@@ -172,9 +173,9 @@ export default function LandingPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
-            className="text-xl md:text-2xl text-slate-600 dark:text-slate-400 font-bold max-w-3xl mx-auto mb-20 leading-tight tracking-tight px-4"
+            className="text-xl md:text-2xl text-slate-500 dark:text-slate-400 font-medium max-w-3xl mx-auto mb-20 leading-tight tracking-tight px-4"
           >
-            Forget everything you know about payroll. AutoPay-OS is the intelligent core for enterprises that demand legendary performance.
+            Experience the definitive enterprise core. AutoPay-OS V2 combines hyper-precision with predictive intelligence for the world&apos;s most ambitious teams.
           </motion.p>
 
           <motion.div
@@ -214,35 +215,74 @@ export default function LandingPage() {
       {/* Features Section */}
       <section id="features" className="py-40 relative">
         <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="text-center mb-32">
-            <motion.h2
+          <div className="grid grid-cols-1 md:grid-cols-12 md:grid-rows-2 gap-8 h-auto">
+            {/* Main Feature - Large */}
+            <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              className="text-5xl md:text-8xl font-black tracking-tight mb-8"
+              className="md:col-span-12 lg:col-span-8 p-16 hyper-glass rounded-[4rem] group overflow-hidden relative"
             >
-              ENGINEERED FOR <br />
-              <span className="text-gradient-extreme">EXCELLENCE.</span>
-            </motion.h2>
-            <p className="text-xl md:text-2xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto font-bold">
-              A powerhouse of features designed to handle the complexity of modern business at any scale.
-            </p>
-          </div>
+              <div className="absolute top-0 right-0 w-80 h-80 bg-primary/20 blur-[100px] -translate-y-1/2 translate-x-1/2 group-hover:scale-125 transition-transform duration-700" />
+              <div className="relative z-10 max-w-2xl">
+                <div className="w-16 h-16 bg-primary/20 rounded-3xl flex items-center justify-center mb-10 group-hover:rotate-12 transition-transform duration-500">
+                  <Brain className="w-8 h-8 text-primary font-bold" />
+                </div>
+                <h3 className="text-5xl md:text-7xl font-black mb-8 font-display tracking-tighter">AI TALENT <br /><span className="text-primary italic">INTELLIGENCE.</span></h3>
+                <p className="text-2xl text-slate-500 font-medium leading-relaxed mb-12">
+                  Our proprietary neural core analyzes attrition patterns and predicts compliance risks before they emerge. Stay ahead of the global workforce curve with sub-second insights.
+                </p>
+                <div className="flex items-center gap-6">
+                  <div className="px-6 py-2 rounded-full border border-primary text-[10px] font-black uppercase tracking-widest text-primary">Neural Core V2</div>
+                  <div className="px-6 py-2 rounded-full border border-slate-200 text-[10px] font-black uppercase tracking-widest text-slate-500">Enterprise Ready</div>
+                </div>
+              </div>
+            </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-            {FEATURES.map((feature, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ delay: i * 0.1, type: "spring" }}
-              >
-                <FeatureCard
-                  title={feature.title}
-                  description={feature.description}
-                  icon={feature.icon}
-                />
-              </motion.div>
-            ))}
+            {/* Sidebar Feature 1 */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.2 }}
+              className="md:col-span-6 lg:col-span-4 p-12 bg-slate-950 rounded-[4rem] text-white overflow-hidden relative group"
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-indigo-600/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+              <Globe className="w-12 h-12 text-indigo-400 mb-8" />
+              <h4 className="text-4xl font-black mb-6 font-display">GLOBAL <br />TENANCY.</h4>
+              <p className="font-medium text-slate-400 text-lg">Multi-currency, multi-jurisdiction logic for the hyper-scaled enterprise.</p>
+            </motion.div>
+
+            {/* Sidebar Feature 2 */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="md:col-span-6 lg:col-span-4 p-12 glass-card-premium rounded-[4rem] border-primary/20 relative group overflow-hidden"
+            >
+              <Zap className="w-12 h-12 text-primary mb-8" />
+              <h4 className="text-4xl font-black mb-6 font-display text-slate-900 dark:text-white">PREDICTIVE <br /><span className="text-primary italic">CASH FLOW.</span></h4>
+              <p className="font-medium text-slate-500 dark:text-slate-400 text-lg">Real-time liability forecasting with 99.8% precision across all regions.</p>
+            </motion.div>
+
+            {/* Bottom Large Feature */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              className="md:col-span-12 lg:col-span-8 p-16 hyper-glass rounded-[4rem] flex flex-col md:flex-row items-center gap-16"
+            >
+              <div className="flex-1">
+                <ShieldCheck className="w-16 h-16 text-emerald-500 mb-8" />
+                <h3 className="text-5xl font-black mb-6 font-display tracking-tighter">IRONCLAD <br />GOVERNANCE.</h3>
+                <p className="text-xl text-slate-500 font-medium leading-relaxed">
+                  Military-grade encryption for PII and automated statutory filings. We handle the complexity, you keep the control.
+                </p>
+              </div>
+              <div className="flex-1 grid grid-cols-2 gap-4">
+                {[1, 2, 3, 4].map(i => (
+                  <div key={i} className="h-24 bg-primary/5 border border-primary/10 rounded-3xl animate-pulse" />
+                ))}
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>

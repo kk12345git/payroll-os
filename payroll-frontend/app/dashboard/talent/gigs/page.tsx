@@ -23,6 +23,7 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { LoadingOverlay } from '@/components/Loading';
+import { API_BASE_URL } from '@/lib/api';
 
 interface Gig {
     id: number;
@@ -47,7 +48,7 @@ export default function GigMarketplace() {
             setLoading(true);
             try {
                 const token = localStorage.getItem('token');
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/talent/gigs`, {
+                const res = await fetch(`${API_BASE_URL}/api/talent/gigs`, {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 if (res.ok) setGigs(await res.json());
@@ -66,7 +67,7 @@ export default function GigMarketplace() {
 
         try {
             const token = localStorage.getItem('token');
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/talent/gigs/apply`, {
+            const res = await fetch(`${API_BASE_URL}/api/talent/gigs/apply`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

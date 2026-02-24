@@ -25,6 +25,7 @@ import {
 import { toast } from 'sonner';
 import { LoadingOverlay } from '@/components/Loading';
 import { cn } from '@/lib/utils';
+import { API_BASE_URL } from '@/lib/api';
 
 interface Asset {
     id: number;
@@ -59,10 +60,10 @@ export default function DocumentVault() {
             try {
                 const token = localStorage.getItem('token');
                 const [assetRes, docRes] = await Promise.all([
-                    fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/assets/hardware`, {
+                    fetch(`${API_BASE_URL}/api/assets/hardware`, {
                         headers: { 'Authorization': `Bearer ${token}` }
                     }),
-                    fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/assets/vault`, {
+                    fetch(`${API_BASE_URL}/api/assets/vault`, {
                         headers: { 'Authorization': `Bearer ${token}` }
                     })
                 ]);

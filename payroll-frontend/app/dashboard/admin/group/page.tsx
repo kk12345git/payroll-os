@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { LoadingOverlay } from '@/components/Loading';
+import { API_BASE_URL } from '@/lib/api';
 
 interface Subsidiary {
     id: number;
@@ -40,7 +41,7 @@ export default function GroupManagement() {
         const fetchSubsidiaries = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/companies/subsidiaries`, {
+                const res = await fetch(`${API_BASE_URL}/api/companies/subsidiaries`, {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 if (res.ok) setSubsidiaries(await res.json());
@@ -58,7 +59,7 @@ export default function GroupManagement() {
         setLoading(true);
         try {
             const token = localStorage.getItem('token');
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/companies/subsidiaries`, {
+            const res = await fetch(`${API_BASE_URL}/api/companies/subsidiaries`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

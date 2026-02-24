@@ -15,6 +15,7 @@ import {
     Upload,
 } from 'lucide-react';
 import Link from 'next/link';
+import { API_BASE_URL } from '@/lib/api';
 
 export default function CompanyProfilePage() {
     const [formData, setFormData] = useState({
@@ -50,7 +51,7 @@ export default function CompanyProfilePage() {
         setSaving(true);
         try {
             const token = localStorage.getItem('token');
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/companies/settings`, {
+            const res = await fetch(`${API_BASE_URL}/api/companies/settings`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
@@ -195,8 +196,8 @@ export default function CompanyProfilePage() {
                                     key={region.id}
                                     onClick={() => handleChange('dataRegion', region.id)}
                                     className={`w-full flex items-center justify-between p-4 rounded-2xl border-2 transition-all ${formData.dataRegion === region.id
-                                            ? 'border-indigo-500 bg-indigo-500/10 shadow-lg shadow-indigo-500/10 scale-[1.02]'
-                                            : 'border-white/5 bg-white/5 hover:bg-white/10'
+                                        ? 'border-indigo-500 bg-indigo-500/10 shadow-lg shadow-indigo-500/10 scale-[1.02]'
+                                        : 'border-white/5 bg-white/5 hover:bg-white/10'
                                         }`}
                                 >
                                     <div className="flex items-center gap-3">

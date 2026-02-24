@@ -22,6 +22,7 @@ import {
 import { toast } from 'sonner';
 import { LoadingOverlay } from '@/components/Loading';
 import { cn } from '@/lib/utils';
+import { API_BASE_URL } from '@/lib/api';
 
 interface LifecycleTask {
     id: number;
@@ -61,7 +62,7 @@ export default function LifecyclePortal() {
         const fetchEmployees = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/employees`, {
+                const res = await fetch(`${API_BASE_URL}/api/employees`, {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 if (res.ok) setEmployees(await res.json());
@@ -78,7 +79,7 @@ export default function LifecyclePortal() {
         setLoading(true);
         try {
             const token = localStorage.getItem('token');
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/lifecycle/tasks/${empId}`, {
+            const res = await fetch(`${API_BASE_URL}/api/lifecycle/tasks/${empId}`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             if (res.ok) setTasks(await res.json());
@@ -100,7 +101,7 @@ export default function LifecyclePortal() {
         setLoading(true);
         try {
             const token = localStorage.getItem('token');
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/lifecycle/offboard`, {
+            const res = await fetch(`${API_BASE_URL}/api/lifecycle/offboard`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -131,7 +132,7 @@ export default function LifecyclePortal() {
         const newStatus = currentStatus === 'completed' ? 'pending' : 'completed';
         try {
             const token = localStorage.getItem('token');
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/lifecycle/tasks/${taskId}`, {
+            const res = await fetch(`${API_BASE_URL}/api/lifecycle/tasks/${taskId}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',

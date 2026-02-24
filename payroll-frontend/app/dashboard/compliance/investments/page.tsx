@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { LoadingOverlay } from '@/components/Loading';
+import { API_BASE_URL } from '@/lib/api';
 
 interface Declaration {
     id: number;
@@ -39,7 +40,7 @@ export default function InvestmentReviewQueue() {
         const fetchDeclarations = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/investments/admin${filter === 'pending' ? '?status=pending' : ''}`, {
+                const res = await fetch(`${API_BASE_URL}/api/investments/admin${filter === 'pending' ? '?status=pending' : ''}`, {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 if (res.ok) setDeclarations(await res.json());
@@ -56,7 +57,7 @@ export default function InvestmentReviewQueue() {
         setLoading(true);
         try {
             const token = localStorage.getItem('token');
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/investments/admin/${id}`, {
+            const res = await fetch(`${API_BASE_URL}/api/investments/admin/${id}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',

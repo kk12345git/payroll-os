@@ -13,7 +13,7 @@ import {
     Building2,
     Briefcase
 } from 'lucide-react';
-import { api, type Employee } from '@/lib/api';
+import { api, type Employee, API_BASE_URL } from '@/lib/api';
 import { LoadingOverlay } from '@/components/Loading';
 import { toast } from 'sonner';
 
@@ -39,8 +39,7 @@ export default function CompliancePage() {
     const downloadFile = async (endpoint: string, filename: string, isJson: boolean = false) => {
         setLoading(true);
         try {
-            const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
-            const response = await fetch(`${baseUrl}/api/compliance/${endpoint}?month=${selectedMonth}&year=${selectedYear}`, {
+            const response = await fetch(`${API_BASE_URL}/api/compliance/${endpoint}?month=${selectedMonth}&year=${selectedYear}`, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }
@@ -67,7 +66,7 @@ export default function CompliancePage() {
     const downloadForm16 = async (empId: number, name: string) => {
         setLoading(true);
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/compliance/form16/${empId}`, {
+            const response = await fetch(`${API_BASE_URL}/api/compliance/form16/${empId}`, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }
@@ -94,7 +93,7 @@ export default function CompliancePage() {
     const downloadForm24Q = async () => {
         setLoading(true);
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/compliance/form24q`, {
+            const response = await fetch(`${API_BASE_URL}/api/compliance/form24q`, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }

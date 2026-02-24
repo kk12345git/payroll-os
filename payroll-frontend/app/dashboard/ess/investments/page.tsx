@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { LoadingOverlay } from '@/components/Loading';
+import { API_BASE_URL } from '@/lib/api';
 
 interface Declaration {
     id: number;
@@ -55,10 +56,10 @@ export default function InvestmentPortal() {
             try {
                 const token = localStorage.getItem('token');
                 const [summaryRes, declRes] = await Promise.all([
-                    fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/investments/me/summary?financial_year=2025-26`, {
+                    fetch(`${API_BASE_URL}/api/investments/me/summary?financial_year=2025-26`, {
                         headers: { 'Authorization': `Bearer ${token}` }
                     }),
-                    fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/investments/me`, {
+                    fetch(`${API_BASE_URL}/api/investments/me`, {
                         headers: { 'Authorization': `Bearer ${token}` }
                     })
                 ]);
@@ -79,7 +80,7 @@ export default function InvestmentPortal() {
         setLoading(true);
         try {
             const token = localStorage.getItem('token');
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/investments/me`, {
+            const res = await fetch(`${API_BASE_URL}/api/investments/me`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -300,8 +301,8 @@ export default function InvestmentPortal() {
                                                     <td className="px-8 py-6 font-black text-slate-900">₹{decl.amount_declared.toLocaleString()}</td>
                                                     <td className="px-8 py-6">
                                                         <span className={`px-4 py-1.5 rounded-full text-[9px] font-black uppercase tracking-widest flex items-center gap-2 w-fit ${decl.status === 'approved' ? 'bg-green-100 text-green-600' :
-                                                                decl.status === 'rejected' ? 'bg-red-100 text-red-600' :
-                                                                    'bg-orange-100 text-orange-600'
+                                                            decl.status === 'rejected' ? 'bg-red-100 text-red-600' :
+                                                                'bg-orange-100 text-orange-600'
                                                             }`}>
                                                             {decl.status === 'approved' && <CheckCircle2 className="w-3 h-3" />}
                                                             {decl.status === 'rejected' && <XCircle className="w-3 h-3" />}

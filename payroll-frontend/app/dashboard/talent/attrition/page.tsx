@@ -29,6 +29,7 @@ import {
 import { toast } from 'sonner';
 import { LoadingOverlay } from '@/components/Loading';
 import { cn } from '@/lib/utils';
+import { API_BASE_URL } from '@/lib/api';
 
 interface RiskFactor {
     name: string;
@@ -53,7 +54,7 @@ export default function AttritionDashboard() {
         const fetchReports = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/talent/attrition-risk`, {
+                const res = await fetch(`${API_BASE_URL}/api/talent/attrition-risk`, {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 if (res.ok) setReports(await res.json());

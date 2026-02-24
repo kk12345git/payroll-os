@@ -34,6 +34,7 @@ import {
 import { toast } from 'sonner';
 import { LoadingOverlay } from '@/components/Loading';
 import { cn } from '@/lib/utils';
+import { API_BASE_URL } from '@/lib/api';
 
 interface OKR {
     id: number;
@@ -76,7 +77,7 @@ export default function PerformanceDashboard() {
         const fetchEmployees = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/employees`, {
+                const res = await fetch(`${API_BASE_URL}/api/employees`, {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 if (res.ok) setEmployees(await res.json());
@@ -94,10 +95,10 @@ export default function PerformanceDashboard() {
         try {
             const token = localStorage.getItem('token');
             const [okrRes, reviewRes] = await Promise.all([
-                fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/performance/okrs/${empId}`, {
+                fetch(`${API_BASE_URL}/api/performance/okrs/${empId}`, {
                     headers: { 'Authorization': `Bearer ${token}` }
                 }),
-                fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/performance/reviews/${empId}`, {
+                fetch(`${API_BASE_URL}/api/performance/reviews/${empId}`, {
                     headers: { 'Authorization': `Bearer ${token}` }
                 })
             ]);

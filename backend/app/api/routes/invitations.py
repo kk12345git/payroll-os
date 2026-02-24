@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks
 from sqlalchemy.orm import Session
+from typing import List
 from app.core.database import get_db
 from app.api import dependencies
 from app.models.user import User
@@ -31,7 +32,7 @@ async def generate_invite_link(
         "expires_in": "48 hours"
     }
 
-@router.get("/pending")
+@router.get("/pending", response_model=List[dict])
 async def get_pending_invites(
     current_user: User = Depends(dependencies.get_current_user)
 ):

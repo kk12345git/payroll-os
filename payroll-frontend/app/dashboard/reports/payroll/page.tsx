@@ -16,7 +16,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 
-interface PayrollSummary {
+interface AutoPayOSSummary {
     month: string;
     totalEmployees: number;
     grossPay: number;
@@ -26,13 +26,13 @@ interface PayrollSummary {
     esiEmployer: number;
 }
 
-const MOCK_SUMMARY: PayrollSummary[] = [
+const MOCK_SUMMARY: AutoPayOSSummary[] = [
     { month: 'Jan 2025', totalEmployees: 150, grossPay: 8500000, deductions: 1250000, netPay: 7250000, pfEmployer: 450000, esiEmployer: 180000 },
     { month: 'Feb 2025', totalEmployees: 155, grossPay: 8800000, deductions: 1300000, netPay: 7500000, pfEmployer: 465000, esiEmployer: 185000 },
     { month: 'Mar 2025', totalEmployees: 158, grossPay: 9100000, deductions: 1350000, netPay: 7750000, pfEmployer: 480000, esiEmployer: 190000 },
 ];
 
-export default function PayrollSummaryReports() {
+export default function AutoPayOSSummaryReports() {
     const [selectedPeriod, setSelectedPeriod] = useState('quarterly');
     const [selectedQuarter, setSelectedQuarter] = useState('Q4-2024');
 
@@ -50,10 +50,10 @@ export default function PayrollSummaryReports() {
                         <ChevronRight className="w-3 h-3" />
                         <Link href="/dashboard/reports" className="hover:text-indigo-600">Reports</Link>
                         <ChevronRight className="w-3 h-3" />
-                        <span className="text-indigo-600">Payroll Summary</span>
+                        <span className="text-indigo-600">AutoPay-OS Summary</span>
                     </nav>
                     <h1 className="text-4xl font-black tracking-tight text-slate-900 mb-2 shimmer-text">
-                        Payroll Summary Reports
+                        AutoPay-OS Summary Reports
                     </h1>
                     <p className="text-slate-500 font-medium">
                         Comprehensive payroll insights and cost breakdowns
@@ -154,7 +154,7 @@ export default function PayrollSummaryReports() {
             {/* Monthly Breakdown Table */}
             <div className="card-extreme p-0 overflow-hidden">
                 <div className="p-6 border-b border-slate-100 bg-gradient-to-r from-indigo-50 to-purple-50">
-                    <h2 className="text-xl font-black text-slate-900">Monthly Payroll Breakdown</h2>
+                    <h2 className="text-xl font-black text-slate-900">Monthly AutoPay-OS Breakdown</h2>
                 </div>
 
                 <div className="overflow-x-auto">

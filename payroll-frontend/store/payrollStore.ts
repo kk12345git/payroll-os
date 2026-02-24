@@ -1,11 +1,11 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { api, type SalaryStructure, type PayrollRecord, type SalaryStructureUpdate, type SalaryStructureCreate, type PayrollSummary } from '../lib/api';
+import { api, type SalaryStructure, type AutoPayOSRecord, type SalaryStructureUpdate, type SalaryStructureCreate, type AutoPayOSSummary } from '../lib/api';
 
-interface PayrollStore {
+interface AutoPayOSStore {
     salaryStructures: Record<number, SalaryStructure>; // employeeId -> structure
-    payrollRecords: PayrollRecord[];
-    monthlySummaries: PayrollSummary[];
+    payrollRecords: AutoPayOSRecord[];
+    monthlySummaries: AutoPayOSSummary[];
     selectedMonth: string;
     loading: boolean;
     error: string | null;
@@ -14,17 +14,17 @@ interface PayrollStore {
     fetchSalaryStructure: (employeeId: number) => Promise<void>;
     updateSalaryStructure: (employeeId: number, structure: SalaryStructureUpdate) => Promise<void>;
     createSalaryStructure: (structure: SalaryStructureCreate) => Promise<void>;
-    processPayroll: (month: number, year: number, employeeIds: number[]) => Promise<void>;
-    fetchPayrollHistory: (employeeId: number) => Promise<void>;
-    fetchPayrollSummaries: () => Promise<void>;
+    processAutoPayOS: (month: number, year: number, employeeIds: number[]) => Promise<void>;
+    fetchAutoPayOSHistory: (employeeId: number) => Promise<void>;
+    fetchAutoPayOSSummaries: () => Promise<void>;
     setSelectedMonth: (month: string) => void;
 
     // Selectors
     getSalaryStructure: (employeeId: number) => SalaryStructure | undefined;
-    getPayrollByMonth: (month: number, year: number) => PayrollRecord[];
+    getAutoPayOSByMonth: (month: number, year: number) => AutoPayOSRecord[];
 }
 
-export const usePayrollStore = create<PayrollStore>()(
+export const useAutoPayOSStore = create<AutoPayOSStore>()(
     persist(
         (set, get) => ({
             salaryStructures: {},
@@ -84,10 +84,10 @@ export const usePayrollStore = create<PayrollStore>()(
                 }
             },
 
-            processPayroll: async (month, year, employeeIds) => {
+            processAutoPayOS: async (month, year, employeeIds) => {
                 set({ loading: true, error: null });
                 try {
-                    const records = await api.processPayroll({ employee_ids: employeeIds, month, year });
+                    const records = await api.processAutoPayOS({ employee_ids: employeeIds, month, year });
                     set((state) => ({
                         payrollRecords: [...state.payrollRecords, ...records],
                         loading: false
@@ -98,10 +98,10 @@ export const usePayrollStore = create<PayrollStore>()(
                 }
             },
 
-            fetchPayrollHistory: async (employeeId) => {
+            fetchAutoPayOSHistory: async (employeeId) => {
                 set({ loading: true, error: null });
                 try {
-                    const history = await api.getPayrollHistory(employeeId);
+                    const history = await api.getAutoPayOSHistory(employeeId);
                     set((state) => {
                         // Merge history avoiding duplicates
                         const otherRecords = state.payrollRecords.filter(r => r.employee_id !== employeeId);
@@ -115,10 +115,10 @@ export const usePayrollStore = create<PayrollStore>()(
                 }
             },
 
-            fetchPayrollSummaries: async () => {
+            fetchAutoPayOSSummaries: async () => {
                 set({ loading: true, error: null });
                 try {
-                    const summaries = await api.getPayrollSummaries();
+                    const summaries = await api.getAutoPayOSSummaries();
                     set({ monthlySummaries: summaries, loading: false });
                 } catch (err: any) {
                     set({ error: err.message, loading: false });
@@ -131,7 +131,7 @@ export const usePayrollStore = create<PayrollStore>()(
                 return get().salaryStructures[employeeId];
             },
 
-            getPayrollByMonth: (month, year) => {
+            getAutoPayOSByMonth: (month, year) => {
                 return get().payrollRecords.filter(
                     (record) => record.month === month && record.year === year
                 );

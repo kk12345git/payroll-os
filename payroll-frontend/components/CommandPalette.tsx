@@ -16,7 +16,7 @@ const QUICK_ACTIONS = [
     { name: 'Add Employee', description: 'Create new employee', href: '/dashboard/employees/add', icon: '➕' },
     { name: 'Departments', description: 'View departments', href: '/dashboard/departments', icon: '🏢' },
     { name: 'Manual Attendance', description: 'Mark attendance', href: '/dashboard/attendance/manual-entry', icon: '✏️' },
-    { name: 'Payroll', description: 'Process payroll', href: '/dashboard/payroll', icon: '💰' },
+    { name: 'AutoPay-OS', description: 'Process payroll', href: '/dashboard/payroll', icon: '💰' },
     { name: 'Reports', description: 'Generate reports', href: '/dashboard/reports', icon: '📈' },
     { name: 'Settings', description: 'System settings', href: '/dashboard/settings', icon: '⚙️' },
 ];

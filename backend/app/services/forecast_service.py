@@ -3,7 +3,7 @@ from sqlalchemy import func
 from decimal import Decimal
 from datetime import date, timedelta
 from typing import List, Dict, Any
-from app.models.payroll import PayrollRecord, PayrollStatus
+from app.models.payroll import AutoPayOSRecord, AutoPay-OSStatus
 from app.models.employee import Employee
 
 class ForecastService:
@@ -15,14 +15,14 @@ class ForecastService:
         """
         # 1. Fetch historical monthly spend (last 6 months)
         historical_records = db.query(
-            PayrollRecord.year,
-            PayrollRecord.month,
-            func.sum(PayrollRecord.net_pay).label("total_net")
+            AutoPayOSRecord.year,
+            AutoPayOSRecord.month,
+            func.sum(AutoPayOSRecord.net_pay).label("total_net")
         ).filter(
-            PayrollRecord.company_id == company_id,
-            PayrollRecord.status == PayrollStatus.PAID
-        ).group_by(PayrollRecord.year, PayrollRecord.month)\
-         .order_by(PayrollRecord.year.desc(), PayrollRecord.month.desc())\
+            AutoPayOSRecord.company_id == company_id,
+            AutoPayOSRecord.status == AutoPay-OSStatus.PAID
+        ).group_by(AutoPayOSRecord.year, AutoPayOSRecord.month)\
+         .order_by(AutoPayOSRecord.year.desc(), AutoPayOSRecord.month.desc())\
          .limit(6).all()
 
         history_data = [
@@ -36,7 +36,7 @@ class ForecastService:
             avg_spend = sum(d["amount"] for d in history_data) / len(history_data)
         else:
             # Fallback: Current active salaries * months
-            active_salaries = db.query(func.sum(PayrollRecord.net_pay)).join(Employee).filter(
+            active_salaries = db.query(func.sum(AutoPayOSRecord.net_pay)).join(Employee).filter(
                 Employee.company_id == company_id,
                 Employee.is_active == True
             ).scalar() or 0

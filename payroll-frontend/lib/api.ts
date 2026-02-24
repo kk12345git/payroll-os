@@ -158,7 +158,7 @@ interface LeaveApplicationCreate {
     reason: string;
 }
 
-// Payroll Interfaces
+// AutoPay-OS Interfaces
 export interface SalaryStructure {
     id: number;
     employee_id: number;
@@ -200,7 +200,7 @@ export interface SalaryStructureUpdate {
     tds_enabled?: boolean;
 }
 
-export interface PayrollRecord {
+export interface AutoPayOSRecord {
     id: number;
     employee_id: number;
     month: number;
@@ -225,13 +225,13 @@ export interface PayrollRecord {
     created_at: string;
 }
 
-export interface PayrollProcessRequest {
+export interface AutoPayOSProcessRequest {
     employee_ids: number[];
     month: number;
     year: number;
 }
 
-export interface PayrollSummary {
+export interface AutoPayOSSummary {
     month: number;
     year: number;
     total_gross: number;
@@ -526,7 +526,7 @@ class ApiClient {
         });
     }
 
-    // Payroll endpoints
+    // AutoPay-OS endpoints
     async getSalaryStructure(employeeId: number): Promise<SalaryStructure> {
         return this.request<SalaryStructure>(`/api/payroll/salary-structures/${employeeId}`);
     }
@@ -545,19 +545,19 @@ class ApiClient {
         });
     }
 
-    async processPayroll(data: PayrollProcessRequest): Promise<PayrollRecord[]> {
-        return this.request<PayrollRecord[]>('/api/payroll/process', {
+    async processAutoPayOS(data: AutoPayOSProcessRequest): Promise<AutoPayOSRecord[]> {
+        return this.request<AutoPayOSRecord[]>('/api/payroll/process', {
             method: 'POST',
             body: JSON.stringify(data),
         });
     }
 
-    async getPayrollSummaries(): Promise<PayrollSummary[]> {
-        return this.request<PayrollSummary[]>('/api/payroll/summaries');
+    async getAutoPayOSSummaries(): Promise<AutoPayOSSummary[]> {
+        return this.request<AutoPayOSSummary[]>('/api/payroll/summaries');
     }
 
-    async getPayrollHistory(employeeId: number): Promise<PayrollRecord[]> {
-        return this.request<PayrollRecord[]>(`/api/payroll/history/${employeeId}`);
+    async getAutoPayOSHistory(employeeId: number): Promise<AutoPayOSRecord[]> {
+        return this.request<AutoPayOSRecord[]>(`/api/payroll/history/${employeeId}`);
     }
 
     // Subscription endpoints

@@ -20,7 +20,7 @@ import {
 import Link from 'next/link';
 import { useEmployeeStore } from '@/store/employeeStore';
 import { useDepartmentStore } from '@/store/useDepartmentStore';
-import { usePayrollStore } from '@/store/payrollStore';
+import { useAutoPayOSStore } from '@/store/payrollStore';
 import { useAnomalyStore } from '@/store/anomalyStore';
 
 import { DashboardCharts } from '@/components/DashboardCharts';
@@ -54,13 +54,13 @@ export default function DashboardPage() {
     // Get live data from stores
     const { employees } = useEmployeeStore();
     const { departments } = useDepartmentStore();
-    const { payrollRecords, monthlySummaries, fetchPayrollSummaries, loading: payrollLoading } = usePayrollStore();
+    const { payrollRecords, monthlySummaries, fetchAutoPayOSSummaries, loading: payrollLoading } = useAutoPayOSStore();
     const { anomalies, fetchAnomalies } = useAnomalyStore();
 
     React.useEffect(() => {
-        fetchPayrollSummaries();
+        fetchAutoPayOSSummaries();
         fetchAnomalies(false); // Fetch unresolved anomalies
-    }, [fetchPayrollSummaries, fetchAnomalies]);
+    }, [fetchAutoPayOSSummaries, fetchAnomalies]);
 
     // Calculate department cost allocation for pie chart
     const deptCosts = React.useMemo(() => {
@@ -82,7 +82,7 @@ export default function DashboardPage() {
     const now = new Date();
     const currentMonth = now.getMonth() + 1;
     const currentYear = now.getFullYear();
-    const currentMonthPayroll = (payrollRecords || [])
+    const currentMonthAutoPayOS = (payrollRecords || [])
         .filter(record => record.month === currentMonth && record.year === currentYear)
         .reduce((sum, record) => sum + (Number(record.net_pay) || 0), 0);
 
@@ -111,8 +111,8 @@ export default function DashboardPage() {
             bgGradient: "from-purple-500/10 to-pink-500/10"
         },
         {
-            label: "Monthly Payroll",
-            value: `₹${(currentMonthPayroll / 100000).toFixed(1)}L`,
+            label: "Monthly AutoPay-OS",
+            value: `₹${(currentMonthAutoPayOS / 100000).toFixed(1)}L`,
             change: "+0%",
             icon: TrendingUp,
             gradient: "from-green-500 to-emerald-500",
@@ -130,14 +130,14 @@ export default function DashboardPage() {
 
     const quickActions = [
         { title: "Add Employee", icon: Users, href: "/dashboard/employees", color: "from-blue-500 to-cyan-500" },
-        { title: "Process Payroll", icon: DollarSign, href: "/dashboard/payroll", color: "from-green-500 to-emerald-500" },
+        { title: "Process AutoPay-OS", icon: DollarSign, href: "/dashboard/payroll", color: "from-green-500 to-emerald-500" },
         { title: "View Reports", icon: TrendingUp, href: "/dashboard/reports", color: "from-purple-500 to-pink-500" },
         { title: "Manage Departments", icon: Building2, href: "/dashboard/departments", color: "from-orange-500 to-red-500" },
     ];
 
     const recentActivity = [
         { action: "New employee onboarded", user: "Sarah Chen", time: "2 hours ago", icon: Users, color: "text-blue-500" },
-        { action: "Payroll processed", user: "System", time: "5 hours ago", icon: CheckCircle2, color: "text-green-500" },
+        { action: "AutoPay-OS processed", user: "System", time: "5 hours ago", icon: CheckCircle2, color: "text-green-500" },
         { action: "Leave request approved", user: "John Doe", time: "1 day ago", icon: Calendar, color: "text-purple-500" },
         { action: "Department created", user: "Admin", time: "2 days ago", icon: Building2, color: "text-orange-500" },
     ];

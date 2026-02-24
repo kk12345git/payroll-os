@@ -4,7 +4,7 @@ from decimal import Decimal
 from typing import Dict, Any, List, Optional
 import re
 from app.models.employee import Employee
-from app.models.payroll import PayrollRecord, PayrollStatus
+from app.models.payroll import AutoPayOSRecord, AutoPay-OSStatus
 from app.models.company import Department
 from app.models.attendance import Attendance
 from app.models.leave import LeaveApplication, LeaveStatus
@@ -51,9 +51,9 @@ class AICopilotService:
 
         # 2. Total Salary Cost
         if any(w in text for w in ["total salary", "total payroll", "total cost", "total spend"]):
-            cost = db.query(func.sum(PayrollRecord.net_pay)).filter(
-                PayrollRecord.company_id == company_id,
-                PayrollRecord.status == PayrollStatus.PAID
+            cost = db.query(func.sum(AutoPayOSRecord.net_pay)).filter(
+                AutoPayOSRecord.company_id == company_id,
+                AutoPayOSRecord.status == AutoPay-OSStatus.PAID
             ).scalar() or 0
             return {
                 "answer": f"The total net payroll cost across the company is *₹{float(cost):,.2f}*.",
@@ -63,9 +63,9 @@ class AICopilotService:
 
         # 3. Highest Paid Employee
         if any(w in text for w in ["highest paid", "top earner", "highest salary"]):
-            record = db.query(PayrollRecord).join(Employee).filter(
-                PayrollRecord.company_id == company_id
-            ).order_by(PayrollRecord.gross_earnings.desc()).first()
+            record = db.query(AutoPayOSRecord).join(Employee).filter(
+                AutoPayOSRecord.company_id == company_id
+            ).order_by(AutoPayOSRecord.gross_earnings.desc()).first()
             if record:
                 employee_name = db.query(Employee.full_name).filter(Employee.id == record.employee_id).scalar()
                 return {
@@ -76,9 +76,9 @@ class AICopilotService:
 
         # 4. Highest Deduction
         if any(w in text for w in ["highest deduction", "top deduction", "most deduction", "deduction analysis"]):
-            record = db.query(PayrollRecord).join(Employee).filter(
-                PayrollRecord.company_id == company_id
-            ).order_by(PayrollRecord.total_deductions.desc()).first()
+            record = db.query(AutoPayOSRecord).join(Employee).filter(
+                AutoPayOSRecord.company_id == company_id
+            ).order_by(AutoPayOSRecord.total_deductions.desc()).first()
             if record:
                 employee_name = db.query(Employee.full_name).filter(Employee.id == record.employee_id).scalar()
                 return {
@@ -91,9 +91,9 @@ class AICopilotService:
         if "department" in text and any(w in text for w in ["breakdown", "cost", "spend"]):
             results = db.query(
                 Department.name,
-                func.sum(PayrollRecord.net_pay)
+                func.sum(AutoPayOSRecord.net_pay)
             ).join(Employee, Employee.department_id == Department.id)\
-             .join(PayrollRecord, PayrollRecord.employee_id == Employee.id)\
+             .join(AutoPayOSRecord, AutoPayOSRecord.employee_id == Employee.id)\
              .filter(Department.company_id == company_id)\
              .group_by(Department.name).all()
              
@@ -147,9 +147,9 @@ class AICopilotService:
     @staticmethod
     def _forecast_budget(db: Session, company_id: int) -> Dict[str, Any]:
         # Simple forecasting: Avg of last 3 months + 5% overhead
-        avg_cost = db.query(func.avg(PayrollRecord.net_pay)).filter(
-            PayrollRecord.company_id == company_id,
-            PayrollRecord.status == PayrollStatus.PAID
+        avg_cost = db.query(func.avg(AutoPayOSRecord.net_pay)).filter(
+            AutoPayOSRecord.company_id == company_id,
+            AutoPayOSRecord.status == AutoPay-OSStatus.PAID
         ).scalar() or 0
         
         forecast = float(avg_cost) * 1.05 # 5% buffer
@@ -161,9 +161,9 @@ class AICopilotService:
 
     @staticmethod
     def _simulate_hike(db: Session, company_id: int, percent: int, dept_name: str = None) -> Dict[str, Any]:
-        query = db.query(func.sum(PayrollRecord.net_pay)).filter(
-            PayrollRecord.company_id == company_id,
-            PayrollRecord.status == PayrollStatus.PAID
+        query = db.query(func.sum(AutoPayOSRecord.net_pay)).filter(
+            AutoPayOSRecord.company_id == company_id,
+            AutoPayOSRecord.status == AutoPay-OSStatus.PAID
         )
         
         if dept_name:

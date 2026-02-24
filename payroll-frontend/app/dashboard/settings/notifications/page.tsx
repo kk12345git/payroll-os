@@ -22,10 +22,10 @@ interface NotificationSetting {
 }
 
 const MOCK_NOTIFICATIONS: NotificationSetting[] = [
-    // Payroll
-    { id: '1', category: 'Payroll', name: 'Payroll Processed', description: 'When monthly payroll is processed successfully', email: true, inApp: true },
-    { id: '2', category: 'Payroll', name: 'Salary Slip Generated', description: 'When salary slip is generated for employees', email: true, inApp: false },
-    { id: '3', category: 'Payroll', name: 'Payroll Errors', description: 'When errors occur during payroll processing', email: true, inApp: true },
+    // AutoPay-OS
+    { id: '1', category: 'AutoPay-OS', name: 'AutoPay-OS Processed', description: 'When monthly payroll is processed successfully', email: true, inApp: true },
+    { id: '2', category: 'AutoPay-OS', name: 'Salary Slip Generated', description: 'When salary slip is generated for employees', email: true, inApp: false },
+    { id: '3', category: 'AutoPay-OS', name: 'AutoPay-OS Errors', description: 'When errors occur during payroll processing', email: true, inApp: true },
 
     // Attendance
     { id: '4', category: 'Attendance', name: 'Late Arrival', description: 'When an employee marks attendance after work hours', email: false, inApp: true },

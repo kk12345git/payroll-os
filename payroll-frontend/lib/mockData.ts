@@ -1,4 +1,4 @@
-// Comprehensive Mock Data for Payroll System
+// Comprehensive Mock Data for AutoPay-OS System
 
 export interface Employee {
     id: string;

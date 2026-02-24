@@ -27,7 +27,7 @@ const PLANS = [
         features: [
             'Up to 10 Employees',
             'Manual Attendance',
-            'Basic Payroll Generation',
+            'Basic AutoPay-OS Generation',
             'Standard Reports',
             'Community Support'
         ],
@@ -44,7 +44,7 @@ const PLANS = [
             'Unlimited Employees',
             'Biometric Sync (AI)',
             'Advanced Tax Compliance',
-            'Bulk Payroll Processing',
+            'Bulk AutoPay-OS Processing',
             'Dedicated Account Manager',
             'Custom Export Formats'
         ],

@@ -12,14 +12,14 @@ import {
     IndianRupee,
 } from 'lucide-react';
 
-interface PayrollEvent {
+interface AutoPayOSEvent {
     date: string;
     status: 'completed' | 'pending' | 'processing';
     amount: number;
     employees: number;
 }
 
-export default function PayrollCalendarPage() {
+export default function AutoPayOSCalendarPage() {
     const [currentDate, setCurrentDate] = useState(new Date(2026, 1)); // February 2026
 
     const monthNames = [
@@ -38,7 +38,7 @@ export default function PayrollCalendarPage() {
     ];
 
     // Mock payroll events
-    const payrollEvents: Record<string, PayrollEvent> = {
+    const payrollEvents: Record<string, AutoPayOSEvent> = {
         '2026-02-28': {
             date: '2026-02-28',
             status: 'pending',
@@ -124,7 +124,7 @@ export default function PayrollCalendarPage() {
                     className="mb-8"
                 >
                     <h1 className="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-2">
-                        Payroll Calendar
+                        AutoPay-OS Calendar
                     </h1>
                     <p className="text-slate-600">View payroll schedule and history</p>
                 </motion.div>
@@ -247,7 +247,7 @@ export default function PayrollCalendarPage() {
                                     </div>
                                     <div>
                                         <div className="font-semibold text-slate-800">Completed</div>
-                                        <div className="text-sm text-slate-500">Payroll processed</div>
+                                        <div className="text-sm text-slate-500">AutoPay-OS processed</div>
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-3">
@@ -271,7 +271,7 @@ export default function PayrollCalendarPage() {
                             </div>
                         </motion.div>
 
-                        {/* Upcoming Payroll */}
+                        {/* Upcoming AutoPay-OS */}
                         <motion.div
                             initial={{ opacity: 0, x: 20 }}
                             animate={{ opacity: 1, x: 0 }}
@@ -282,7 +282,7 @@ export default function PayrollCalendarPage() {
                                 <div className="p-3 bg-white/20 backdrop-blur-xl rounded-xl">
                                     <CalendarIcon className="w-6 h-6" />
                                 </div>
-                                <h3 className="text-lg font-bold">Next Payroll</h3>
+                                <h3 className="text-lg font-bold">Next AutoPay-OS</h3>
                             </div>
                             <div className="space-y-3">
                                 <div>

@@ -15,7 +15,7 @@ import Link from 'next/link';
 
 const REPORT_FEATURES = [
     {
-        title: 'Payroll Summary',
+        title: 'AutoPay-OS Summary',
         description: 'Monthly payroll breakdown with cost distribution and trends',
         icon: TrendingUp,
         href: '/dashboard/reports/payroll',

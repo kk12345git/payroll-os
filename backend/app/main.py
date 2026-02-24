@@ -20,7 +20,7 @@ except Exception as e:
 app = FastAPI(
     title=settings.APP_NAME,
     version=settings.APP_VERSION,
-    description="Enterprise-grade Payroll Management System with Indian Statutory Compliance"
+    description="Enterprise-grade AutoPay-OS Management System with Indian Statutory Compliance"
 )
 
 # Configure CORS - Must be added before routes
@@ -43,7 +43,7 @@ app.include_router(employees.router, prefix="/api/employees", tags=["Employees"]
 app.include_router(departments.router, prefix="/api/departments", tags=["Departments"])
 app.include_router(attendance.router, prefix="/api/attendance", tags=["Attendance"])
 app.include_router(leaves.router, prefix="/api/leaves", tags=["Leaves"])
-app.include_router(payroll.router, prefix="/api/payroll", tags=["Payroll"])
+app.include_router(payroll.router, prefix="/api/payroll", tags=["AutoPay-OS"])
 app.include_router(companies.router, prefix="/api/companies", tags=["Companies"])
 app.include_router(anomalies.router, prefix="/api/anomalies", tags=["Anomalies"])
 app.include_router(ewa.router, prefix="/api/ewa", tags=["Earned Wage Access"])
@@ -66,7 +66,7 @@ app.include_router(performance.router, prefix="/api/performance", tags=["Perform
 @app.get("/")
 async def root():
     return {
-        "message": "AutoPay-OS API is Online",
+        "message": "AutoPayOS API is Online",
         "status": "active",
         "version": settings.APP_VERSION,
         "environment": settings.ENVIRONMENT

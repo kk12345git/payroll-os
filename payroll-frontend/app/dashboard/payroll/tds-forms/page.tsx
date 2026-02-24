@@ -72,7 +72,7 @@ export default function TDSFormsPage() {
                     <nav className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-400 mb-4">
                         <Link href="/dashboard" className="hover:text-indigo-600">Admin Console</Link>
                         <ChevronRight className="w-3 h-3" />
-                        <Link href="/dashboard/payroll" className="hover:text-indigo-600">Payroll</Link>
+                        <Link href="/dashboard/payroll" className="hover:text-indigo-600">AutoPay-OS</Link>
                         <ChevronRight className="w-3 h-3" />
                         <span className="text-indigo-600">TDS Forms</span>
                     </nav>
@@ -411,7 +411,7 @@ export default function TDSFormsPage() {
                                     <div className="grid grid-cols-2 gap-4">
                                         <div>
                                             <div className="font-semibold text-slate-500">Employer Name</div>
-                                            <div className="font-bold text-slate-900">Payroll Management Pvt. Ltd.</div>
+                                            <div className="font-bold text-slate-900">AutoPay-OS Management Pvt. Ltd.</div>
                                         </div>
                                         <div>
                                             <div className="font-semibold text-slate-500">TAN</div>

@@ -100,7 +100,7 @@ export default function DepartmentCostAnalysisPage() {
                         </div>
                     </div>
                     <div className="space-y-1">
-                        <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Total Payroll Cost</div>
+                        <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Total AutoPay-OS Cost</div>
                         <div className="text-3xl font-black text-slate-900">₹{(totalCost / 100000).toFixed(1)}L</div>
                     </div>
                 </motion.div>

@@ -48,7 +48,7 @@ export function LoadingOverlay({ message = "Preparing your dashboard..." }: { me
                         animate={{ opacity: 1, y: 0 }}
                         className="text-2xl font-black text-slate-900 dark:text-white tracking-tight"
                     >
-                        Payroll OS
+                        AutoPay-OS OS
                     </motion.h3>
                     <motion.div
                         initial={{ opacity: 0 }}

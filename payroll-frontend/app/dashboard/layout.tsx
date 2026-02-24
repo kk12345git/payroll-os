@@ -118,7 +118,7 @@ export default function DashboardLayout({
         { title: 'Recruit & Invite', icon: UserPlus, href: '/dashboard/settings/invites', roles: ['admin', 'hr_manager'] },
         { title: 'Employees', icon: Users, href: '/dashboard/employees', roles: ['admin', 'hr_manager'] },
         { title: 'Departments', icon: Building2, href: '/dashboard/departments', roles: ['admin', 'hr_manager'] },
-        { title: 'Payroll', icon: Wallet, href: '/dashboard/payroll', roles: ['admin', 'hr_manager', 'accountant'] },
+        { title: 'AutoPay-OS', icon: Wallet, href: '/dashboard/payroll', roles: ['admin', 'hr_manager', 'accountant'] },
         { title: 'Attendance', icon: ClipboardCheck, href: '/dashboard/attendance', roles: ['admin', 'hr_manager'] },
         { title: 'Reports', icon: PieChart, href: '/dashboard/reports', roles: ['admin', 'hr_manager', 'accountant'] },
 

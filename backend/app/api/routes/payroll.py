@@ -6,16 +6,16 @@ from decimal import Decimal
 import calendar
 
 from app.core.database import get_db
-from app.models.payroll import SalaryStructure, PayrollRecord, PayrollStatus
+from app.models.payroll import SalaryStructure, AutoPayOSRecord, AutoPay-OSStatus
 from app.models.employee import Employee
 from app.models.attendance import Attendance
 from app.schemas.payroll import (
     SalaryStructure as SalaryStructureSchema,
     SalaryStructureCreate,
     SalaryStructureUpdate,
-    PayrollRecord as PayrollRecordSchema,
-    PayrollProcessRequest,
-    PayrollSummary
+    AutoPayOSRecord as AutoPayOSRecordSchema,
+    AutoPayOSProcessRequest,
+    AutoPayOSSummary
 )
 from app.api import dependencies
 from app.models.user import UserRole
@@ -69,9 +69,9 @@ def update_salary_structure(
     db.refresh(db_structure)
     return db_structure
 
-@router.post("/process", response_model=List[PayrollRecordSchema])
+@router.post("/process", response_model=List[AutoPayOSRecordSchema])
 def process_payroll(
-    request: PayrollProcessRequest,
+    request: AutoPayOSProcessRequest,
     db: Session = Depends(get_db),
     current_user = Depends(dependencies.require_role(UserRole.HR_MANAGER))
 ):
@@ -148,11 +148,11 @@ def process_payroll(
             # Employer contribution is 3.25%
             employer_esi = gross_earnings * Decimal("0.0325")
 
-        # 5. Create or Update Payroll Record
-        db_record = db.query(PayrollRecord).filter(
-            PayrollRecord.employee_id == emp_id,
-            PayrollRecord.month == request.month,
-            PayrollRecord.year == request.year
+        # 5. Create or Update AutoPay-OS Record
+        db_record = db.query(AutoPayOSRecord).filter(
+            AutoPayOSRecord.employee_id == emp_id,
+            AutoPayOSRecord.month == request.month,
+            AutoPayOSRecord.year == request.year
         ).first()
         
         if db_record:
@@ -171,10 +171,10 @@ def process_payroll(
             db_record.pt_deduction = pt_deduction
             db_record.employer_pf_contribution = employer_pf
             db_record.employer_esi_contribution = employer_esi
-            db_record.status = PayrollStatus.PROCESSED
+            db_record.status = AutoPay-OSStatus.PROCESSED
             db_record.processed_at = datetime.now()
         else:
-            db_record = PayrollRecord(
+            db_record = AutoPayOSRecord(
                 employee_id=emp_id,
                 company_id=employee.company_id,
                 month=request.month,
@@ -194,7 +194,7 @@ def process_payroll(
                 pt_deduction=pt_deduction,
                 employer_pf_contribution=employer_pf,
                 employer_esi_contribution=employer_esi,
-                status=PayrollStatus.PROCESSED,
+                status=AutoPay-OSStatus.PROCESSED,
                 processed_at=datetime.now()
             )
             db.add(db_record)
@@ -212,10 +212,10 @@ def process_payroll(
             
     return results
 
-@router.get("/history/{employee_id}", response_model=List[PayrollRecordSchema])
+@router.get("/history/{employee_id}", response_model=List[AutoPayOSRecordSchema])
 def get_payroll_history(
     employee_id: int,
     db: Session = Depends(get_db),
     current_user = Depends(dependencies.get_current_user)
 ):
-    return db.query(PayrollRecord).filter(PayrollRecord.employee_id == employee_id).order_by(PayrollRecord.year.desc(), PayrollRecord.month.desc()).all()
+    return db.query(AutoPayOSRecord).filter(AutoPayOSRecord.employee_id == employee_id).order_by(AutoPayOSRecord.year.desc(), AutoPayOSRecord.month.desc()).all()

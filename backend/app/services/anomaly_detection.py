@@ -4,13 +4,13 @@ from datetime import datetime
 from decimal import Decimal
 from typing import List, Optional
 
-from app.models.payroll import PayrollRecord, PayrollStatus
+from app.models.payroll import AutoPayOSRecord, AutoPay-OSStatus
 from app.models.anomaly import Anomaly, AnomalyType, AnomalySeverity
 from app.models.employee import Employee
 
 class AnomalyDetectionService:
     @staticmethod
-    def analyze_payroll_record(db: Session, record: PayrollRecord) -> List[Anomaly]:
+    def analyze_payroll_record(db: Session, record: AutoPayOSRecord) -> List[Anomaly]:
         anomalies = []
         
         # 1. Salary Spike Detection (> 20% increase from previous month)
@@ -19,11 +19,11 @@ class AnomalyDetectionService:
         if not employee:
             return []
 
-        previous_record = db.query(PayrollRecord).filter(
-            PayrollRecord.employee_id == record.employee_id,
-            PayrollRecord.status == PayrollStatus.PAID,
-            (PayrollRecord.year * 12 + PayrollRecord.month) < (record.year * 12 + record.month)
-        ).order_by(PayrollRecord.year.desc(), PayrollRecord.month.desc()).first()
+        previous_record = db.query(AutoPayOSRecord).filter(
+            AutoPayOSRecord.employee_id == record.employee_id,
+            AutoPayOSRecord.status == AutoPay-OSStatus.PAID,
+            (AutoPayOSRecord.year * 12 + AutoPayOSRecord.month) < (record.year * 12 + record.month)
+        ).order_by(AutoPayOSRecord.year.desc(), AutoPayOSRecord.month.desc()).first()
         
         if previous_record and previous_record.gross_earnings > 0:
             diff_percent = (record.gross_earnings - previous_record.gross_earnings) / previous_record.gross_earnings * 100

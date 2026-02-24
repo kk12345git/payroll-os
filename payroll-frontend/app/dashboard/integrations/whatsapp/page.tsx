@@ -30,7 +30,7 @@ export default function WhatsAppSimulatorPage() {
     const [messages, setMessages] = useState<Message[]>([
         {
             id: 'welcome',
-            text: "👋 Hi! I'm the Payroll Bot. Verify your phone number to start.",
+            text: "👋 Hi! I'm the AutoPay-OS Bot. Verify your phone number to start.",
             sender: 'bot',
             timestamp: new Date()
         }
@@ -123,7 +123,7 @@ export default function WhatsAppSimulatorPage() {
                 <div className="hidden md:flex flex-col justify-center w-1/3 text-slate-600 space-y-6">
                     <div>
                         <h1 className="text-3xl font-black text-slate-900 mb-2">WhatsApp Integration</h1>
-                        <p className="text-sm font-medium opacity-80">Zero-UI Payroll Management</p>
+                        <p className="text-sm font-medium opacity-80">Zero-UI AutoPay-OS Management</p>
                     </div>
 
                     <div className="bg-indigo-50 border border-indigo-100 rounded-2xl p-6">
@@ -171,7 +171,7 @@ export default function WhatsAppSimulatorPage() {
                                         <Bot className="w-5 h-5" />
                                     </div>
                                     <div>
-                                        <h3 className="font-bold text-sm leading-tight">Payroll Bot</h3>
+                                        <h3 className="font-bold text-sm leading-tight">AutoPay-OS Bot</h3>
                                         <p className="text-[10px] opacity-80">Business Account</p>
                                     </div>
                                 </div>

@@ -32,14 +32,14 @@ class SalaryStructure(Base):
     employee = relationship("Employee", back_populates="salary_structure")
 
 
-class PayrollStatus(str, enum.Enum):
+class AutoPay-OSStatus(str, enum.Enum):
     DRAFT = "draft"
     PROCESSED = "processed"
     PAID = "paid"
     CANCELLED = "cancelled"
 
 
-class PayrollRecord(Base):
+class AutoPayOSRecord(Base):
     __tablename__ = "payroll_records"
     
     id = Column(Integer, primary_key=True, index=True)
@@ -71,7 +71,7 @@ class PayrollRecord(Base):
     employer_pf_contribution = Column(Numeric(precision=15, scale=2))
     employer_esi_contribution = Column(Numeric(precision=15, scale=2))
     
-    status = Column(SQLEnum(PayrollStatus), default=PayrollStatus.DRAFT)
+    status = Column(SQLEnum(AutoPay-OSStatus), default=AutoPay-OSStatus.DRAFT)
     processed_at = Column(DateTime(timezone=True))
     paid_at = Column(DateTime(timezone=True))
     

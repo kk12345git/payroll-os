@@ -14,13 +14,13 @@ import {
     FileText,
 } from 'lucide-react';
 import { useEmployeeStore } from '@/store/employeeStore';
-import { usePayrollStore } from '@/store/payrollStore';
+import { useAutoPayOSStore } from '@/store/payrollStore';
 import { useDepartmentStore } from '@/store/useDepartmentStore';
 import { LoadingOverlay } from '@/components/Loading';
 
-export default function RunPayrollPage() {
+export default function RunAutoPayOSPage() {
     const { employees, fetchEmployees, loading: empLoading } = useEmployeeStore();
-    const { processPayroll, loading: payrollLoading, payrollRecords, error } = usePayrollStore();
+    const { processAutoPayOS, loading: payrollLoading, payrollRecords, error } = useAutoPayOSStore();
     const [selectedMonth, setSelectedMonth] = useState(new Date().toISOString().substring(0, 7)); // YYYY-MM
     const [processed, setProcessed] = useState(false);
 
@@ -54,13 +54,13 @@ export default function RunPayrollPage() {
         };
     }, [activeEmployees, currentMonthRecords]);
 
-    const handleRunPayroll = async () => {
+    const handleRunAutoPayOS = async () => {
         try {
             const empIds = activeEmployees.map(e => e.id);
-            await processPayroll(month, year, empIds);
+            await processAutoPayOS(month, year, empIds);
             setProcessed(true);
         } catch (err) {
-            console.error('Payroll processing failed:', err);
+            console.error('AutoPay-OS processing failed:', err);
         }
     };
 
@@ -88,7 +88,7 @@ export default function RunPayrollPage() {
                     className="mb-8"
                 >
                     <h1 className="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-2 shimmer-text">
-                        Run Monthly Payroll
+                        Run Monthly AutoPay-OS
                     </h1>
                     <p className="text-slate-600 font-medium tracking-tight uppercase text-[10px] bg-white/50 w-fit px-2 py-1 rounded border border-indigo-100">
                         Process salaries for all employees • {activeEmployees.length} active
@@ -103,7 +103,7 @@ export default function RunPayrollPage() {
                 )}
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    {/* Left: Payroll Configuration */}
+                    {/* Left: AutoPay-OS Configuration */}
                     <div className="lg:col-span-2 space-y-6">
                         {/* Month Selection */}
                         <motion.div
@@ -136,7 +136,7 @@ export default function RunPayrollPage() {
                             </select>
                         </motion.div>
 
-                        {/* Payroll Summary */}
+                        {/* AutoPay-OS Summary */}
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
@@ -192,7 +192,7 @@ export default function RunPayrollPage() {
                             className="card-extreme p-6"
                         >
                             <h3 className="text-lg font-black text-slate-800 mb-6 tracking-tight">
-                                Payroll Status Table
+                                AutoPay-OS Status Table
                             </h3>
                             <div className="space-y-3 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
                                 {activeEmployees.map((emp) => {
@@ -266,7 +266,7 @@ export default function RunPayrollPage() {
                                     </div>
 
                                     <motion.button
-                                        onClick={handleRunPayroll}
+                                        onClick={handleRunAutoPayOS}
                                         disabled={payrollLoading}
                                         whileHover={{ scale: payrollLoading ? 1 : 1.02 }}
                                         whileTap={{ scale: payrollLoading ? 1 : 0.98 }}

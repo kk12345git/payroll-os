@@ -2,7 +2,7 @@ from pydantic import BaseModel, ConfigDict
 from typing import Optional, List
 from datetime import datetime
 from decimal import Decimal
-from app.models.payroll import PayrollStatus
+from app.models.payroll import AutoPay-OSStatus
 
 class SalaryStructureBase(BaseModel):
     basic: Decimal
@@ -42,7 +42,7 @@ class SalaryStructure(SalaryStructureBase):
     model_config = ConfigDict(from_attributes=True)
 
 
-class PayrollRecordBase(BaseModel):
+class AutoPayOSRecordBase(BaseModel):
     month: int
     year: int
     paid_days: Decimal
@@ -61,9 +61,9 @@ class PayrollRecordBase(BaseModel):
     income_tax_deduction: Decimal
     employer_pf_contribution: Decimal = Decimal("0.0")
     employer_esi_contribution: Decimal = Decimal("0.0")
-    status: PayrollStatus = PayrollStatus.DRAFT
+    status: AutoPay-OSStatus = AutoPay-OSStatus.DRAFT
 
-class PayrollSummary(BaseModel):
+class AutoPayOSSummary(BaseModel):
     month: int
     year: int
     total_gross: Decimal
@@ -71,7 +71,7 @@ class PayrollSummary(BaseModel):
     employee_count: int
     status: str
 
-class PayrollRecord(PayrollRecordBase):
+class AutoPayOSRecord(AutoPayOSRecordBase):
     id: int
     employee_id: int
     processed_at: Optional[datetime] = None
@@ -80,12 +80,12 @@ class PayrollRecord(PayrollRecordBase):
     
     model_config = ConfigDict(from_attributes=True)
 
-class PayrollProcessRequest(BaseModel):
+class AutoPayOSProcessRequest(BaseModel):
     employee_ids: List[int]
     month: int
     year: int
 
-class PayrollSummary(BaseModel):
+class AutoPayOSSummary(BaseModel):
     total_employees: int
     total_gross: Decimal
     total_deductions: Decimal

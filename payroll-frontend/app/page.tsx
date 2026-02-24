@@ -273,7 +273,7 @@ export default function LandingPage() {
 
               <div className="mt-auto h-40 rounded-xl bg-[#020617] border border-white/5 p-4 relative overflow-hidden flex flex-col items-center justify-center group-hover:border-emerald-500/30 transition-colors">
                 <div className="text-3xl font-bold text-white mb-1 tracking-tighter">$2,450,000</div>
-                <div className="text-xs text-slate-500 mb-4 font-semibold uppercase tracking-widest">Total Payroll Run</div>
+                <div className="text-xs text-slate-500 mb-4 font-semibold uppercase tracking-widest">Total AutoPay-OS Run</div>
                 <button className="px-6 py-2 bg-emerald-500/10 text-emerald-500 hover:bg-emerald-500 hover:text-white border border-emerald-500/20 text-xs font-bold rounded-lg w-full flex justify-center items-center gap-2 transition-all">
                   Approve Run <Check className="w-3 h-3" />
                 </button>

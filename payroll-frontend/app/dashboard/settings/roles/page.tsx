@@ -157,9 +157,9 @@ export default function UserRolesPage() {
                             </div>
                         </div>
 
-                        {/* Payroll Permissions */}
+                        {/* AutoPay-OS Permissions */}
                         <div>
-                            <h3 className="text-sm font-black text-slate-700 uppercase tracking-wider mb-3">Payroll Management</h3>
+                            <h3 className="text-sm font-black text-slate-700 uppercase tracking-wider mb-3">AutoPay-OS Management</h3>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                                 {['view_payroll', 'process_payroll', 'edit_payroll'].map(permission => (
                                     <label

@@ -14,10 +14,10 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 
-export default function PayrollPage() {
+export default function AutoPayOSPage() {
     const stats = [
         {
-            title: 'Total Payroll',
+            title: 'Total AutoPay-OS',
             value: '₹45,67,890',
             change: '+12.5%',
             icon: IndianRupee,
@@ -62,7 +62,7 @@ export default function PayrollPage() {
             color: 'from-pink-500 to-rose-600',
         },
         {
-            title: 'Run Payroll',
+            title: 'Run AutoPay-OS',
             description: 'Process monthly payroll for all employees',
             icon: DollarSign,
             href: '/dashboard/payroll/run',
@@ -90,7 +90,7 @@ export default function PayrollPage() {
             color: 'from-blue-500 to-cyan-600',
         },
         {
-            title: 'Payroll Calendar',
+            title: 'AutoPay-OS Calendar',
             description: 'View payroll schedule and history',
             icon: Calendar,
             href: '/dashboard/payroll/calendar',
@@ -108,7 +108,7 @@ export default function PayrollPage() {
                     className="mb-8"
                 >
                     <h1 className="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-2">
-                        Payroll Management
+                        AutoPay-OS Management
                     </h1>
                     <p className="text-slate-600">
                         Manage salaries, process payroll, and ensure compliance
@@ -175,14 +175,14 @@ export default function PayrollPage() {
                     </div>
                 </motion.div>
 
-                {/* Recent Payroll Runs */}
+                {/* Recent AutoPay-OS Runs */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.9 }}
                     className="bg-white/80 backdrop-blur-xl rounded-2xl p-6 border border-slate-200 shadow-xl"
                 >
-                    <h2 className="text-2xl font-bold text-slate-800 mb-6">Recent Payroll Runs</h2>
+                    <h2 className="text-2xl font-bold text-slate-800 mb-6">Recent AutoPay-OS Runs</h2>
                     <div className="space-y-4">
                         {[
                             { month: 'January 2026', amount: '₹45,67,890', employees: 156, status: 'Completed' },

@@ -17,26 +17,26 @@ import {
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { useEmployeeStore } from '@/store/employeeStore';
-import { usePayrollStore } from '@/store/payrollStore';
+import { useAutoPayOSStore } from '@/store/payrollStore';
 import { useDepartmentStore } from '@/store/useDepartmentStore';
 import { LoadingOverlay } from '@/components/Loading';
-import type { PayrollRecord } from '@/lib/api';
+import type { AutoPayOSRecord } from '@/lib/api';
 
 export default function SalarySlipsPage() {
     const { employees, fetchEmployees, loading: empLoading } = useEmployeeStore();
     const { departments, fetchDepartments } = useDepartmentStore();
-    const { payrollRecords, fetchPayrollHistory, fetchPayrollSummaries, loading: payrollLoading } = usePayrollStore();
+    const { payrollRecords, fetchAutoPayOSHistory, fetchAutoPayOSSummaries, loading: payrollLoading } = useAutoPayOSStore();
 
     const [selectedMonth, setSelectedMonth] = useState(new Date().toISOString().substring(0, 7)); // YYYY-MM
-    const [selectedRecord, setSelectedRecord] = useState<PayrollRecord | null>(null);
+    const [selectedRecord, setSelectedRecord] = useState<AutoPayOSRecord | null>(null);
     const [notifying, setNotifying] = useState(false);
     const slipRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         fetchEmployees();
         fetchDepartments();
-        fetchPayrollSummaries();
-    }, [fetchEmployees, fetchDepartments, fetchPayrollSummaries]);
+        fetchAutoPayOSSummaries();
+    }, [fetchEmployees, fetchDepartments, fetchAutoPayOSSummaries]);
 
     const months = useMemo(() => {
         const result = [];

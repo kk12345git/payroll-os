@@ -7,7 +7,7 @@ from datetime import datetime
 from decimal import Decimal
 
 from app.models.employee import Employee
-from app.models.payroll import PayrollRecord, PayrollStatus
+from app.models.payroll import AutoPayOSRecord, AutoPay-OSStatus
 
 class ComplianceService:
     @staticmethod
@@ -16,11 +16,11 @@ class ComplianceService:
         Generates the PF ECR (Electronic Challan-cum-Return) 2.0 text file.
         Separator: #~#
         """
-        records = db.query(PayrollRecord).join(Employee).filter(
-            PayrollRecord.company_id == company_id,
-            PayrollRecord.month == month,
-            PayrollRecord.year == year,
-            PayrollRecord.status == PayrollStatus.PAID,
+        records = db.query(AutoPayOSRecord).join(Employee).filter(
+            AutoPayOSRecord.company_id == company_id,
+            AutoPayOSRecord.month == month,
+            AutoPayOSRecord.year == year,
+            AutoPayOSRecord.status == AutoPay-OSStatus.PAID,
             Employee.uan_number.isnot(None)
         ).all()
 
@@ -64,11 +64,11 @@ class ComplianceService:
         """
         Generates the ESI monthly contribution data in JSON format for the ESIC portal.
         """
-        records = db.query(PayrollRecord).join(Employee).filter(
-            PayrollRecord.company_id == company_id,
-            PayrollRecord.month == month,
-            PayrollRecord.year == year,
-            PayrollRecord.status == PayrollStatus.PAID,
+        records = db.query(AutoPayOSRecord).join(Employee).filter(
+            AutoPayOSRecord.company_id == company_id,
+            AutoPayOSRecord.month == month,
+            AutoPayOSRecord.year == year,
+            AutoPayOSRecord.status == AutoPay-OSStatus.PAID,
             Employee.esi_number.isnot(None)
         ).all()
 
@@ -97,13 +97,13 @@ class ComplianceService:
         results = db.query(
             Employee.state,
             func.count(Employee.id).label("emp_count"),
-            func.sum(PayrollRecord.pt_deduction).label("total_pt")
-        ).join(PayrollRecord, PayrollRecord.employee_id == Employee.id)\
+            func.sum(AutoPayOSRecord.pt_deduction).label("total_pt")
+        ).join(AutoPayOSRecord, AutoPayOSRecord.employee_id == Employee.id)\
          .filter(
-             PayrollRecord.company_id == company_id,
-             PayrollRecord.month == month,
-             PayrollRecord.year == year,
-             PayrollRecord.pt_deduction > 0
+             AutoPayOSRecord.company_id == company_id,
+             AutoPayOSRecord.month == month,
+             AutoPayOSRecord.year == year,
+             AutoPayOSRecord.pt_deduction > 0
          ).group_by(Employee.state).all()
 
         return [

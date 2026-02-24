@@ -13,12 +13,12 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { useEmployeeStore } from '@/store/employeeStore';
-import { usePayrollStore } from '@/store/payrollStore';
+import { useAutoPayOSStore } from '@/store/payrollStore';
 import { useToast } from '@/store/toastStore';
 
 export default function LeaveEncashmentPage() {
     const { employees } = useEmployeeStore();
-    const { salaryStructures } = usePayrollStore();
+    const { salaryStructures } = useAutoPayOSStore();
     const toast = useToast();
 
     const [selectedEmployeeId, setSelectedEmployeeId] = useState('');

@@ -283,7 +283,7 @@ export default function CustomReportBuilderPage() {
                                     type="text"
                                     value={reportName}
                                     onChange={(e) => setReportName(e.target.value)}
-                                    placeholder="e.g., Monthly Payroll Summary"
+                                    placeholder="e.g., Monthly AutoPay-OS Summary"
                                     className="input-extreme !py-2.5 text-sm"
                                 />
                             </div>

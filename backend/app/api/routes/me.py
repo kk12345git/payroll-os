@@ -7,10 +7,10 @@ from app.core.database import get_db
 from app.api import dependencies
 from app.models.user import User, UserRole
 from app.models.employee import Employee
-from app.models.payroll import PayrollRecord, PayrollStatus
+from app.models.payroll import AutoPayOSRecord, AutoPay-OSStatus
 from app.models.attendance import Attendance
 from app.models.leave import LeaveApplication, LeaveStatus
-from app.schemas.payroll import PayrollRecord as PayrollRecordSchema
+from app.schemas.payroll import AutoPayOSRecord as AutoPayOSRecordSchema
 
 router = APIRouter()
 
@@ -27,10 +27,10 @@ def get_my_dashboard(
         raise HTTPException(status_code=404, detail="Employee profile not found")
 
     # Get last payslip
-    last_payslip = db.query(PayrollRecord).filter(
-        PayrollRecord.employee_id == employee.id,
-        PayrollRecord.status == PayrollStatus.PAID
-    ).order_by(PayrollRecord.year.desc(), PayrollRecord.month.desc()).first()
+    last_payslip = db.query(AutoPayOSRecord).filter(
+        AutoPayOSRecord.employee_id == employee.id,
+        AutoPayOSRecord.status == AutoPay-OSStatus.PAID
+    ).order_by(AutoPayOSRecord.year.desc(), AutoPayOSRecord.month.desc()).first()
 
     # Get recent attendance
     recent_attendance = db.query(Attendance).filter(
@@ -59,7 +59,7 @@ def get_my_dashboard(
         ]
     }
 
-@router.get("/payslips", response_model=List[PayrollRecordSchema])
+@router.get("/payslips", response_model=List[AutoPayOSRecordSchema])
 def get_my_payslips(
     db: Session = Depends(get_db),
     current_user: User = Depends(dependencies.get_current_user)
@@ -71,9 +71,9 @@ def get_my_payslips(
     if not employee:
         raise HTTPException(status_code=404, detail="Employee profile not found")
 
-    return db.query(PayrollRecord).filter(
-        PayrollRecord.employee_id == employee.id
-    ).order_by(PayrollRecord.year.desc(), PayrollRecord.month.desc()).all()
+    return db.query(AutoPayOSRecord).filter(
+        AutoPayOSRecord.employee_id == employee.id
+    ).order_by(AutoPayOSRecord.year.desc(), AutoPayOSRecord.month.desc()).all()
 
 @router.post("/apply-leave")
 def apply_leave(

@@ -154,7 +154,7 @@ class TaxOptimizerService:
             4: {"title": "Start of FY Planning", "tip": "Plan your 80C investments now to avoid last-minute stress in March!"},
             6: {"title": "LTA Claims", "tip": "Planning a summer vacation? Check your LTA eligibility for tax-free travel reimbursements."},
             9: {"title": "Advance Tax", "tip": "Ensure your advance tax installments are paid to avoid interest penalties."},
-            12: {"title": "Investment Proofs", "tip": "Payroll will soon ask for investment proofs. Organize your receipts now!"},
+            12: {"title": "Investment Proofs", "tip": "AutoPay-OS will soon ask for investment proofs. Organize your receipts now!"},
             3: {"title": "Last Call for Savings", "tip": "March 31st is the deadline for tax-saving investments. Max out your 80C/80D now!"}
         }
         return suggestions.get(month, {"title": "Tax Efficiency", "tip": "Review your salary components to ensure you're maximizing HRA and standard deductions."})

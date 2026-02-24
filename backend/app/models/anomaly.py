@@ -41,4 +41,4 @@ class Anomaly(Base):
     # Relationships
     company = relationship("Company")
     employee = relationship("Employee")
-    payroll_record = relationship("PayrollRecord")
+    payroll_record = relationship("AutoPayOSRecord")

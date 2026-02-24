@@ -77,7 +77,7 @@ class WhatsAppService:
                  return f"❌ Failed: {str(e)}"
 
         else:
-            return ("🤖 *Payroll Bot Help*\n\n"
+            return ("🤖 *AutoPay-OS Bot Help*\n\n"
                     "I can help you with:\n"
                     "- *BALANCE*: Check earned wage access\n"
                     "- *ATTENDANCE*: Mark usage for today\n"

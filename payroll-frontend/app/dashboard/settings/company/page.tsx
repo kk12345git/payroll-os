@@ -37,14 +37,38 @@ export default function CompanyProfilePage() {
         ptNumber: 'PT123456',
         lwfNumber: 'LWF123456',
         financialYearStart: '04',
+        dataRegion: 'India',
     });
+
+    const [saving, setSaving] = useState(false);
 
     const handleChange = (field: string, value: string) => {
         setFormData(prev => ({ ...prev, [field]: value }));
     };
 
-    const handleSave = () => {
-        console.log('Saving company profile:', formData);
+    const handleSave = async () => {
+        setSaving(true);
+        try {
+            const token = localStorage.getItem('token');
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/companies/settings`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    country: formData.country,
+                    data_region: formData.dataRegion
+                })
+            });
+            if (res.ok) {
+                alert('Settings updated successfully!');
+            }
+        } catch (error) {
+            console.error('Save failed:', error);
+        } finally {
+            setSaving(false);
+        }
     };
 
     return (
@@ -67,9 +91,13 @@ export default function CompanyProfilePage() {
                     </p>
                 </div>
 
-                <button onClick={handleSave} className="btn-extreme">
+                <button
+                    onClick={handleSave}
+                    disabled={saving}
+                    className="btn-extreme disabled:opacity-50"
+                >
                     <Save className="w-4 h-4 mr-2" />
-                    Save Changes
+                    {saving ? 'Saving...' : 'Save Changes'}
                 </button>
             </div>
 
@@ -125,6 +153,64 @@ export default function CompanyProfilePage() {
                             <option value="07">July</option>
                             <option value="10">October</option>
                         </select>
+                    </div>
+                </div>
+            </div>
+
+            {/* Global Sovereignty & Data Residency */}
+            <div className="card-extreme border-2 border-indigo-500/10 bg-indigo-50/10">
+                <div className="flex items-center gap-3 mb-6">
+                    <div className="w-12 h-12 rounded-2xl bg-slate-900 flex items-center justify-center shadow-lg shadow-indigo-500/20">
+                        <Globe className="w-6 h-6 text-indigo-400" />
+                    </div>
+                    <div>
+                        <h2 className="text-xl font-black text-slate-900 uppercase italic">Data Sovereignty</h2>
+                        <p className="text-[10px] font-black text-indigo-500 uppercase tracking-widest leading-none">GDPR / DPDP Compliance Control</p>
+                    </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div className="space-y-4">
+                        <p className="text-sm font-bold text-slate-600 leading-relaxed">
+                            AutoPay-OS ensures global regulatory compliance by allowing you to pin your organizational data to specific geographic legal regions.
+                        </p>
+                        <div className="flex items-center gap-2 p-3 bg-white rounded-xl border border-indigo-100 shadow-sm">
+                            <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Active Encryption: AES-256-GCM</span>
+                        </div>
+                    </div>
+
+                    <div className="p-8 rounded-[2rem] bg-slate-900 text-white shadow-2xl relative overflow-hidden">
+                        <div className="absolute top-0 right-0 p-8 opacity-10">
+                            <Globe className="w-24 h-24" />
+                        </div>
+                        <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-indigo-400 mb-6 font-mono">Select Data Residency Node</label>
+                        <div className="space-y-4 relative z-10">
+                            {[
+                                { id: 'India', label: 'India (MeitY Approved)', flag: '🇮🇳' },
+                                { id: 'EU', label: 'European Union (GDPR)', flag: '🇪🇺' },
+                                { id: 'US', label: 'United States (HIPAA/SOC2)', flag: '🇺🇸' }
+                            ].map((region) => (
+                                <button
+                                    key={region.id}
+                                    onClick={() => handleChange('dataRegion', region.id)}
+                                    className={`w-full flex items-center justify-between p-4 rounded-2xl border-2 transition-all ${formData.dataRegion === region.id
+                                            ? 'border-indigo-500 bg-indigo-500/10 shadow-lg shadow-indigo-500/10 scale-[1.02]'
+                                            : 'border-white/5 bg-white/5 hover:bg-white/10'
+                                        }`}
+                                >
+                                    <div className="flex items-center gap-3">
+                                        <span className="text-xl">{region.flag}</span>
+                                        <span className="text-xs font-black uppercase tracking-widest">{region.label}</span>
+                                    </div>
+                                    {formData.dataRegion === region.id && (
+                                        <div className="w-5 h-5 rounded-full bg-indigo-500 flex items-center justify-center">
+                                            <div className="w-2 h-2 rounded-full bg-white" />
+                                        </div>
+                                    )}
+                                </button>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>

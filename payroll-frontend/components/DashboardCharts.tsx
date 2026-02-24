@@ -40,24 +40,24 @@ export function DashboardCharts({ data, title, type }: ChartProps) {
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="card-extreme p-6 h-[400px]"
+                className="card-extreme p-4 md:p-6 h-[300px] md:h-[400px]"
             >
-                <div className="flex items-center justify-between mb-6">
-                    <h3 className="text-lg font-black text-slate-800 tracking-tight uppercase">{title}</h3>
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                    <h3 className="text-sm md:text-lg font-black text-slate-800 tracking-tight uppercase">{title}</h3>
                     <div className="flex gap-4">
                         <div className="flex items-center gap-2">
-                            <div className="w-3 h-3 rounded-full bg-indigo-500" />
-                            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Gross</span>
+                            <div className="w-2 md:w-3 h-2 md:h-3 rounded-full bg-indigo-500" />
+                            <span className="text-[8px] md:text-[10px] font-black text-slate-400 uppercase tracking-widest">Gross</span>
                         </div>
                         <div className="flex items-center gap-2">
-                            <div className="w-3 h-3 rounded-full bg-purple-500" />
-                            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Net</span>
+                            <div className="w-2 md:w-3 h-2 md:h-3 rounded-full bg-purple-500" />
+                            <span className="text-[8px] md:text-[10px] font-black text-slate-400 uppercase tracking-widest">Net</span>
                         </div>
                     </div>
                 </div>
 
                 <ResponsiveContainer width="100%" height="80%">
-                    <AreaChart data={chartData}>
+                    <AreaChart data={chartData} margin={{ left: -20, right: 10, bottom: 0 }}>
                         <defs>
                             <linearGradient id="colorGross" x1="0" y1="0" x2="0" y2="1">
                                 <stop offset="5%" stopColor="#6366f1" stopOpacity={0.1} />
@@ -73,13 +73,13 @@ export function DashboardCharts({ data, title, type }: ChartProps) {
                             dataKey="name"
                             axisLine={false}
                             tickLine={false}
-                            tick={{ fontSize: 10, fontWeight: 900, fill: '#94a3b8' }}
+                            tick={{ fontSize: 9, fontWeight: 900, fill: '#94a3b8' }}
                             dy={10}
                         />
                         <YAxis
                             axisLine={false}
                             tickLine={false}
-                            tick={{ fontSize: 10, fontWeight: 900, fill: '#94a3b8' }}
+                            tick={{ fontSize: 9, fontWeight: 900, fill: '#94a3b8' }}
                             tickFormatter={(v) => `₹${(v / 100000).toFixed(1)}L`}
                         />
                         <Tooltip
@@ -95,7 +95,7 @@ export function DashboardCharts({ data, title, type }: ChartProps) {
                             type="monotone"
                             dataKey="gross"
                             stroke="#6366f1"
-                            strokeWidth={4}
+                            strokeWidth={3}
                             fillOpacity={1}
                             fill="url(#colorGross)"
                         />
@@ -103,7 +103,7 @@ export function DashboardCharts({ data, title, type }: ChartProps) {
                             type="monotone"
                             dataKey="net"
                             stroke="#a855f7"
-                            strokeWidth={4}
+                            strokeWidth={3}
                             fillOpacity={1}
                             fill="url(#colorNet)"
                         />
@@ -118,15 +118,15 @@ export function DashboardCharts({ data, title, type }: ChartProps) {
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="card-extreme p-6 h-[400px]"
+                className="card-extreme p-4 md:p-6 h-[300px] md:h-[400px]"
             >
-                <h3 className="text-lg font-black text-slate-800 tracking-tight uppercase mb-6">{title}</h3>
-                <ResponsiveContainer width="100%" height="80%">
+                <h3 className="text-sm md:text-lg font-black text-slate-800 tracking-tight uppercase mb-6">{title}</h3>
+                <ResponsiveContainer width="100%" height="70%">
                     <PieChart>
                         <Pie
                             data={data}
-                            innerRadius={80}
-                            outerRadius={100}
+                            innerRadius={60}
+                            outerRadius={80}
                             paddingAngle={8}
                             dataKey="value"
                         >
@@ -148,11 +148,11 @@ export function DashboardCharts({ data, title, type }: ChartProps) {
                         />
                     </PieChart>
                 </ResponsiveContainer>
-                <div className="grid grid-cols-2 gap-2 mt-4">
+                <div className="grid grid-cols-2 md:grid-cols-2 gap-2 mt-4 overflow-y-auto max-h-[60px]">
                     {data.map((entry, index) => (
                         <div key={entry.name} className="flex items-center gap-2">
-                            <div className="w-2 h-2 rounded-full" style={{ backgroundColor: COLORS[index % COLORS.length] }} />
-                            <span className="text-[10px] font-black text-slate-500 truncate uppercase tracking-tighter">
+                            <div className="w-1.5 md:w-2 h-1.5 md:h-2 rounded-full" style={{ backgroundColor: COLORS[index % COLORS.length] }} />
+                            <span className="text-[8px] md:text-[10px] font-black text-slate-500 truncate uppercase tracking-tighter">
                                 {entry.name}
                             </span>
                         </div>

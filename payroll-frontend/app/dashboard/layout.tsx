@@ -34,7 +34,8 @@ import {
     UserPlus,
     FileText,
     Trophy,
-    Globe
+    Globe,
+    Rocket
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useThemeStore } from '@/store/themeStore';
@@ -110,6 +111,7 @@ export default function DashboardLayout({
         { title: 'Lifecycle', icon: TrendingDown, href: '/dashboard/talent/lifecycle', roles: ['admin', 'hr_manager'] },
         { title: 'Doc Vault', icon: ShieldCheck, href: '/dashboard/talent/vault', roles: ['admin', 'hr_manager'] },
         { title: 'Performance', icon: Trophy, href: '/dashboard/talent/performance', roles: ['admin', 'hr_manager'] },
+        { title: 'Gig Board', icon: Rocket, href: '/dashboard/talent/gigs', roles: ['admin', 'hr_manager', 'employee'] },
         { title: 'Group Admin', icon: Globe, href: '/dashboard/admin/group', roles: ['admin'] },
         { title: 'Billing', icon: CreditCard, href: '/dashboard/billing', roles: ['admin', 'hr_manager'] },
         { title: 'Sales Admin', icon: TrendingUp, href: '/admin/sales', roles: ['admin'] },

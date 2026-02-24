@@ -40,6 +40,7 @@ class Company(Base):
     # Multi-Entity / Group Company Management
     parent_id = Column(Integer, ForeignKey("companies.id"), nullable=True)
     is_parent = Column(Boolean, default=False)
+    data_region = Column(String, default="India") # India, EU, US, etc.
     
     # SaaS Fields
     plan = Column(SQLEnum(SubscriptionPlan), default=SubscriptionPlan.FREE)

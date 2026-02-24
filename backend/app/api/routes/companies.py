@@ -76,6 +76,7 @@ async def upgrade_subscription(
 class CompanySettingsUpdate(BaseModel):
     country: Optional[str] = None
     base_currency: Optional[str] = None
+    data_region: Optional[str] = None
 
 @router.patch("/settings")
 async def update_company_settings(
@@ -83,7 +84,7 @@ async def update_company_settings(
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
-    """Update company-wide settings like country and currency"""
+    """Update company-wide settings like country, currency, and data region"""
     if not current_user.company_id:
         raise HTTPException(status_code=400, detail="No company associated")
         
@@ -93,9 +94,15 @@ async def update_company_settings(
         company.country = settings_data.country
     if settings_data.base_currency:
         company.base_currency = settings_data.base_currency.upper()
+    if settings_data.data_region:
+        company.data_region = settings_data.data_region
         
     db.commit()
-    return {"status": "success", "base_currency": company.base_currency}
+    return {
+        "status": "success", 
+        "base_currency": company.base_currency,
+        "data_region": company.data_region
+    }
 
 class SubsidiaryCreate(BaseModel):
     name: str

@@ -10,7 +10,7 @@ from app.services.forecast_service import ForecastService
 router = APIRouter()
 
 @router.get("/forecast")
-async def get_payroll_forecast(
+async def get_autopay_os_forecast(
     months: int = 6,
     db: Session = Depends(get_db),
     current_user: User = Depends(dependencies.get_current_user)

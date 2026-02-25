@@ -22,7 +22,7 @@
 - `DELETE /api/employees/{id}` - Soft delete employee
 
 ### Database
-- Using SQLite: `payroll.db`
+- Using SQLite: `autopay-os.db`
 - Auto-created on first request
 - Tables: users, companies, departments, employees
 
@@ -33,4 +33,4 @@ Open http://localhost:8000/docs in your browser to test the API interactively.
 1. Create a test user
 2. Build frontend login page
 3. Connect frontend to backend
-4. Add more features (attendance, payroll, compliance)
+4. Add more features (attendance, autopay-os, compliance)

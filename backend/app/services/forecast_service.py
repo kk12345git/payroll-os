@@ -3,14 +3,14 @@ from sqlalchemy import func
 from decimal import Decimal
 from datetime import date, timedelta
 from typing import List, Dict, Any
-from app.models.payroll import AutoPayOSRecord, AutoPayOSStatus
+from app.models.autopay_os import AutoPayOSRecord, AutoPayOSStatus
 from app.models.employee import Employee
 
 class ForecastService:
     @staticmethod
     def get_cash_flow_forecast(db: Session, company_id: int, months: int = 6) -> Dict[str, Any]:
         """
-        Calculates a 6-month predictive cash flow forecast for payroll.
+        Calculates a 6-month predictive cash flow forecast for autopay_os.
         Formula: (Average Historical Spend) + (Projected Increments/Hires)
         """
         # 1. Fetch historical monthly spend (last 6 months)

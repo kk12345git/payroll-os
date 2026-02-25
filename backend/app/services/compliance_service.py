@@ -7,7 +7,7 @@ from datetime import datetime
 from decimal import Decimal
 
 from app.models.employee import Employee
-from app.models.payroll import AutoPayOSRecord, AutoPayOSStatus
+from app.models.autopay_os import AutoPayOSRecord, AutoPayOSStatus
 
 class ComplianceService:
     @staticmethod

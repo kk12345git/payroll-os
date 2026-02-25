@@ -74,4 +74,4 @@ class Employee(Base):
     leave_applications = relationship("LeaveApplication", back_populates="employee")
     user = relationship("User")
     salary_structure = relationship("SalaryStructure", back_populates="employee", uselist=False)
-    payroll_records = relationship("AutoPayOSRecord", back_populates="employee")
+    autopay_os_records = relationship("AutoPayOSRecord", back_populates="employee")

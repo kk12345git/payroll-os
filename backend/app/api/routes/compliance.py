@@ -8,7 +8,7 @@ from app.core.database import get_db
 from app.api import dependencies
 from app.models.user import User
 from app.models.employee import Employee
-from app.models.payroll import AutoPayOSRecord
+from app.models.autopay_os import AutoPayOSRecord
 from app.models.company import Company
 from app.services.pdf_service import PDFService
 from app.services.compliance_service import ComplianceService
@@ -28,7 +28,7 @@ async def download_form_16(
         
     company = db.query(Company).filter(Company.id == current_user.company_id).first()
     
-    # Calculate mock data from payroll records
+    # Calculate mock data from autopay_os records
     records = db.query(AutoPayOSRecord).filter(AutoPayOSRecord.employee_id == employee_id).all()
     gross = sum(Decimal(r.gross_earnings) for r in records)
     tax = sum(Decimal(r.income_tax_deduction or 0) for r in records)

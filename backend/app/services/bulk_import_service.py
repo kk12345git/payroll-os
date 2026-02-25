@@ -4,7 +4,7 @@ from typing import List, Dict, Any
 from sqlalchemy.orm import Session
 from app.models.employee import Employee, Gender, MaritalStatus
 from app.models.company import Company
-from app.models.payroll import SalaryStructure
+from app.models.autopay_os import SalaryStructure
 from decimal import Decimal
 import logging
 

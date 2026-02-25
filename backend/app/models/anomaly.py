@@ -23,7 +23,7 @@ class Anomaly(Base):
     id = Column(Integer, primary_key=True, index=True)
     company_id = Column(Integer, ForeignKey("companies.id"), nullable=False)
     employee_id = Column(Integer, ForeignKey("employees.id"), nullable=True)
-    payroll_record_id = Column(Integer, ForeignKey("payroll_records.id"), nullable=True)
+    autopay_os_record_id = Column(Integer, ForeignKey("autopay_os_records.id"), nullable=True)
     
     type = Column(SQLEnum(AnomalyType), nullable=False)
     severity = Column(SQLEnum(AnomalySeverity), default=AnomalySeverity.LOW)
@@ -41,4 +41,4 @@ class Anomaly(Base):
     # Relationships
     company = relationship("Company")
     employee = relationship("Employee")
-    payroll_record = relationship("AutoPayOSRecord")
+    autopay_os_record = relationship("AutoPayOSRecord")

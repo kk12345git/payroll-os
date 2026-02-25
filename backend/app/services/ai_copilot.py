@@ -4,7 +4,7 @@ from decimal import Decimal
 from typing import Dict, Any, List, Optional
 import re
 from app.models.employee import Employee
-from app.models.payroll import AutoPayOSRecord, AutoPayOSStatus
+from app.models.autopay_os import AutoPayOSRecord, AutoPayOSStatus
 from app.models.company import Department
 from app.models.attendance import Attendance
 from app.models.leave import LeaveApplication, LeaveStatus
@@ -50,13 +50,13 @@ class AICopilotService:
             }
 
         # 2. Total Salary Cost
-        if any(w in text for w in ["total salary", "total payroll", "total cost", "total spend"]):
+        if any(w in text for w in ["total salary", "total autopay_os", "total cost", "total spend"]):
             cost = db.query(func.sum(AutoPayOSRecord.net_pay)).filter(
                 AutoPayOSRecord.company_id == company_id,
                 AutoPayOSRecord.status == AutoPayOSStatus.PAID
             ).scalar() or 0
             return {
-                "answer": f"The total net payroll cost across the company is *₹{float(cost):,.2f}*.",
+                "answer": f"The total net autopay_os cost across the company is *₹{float(cost):,.2f}*.",
                 "data": {"total_cost": float(cost)},
                 "type": "metric"
             }
@@ -82,7 +82,7 @@ class AICopilotService:
             if record:
                 employee_name = db.query(Employee.full_name).filter(Employee.id == record.employee_id).scalar()
                 return {
-                    "answer": f"The highest deduction was recorded for *{employee_name}* with a total of *₹{float(record.total_deductions):,.2f}* (mostly {record.status} payroll).",
+                    "answer": f"The highest deduction was recorded for *{employee_name}* with a total of *₹{float(record.total_deductions):,.2f}* (mostly {record.status} autopay_os).",
                     "data": {"employee": employee_name, "amount": float(record.total_deductions)},
                     "type": "entity"
                 }
@@ -98,7 +98,7 @@ class AICopilotService:
              .group_by(Department.name).all()
              
             data = {r[0]: float(r[1]) for r in results}
-            answer = "Here is the breakdown of payroll costs by department:\n"
+            answer = "Here is the breakdown of autopay_os costs by department:\n"
             for dept, cost in data.items():
                 answer += f"- *{dept}*: ₹{cost:,.2f}\n"
                 
@@ -154,7 +154,7 @@ class AICopilotService:
         
         forecast = float(avg_cost) * 1.05 # 5% buffer
         return {
-            "answer": f"Based on recent trends, your projected payroll budget for next month is ~**₹{forecast:,.2f}**.",
+            "answer": f"Based on recent trends, your projected autopay_os budget for next month is ~**₹{forecast:,.2f}**.",
             "data": {"forecasted_amount": forecast},
             "type": "metric"
         }

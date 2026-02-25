@@ -1,7 +1,7 @@
 from decimal import Decimal
 from typing import Dict, List, Any
 from app.models.employee import Employee
-from app.models.payroll import SalaryStructure
+from app.models.autopay_os import SalaryStructure
 
 class TaxOptimizerService:
     @staticmethod

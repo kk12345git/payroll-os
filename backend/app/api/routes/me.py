@@ -7,10 +7,10 @@ from app.core.database import get_db
 from app.api import dependencies
 from app.models.user import User, UserRole
 from app.models.employee import Employee
-from app.models.payroll import AutoPayOSRecord, AutoPayOSStatus
+from app.models.autopay_os import AutoPayOSRecord, AutoPayOSStatus
 from app.models.attendance import Attendance
 from app.models.leave import LeaveApplication, LeaveStatus
-from app.schemas.payroll import AutoPayOSRecord as AutoPayOSRecordSchema
+from app.schemas.autopay_os import AutoPayOSRecord as AutoPayOSRecordSchema
 
 router = APIRouter()
 

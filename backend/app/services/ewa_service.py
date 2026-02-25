@@ -6,7 +6,7 @@ import calendar
 
 from app.models.employee import Employee
 from app.models.attendance import Attendance
-from app.models.payroll import SalaryStructure
+from app.models.autopay_os import SalaryStructure
 from app.models.ewa import EWAWithdrawal, EWAStatus
 
 class EWAService:

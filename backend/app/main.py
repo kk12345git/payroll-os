@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
-from app.api.routes import auth, employees, departments, attendance, leaves, payroll, companies, anomalies, ewa, tax_optimizer, whatsapp, copilot, analytics, compliance, billing, admin, invitations, me, investments, talent, lifecycle, assets, performance
+from app.api.routes import auth, employees, departments, attendance, leaves, autopay_os, companies, anomalies, ewa, tax_optimizer, whatsapp, copilot, analytics, compliance, billing, admin, invitations, me, investments, talent, lifecycle, assets, performance
 from app.core.database import engine, Base
 from app.core.security_middleware import SecurityHardeningMiddleware
 
@@ -43,7 +43,7 @@ app.include_router(employees.router, prefix="/api/employees", tags=["Employees"]
 app.include_router(departments.router, prefix="/api/departments", tags=["Departments"])
 app.include_router(attendance.router, prefix="/api/attendance", tags=["Attendance"])
 app.include_router(leaves.router, prefix="/api/leaves", tags=["Leaves"])
-app.include_router(payroll.router, prefix="/api/payroll", tags=["AutoPayOS"])
+app.include_router(autopay_os.router, prefix="/api/autopay-os", tags=["AutoPayOS"])
 app.include_router(companies.router, prefix="/api/companies", tags=["Companies"])
 app.include_router(anomalies.router, prefix="/api/anomalies", tags=["Anomalies"])
 app.include_router(ewa.router, prefix="/api/ewa", tags=["Earned Wage Access"])

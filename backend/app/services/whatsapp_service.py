@@ -58,7 +58,7 @@ class WhatsAppService:
             # Mock link
             return (f"📄 *Payslip Generated*\n\n"
                     f"Here is your payslip for the last month:\n"
-                    f"https://payroll.krg.com/doc/{employee.employee_code}/last-payslip.pdf\n\n"
+                    f"https://autopay_os.krg.com/doc/{employee.employee_code}/last-payslip.pdf\n\n"
                     f"(Password: Your PAN DOY)")
 
         elif "WITHDRAW" in command:

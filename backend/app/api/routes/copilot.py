@@ -20,7 +20,7 @@ async def ask_copilot(
     current_user: User = Depends(dependencies.get_current_user)
 ):
     """
-    Experimental: Natural language interface for payroll data.
+    Experimental: Natural language interface for autopay_os data.
     """
     if not current_user.company_id:
         raise HTTPException(status_code=400, detail="User not associated with a company.")

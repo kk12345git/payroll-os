@@ -4,13 +4,13 @@ from datetime import datetime
 from decimal import Decimal
 from typing import List, Optional
 
-from app.models.payroll import AutoPayOSRecord, AutoPayOSStatus
+from app.models.autopay_os import AutoPayOSRecord, AutoPayOSStatus
 from app.models.anomaly import Anomaly, AnomalyType, AnomalySeverity
 from app.models.employee import Employee
 
 class AnomalyDetectionService:
     @staticmethod
-    def analyze_payroll_record(db: Session, record: AutoPayOSRecord) -> List[Anomaly]:
+    def analyze_autopay_os_record(db: Session, record: AutoPayOSRecord) -> List[Anomaly]:
         anomalies = []
         
         # 1. Salary Spike Detection (> 20% increase from previous month)
@@ -31,7 +31,7 @@ class AnomalyDetectionService:
                 anomalies.append(Anomaly(
                     company_id=employee.company_id,
                     employee_id=record.employee_id,
-                    payroll_record_id=record.id,
+                    autopay_os_record_id=record.id,
                     type=AnomalyType.SALARY_SPIKE,
                     severity=AnomalySeverity.HIGH,
                     title="Significant Salary Spike Detected",
@@ -48,7 +48,7 @@ class AnomalyDetectionService:
              anomalies.append(Anomaly(
                 company_id=employee.company_id,
                 employee_id=record.employee_id,
-                payroll_record_id=record.id,
+                autopay_os_record_id=record.id,
                 type=AnomalyType.COMPLIANCE_MISMATCH,
                 severity=AnomalySeverity.MEDIUM,
                 title="Potential PF Compliance Issue",
@@ -61,7 +61,7 @@ class AnomalyDetectionService:
              anomalies.append(Anomaly(
                 company_id=employee.company_id,
                 employee_id=record.employee_id,
-                payroll_record_id=record.id,
+                autopay_os_record_id=record.id,
                 type=AnomalyType.TAX_ANOMALY,
                 severity=AnomalySeverity.HIGH,
                 title="Abnormally Low TDS Deduction",

@@ -9,7 +9,7 @@ class EWAStatus(str, enum.Enum):
     APPROVED = "approved"
     REJECTED = "rejected"
     DISBURSED = "disbursed"
-    SETTLED = "settled" # Settled means it was deducted from the final payroll
+    SETTLED = "settled" # Settled means it was deducted from the final autopay_os
 
 class EWAWithdrawal(Base):
     __tablename__ = "ewa_withdrawals"

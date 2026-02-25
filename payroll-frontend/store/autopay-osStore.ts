@@ -4,7 +4,7 @@ import { api, type SalaryStructure, type AutoPayOSRecord, type SalaryStructureUp
 
 interface AutoPayOSStore {
     salaryStructures: Record<number, SalaryStructure>; // employeeId -> structure
-    autopay-osRecords: AutoPayOSRecord[];
+    autopayOSRecords: AutoPayOSRecord[];
     monthlySummaries: AutoPayOSSummary[];
     selectedMonth: string;
     loading: boolean;
@@ -28,7 +28,7 @@ export const useAutoPayOSStore = create<AutoPayOSStore>()(
     persist(
         (set, get) => ({
             salaryStructures: {},
-            autopay-osRecords: [],
+            autopayOSRecords: [],
             monthlySummaries: [],
             selectedMonth: new Date().toISOString().substring(0, 7),
             loading: false,
@@ -89,7 +89,7 @@ export const useAutoPayOSStore = create<AutoPayOSStore>()(
                 try {
                     const records = await api.processAutoPayOS({ employee_ids: employeeIds, month, year });
                     set((state) => ({
-                        autopay-osRecords: [...state.autopay-osRecords, ...records],
+                        autopayOSRecords: [...state.autopayOSRecords, ...records],
                         loading: false
                     }));
                 } catch (err: any) {
@@ -104,9 +104,9 @@ export const useAutoPayOSStore = create<AutoPayOSStore>()(
                     const history = await api.getAutoPayOSHistory(employeeId);
                     set((state) => {
                         // Merge history avoiding duplicates
-                        const otherRecords = state.autopay-osRecords.filter(r => r.employee_id !== employeeId);
+                        const otherRecords = state.autopayOSRecords.filter(r => r.employee_id !== employeeId);
                         return {
-                            autopay-osRecords: [...otherRecords, ...history],
+                            autopayOSRecords: [...otherRecords, ...history],
                             loading: false
                         };
                     });
@@ -132,7 +132,7 @@ export const useAutoPayOSStore = create<AutoPayOSStore>()(
             },
 
             getAutoPayOSByMonth: (month, year) => {
-                return get().autopay-osRecords.filter(
+                return get().autopayOSRecords.filter(
                     (record) => record.month === month && record.year === year
                 );
             },

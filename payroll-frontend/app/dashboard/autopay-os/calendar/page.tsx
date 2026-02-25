@@ -38,7 +38,7 @@ export default function AutoPayOSCalendarPage() {
     ];
 
     // Mock autopay-os events
-    const autopay-osEvents: Record<string, AutoPayOSEvent> = {
+    const autopayOSEvents: Record<string, AutoPayOSEvent> = {
         '2026-02-28': {
             date: '2026-02-28',
             status: 'pending',
@@ -85,7 +85,7 @@ export default function AutoPayOSCalendarPage() {
             2,
             '0'
         )}-${String(day).padStart(2, '0')}`;
-        return autopay-osEvents[dateStr];
+        return autopayOSEvents[dateStr];
     };
 
     const getStatusColor = (status: string) => {
@@ -319,7 +319,7 @@ export default function AutoPayOSCalendarPage() {
                         >
                             <h3 className="text-lg font-semibold text-slate-800 mb-4">Recent History</h3>
                             <div className="space-y-3">
-                                {Object.values(autopay-osEvents)
+                                {Object.values(autopayOSEvents)
                                     .filter((e) => e.status === 'completed')
                                     .map((event) => (
                                         <div

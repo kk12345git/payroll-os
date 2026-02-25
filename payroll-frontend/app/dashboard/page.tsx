@@ -20,7 +20,7 @@ import {
 import Link from 'next/link';
 import { useEmployeeStore } from '@/store/employeeStore';
 import { useDepartmentStore } from '@/store/useDepartmentStore';
-import { useAutoPayOSStore } from '@/store/autopay-osStore';
+import { useAutoPayOSStore } from '@/store/autopayOSStore';
 import { useAnomalyStore } from '@/store/anomalyStore';
 
 import { DashboardCharts } from '@/components/DashboardCharts';
@@ -54,7 +54,7 @@ export default function DashboardPage() {
     // Get live data from stores
     const { employees } = useEmployeeStore();
     const { departments } = useDepartmentStore();
-    const { autopay-osRecords, monthlySummaries, fetchAutoPayOSSummaries, loading: autopay-osLoading } = useAutoPayOSStore();
+    const { autopayOSRecords, monthlySummaries, fetchAutoPayOSSummaries, loading: autopayOSLoading } = useAutoPayOSStore();
     const { anomalies, fetchAnomalies } = useAnomalyStore();
 
     React.useEffect(() => {
@@ -67,12 +67,12 @@ export default function DashboardPage() {
         return departments.map(dept => {
             const deptEmployees = employees.filter(e => e.department_id === dept.id);
             const totalCost = deptEmployees.reduce((sum, emp) => {
-                const record = autopay-osRecords.find(r => r.employee_id === emp.id);
+                const record = autopayOSRecords.find(r => r.employee_id === emp.id);
                 return sum + (Number(record?.gross_earnings) || 0);
             }, 0);
             return { name: dept.name, value: totalCost };
         }).filter(d => d.value > 0);
-    }, [departments, employees, autopay-osRecords]);
+    }, [departments, employees, autopayOSRecords]);
 
     // Calculate live stats
     const totalEmployees = employees.length;
@@ -82,7 +82,7 @@ export default function DashboardPage() {
     const now = new Date();
     const currentMonth = now.getMonth() + 1;
     const currentYear = now.getFullYear();
-    const currentMonthAutoPayOS = (autopay-osRecords || [])
+    const currentMonthAutoPayOS = (autopayOSRecords || [])
         .filter(record => record.month === currentMonth && record.year === currentYear)
         .reduce((sum, record) => sum + (Number(record.net_pay) || 0), 0);
 
@@ -142,7 +142,7 @@ export default function DashboardPage() {
         { action: "Department created", user: "Admin", time: "2 days ago", icon: Building2, color: "text-orange-500" },
     ];
 
-    if (autopay-osLoading && monthlySummaries.length === 0) {
+    if (autopayOSLoading && monthlySummaries.length === 0) {
         return (
             <div className="space-y-8 pb-12">
                 <div className="flex justify-between items-end">

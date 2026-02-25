@@ -14,13 +14,13 @@ import {
     FileText,
 } from 'lucide-react';
 import { useEmployeeStore } from '@/store/employeeStore';
-import { useAutoPayOSStore } from '@/store/autopay-osStore';
+import { useAutoPayOSStore } from '@/store/autopayOSStore';
 import { useDepartmentStore } from '@/store/useDepartmentStore';
 import { LoadingOverlay } from '@/components/Loading';
 
 export default function RunAutoPayOSPage() {
     const { employees, fetchEmployees, loading: empLoading } = useEmployeeStore();
-    const { processAutoPayOS, loading: autopay-osLoading, autopay-osRecords, error } = useAutoPayOSStore();
+    const { processAutoPayOS, loading: autopayOSLoading, autopayOSRecords, error } = useAutoPayOSStore();
     const [selectedMonth, setSelectedMonth] = useState(new Date().toISOString().substring(0, 7)); // YYYY-MM
     const [processed, setProcessed] = useState(false);
 
@@ -36,8 +36,8 @@ export default function RunAutoPayOSPage() {
     }, [selectedMonth]);
 
     const currentMonthRecords = useMemo(() => {
-        return autopay-osRecords.filter(r => r.month === month && r.year === year);
-    }, [autopay-osRecords, month, year]);
+        return autopayOSRecords.filter(r => r.month === month && r.year === year);
+    }, [autopayOSRecords, month, year]);
 
     const stats = useMemo(() => {
         const total = activeEmployees.length;
@@ -267,15 +267,15 @@ export default function RunAutoPayOSPage() {
 
                                     <motion.button
                                         onClick={handleRunAutoPayOS}
-                                        disabled={autopay-osLoading}
-                                        whileHover={{ scale: autopay-osLoading ? 1 : 1.02 }}
-                                        whileTap={{ scale: autopay-osLoading ? 1 : 0.98 }}
-                                        className={`w-full py-4 rounded-2xl font-black uppercase tracking-widest text-xs transition-all flex items-center justify-center gap-3 ${autopay-osLoading
+                                        disabled={autopayOSLoading}
+                                        whileHover={{ scale: autopayOSLoading ? 1 : 1.02 }}
+                                        whileTap={{ scale: autopayOSLoading ? 1 : 0.98 }}
+                                        className={`w-full py-4 rounded-2xl font-black uppercase tracking-widest text-xs transition-all flex items-center justify-center gap-3 ${autopayOSLoading
                                             ? 'bg-white/10 cursor-not-allowed text-slate-500'
                                             : 'bg-white text-slate-900 hover:shadow-[0_0_30px_rgba(255,255,255,0.2)]'
                                             }`}
                                     >
-                                        {autopay-osLoading ? (
+                                        {autopayOSLoading ? (
                                             <>
                                                 <Clock className="w-4 h-4 animate-spin text-indigo-500" />
                                                 Calculations Pending...

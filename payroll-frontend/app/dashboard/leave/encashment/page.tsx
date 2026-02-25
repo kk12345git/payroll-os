@@ -13,7 +13,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { useEmployeeStore } from '@/store/employeeStore';
-import { useAutoPayOSStore } from '@/store/autopay-osStore';
+import { useAutoPayOSStore } from '@/store/autopayOSStore';
 import { useToast } from '@/store/toastStore';
 
 export default function LeaveEncashmentPage() {

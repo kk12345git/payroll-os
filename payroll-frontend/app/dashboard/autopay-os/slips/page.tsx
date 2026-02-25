@@ -17,7 +17,7 @@ import {
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { useEmployeeStore } from '@/store/employeeStore';
-import { useAutoPayOSStore } from '@/store/autopay-osStore';
+import { useAutoPayOSStore } from '@/store/autopayOSStore';
 import { useDepartmentStore } from '@/store/useDepartmentStore';
 import { LoadingOverlay } from '@/components/Loading';
 import type { AutoPayOSRecord } from '@/lib/api';
@@ -25,7 +25,7 @@ import type { AutoPayOSRecord } from '@/lib/api';
 export default function SalarySlipsPage() {
     const { employees, fetchEmployees, loading: empLoading } = useEmployeeStore();
     const { departments, fetchDepartments } = useDepartmentStore();
-    const { autopay-osRecords, fetchAutoPayOSHistory, fetchAutoPayOSSummaries, loading: autopay-osLoading } = useAutoPayOSStore();
+    const { autopayOSRecords, fetchAutoPayOSHistory, fetchAutoPayOSSummaries, loading: autopayOSLoading } = useAutoPayOSStore();
 
     const [selectedMonth, setSelectedMonth] = useState(new Date().toISOString().substring(0, 7)); // YYYY-MM
     const [selectedRecord, setSelectedRecord] = useState<AutoPayOSRecord | null>(null);
@@ -58,8 +58,8 @@ export default function SalarySlipsPage() {
     const activeEmployees = useMemo(() => employees.filter(e => e.is_active), [employees]);
 
     const filteredRecords = useMemo(() => {
-        return autopay-osRecords.filter(r => r.month === month && r.year === year);
-    }, [autopay-osRecords, month, year]);
+        return autopayOSRecords.filter(r => r.month === month && r.year === year);
+    }, [autopayOSRecords, month, year]);
 
     const displays = useMemo(() => {
         return activeEmployees.map(emp => {

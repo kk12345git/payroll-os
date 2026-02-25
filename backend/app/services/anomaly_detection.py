@@ -4,7 +4,7 @@ from datetime import datetime
 from decimal import Decimal
 from typing import List, Optional
 
-from app.models.payroll import AutoPayOSRecord, AutoPay-OSStatus
+from app.models.payroll import AutoPayOSRecord, AutoPayOSStatus
 from app.models.anomaly import Anomaly, AnomalyType, AnomalySeverity
 from app.models.employee import Employee
 
@@ -21,7 +21,7 @@ class AnomalyDetectionService:
 
         previous_record = db.query(AutoPayOSRecord).filter(
             AutoPayOSRecord.employee_id == record.employee_id,
-            AutoPayOSRecord.status == AutoPay-OSStatus.PAID,
+            AutoPayOSRecord.status == AutoPayOSStatus.PAID,
             (AutoPayOSRecord.year * 12 + AutoPayOSRecord.month) < (record.year * 12 + record.month)
         ).order_by(AutoPayOSRecord.year.desc(), AutoPayOSRecord.month.desc()).first()
         

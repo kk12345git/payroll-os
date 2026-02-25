@@ -3,7 +3,7 @@ from sqlalchemy import func
 from decimal import Decimal
 from datetime import date, timedelta
 from typing import List, Dict, Any
-from app.models.payroll import AutoPayOSRecord, AutoPay-OSStatus
+from app.models.payroll import AutoPayOSRecord, AutoPayOSStatus
 from app.models.employee import Employee
 
 class ForecastService:
@@ -20,7 +20,7 @@ class ForecastService:
             func.sum(AutoPayOSRecord.net_pay).label("total_net")
         ).filter(
             AutoPayOSRecord.company_id == company_id,
-            AutoPayOSRecord.status == AutoPay-OSStatus.PAID
+            AutoPayOSRecord.status == AutoPayOSStatus.PAID
         ).group_by(AutoPayOSRecord.year, AutoPayOSRecord.month)\
          .order_by(AutoPayOSRecord.year.desc(), AutoPayOSRecord.month.desc())\
          .limit(6).all()

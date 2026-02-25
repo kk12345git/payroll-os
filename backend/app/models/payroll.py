@@ -32,7 +32,7 @@ class SalaryStructure(Base):
     employee = relationship("Employee", back_populates="salary_structure")
 
 
-class AutoPay-OSStatus(str, enum.Enum):
+class AutoPayOSStatus(str, enum.Enum):
     DRAFT = "draft"
     PROCESSED = "processed"
     PAID = "paid"
@@ -71,7 +71,7 @@ class AutoPayOSRecord(Base):
     employer_pf_contribution = Column(Numeric(precision=15, scale=2))
     employer_esi_contribution = Column(Numeric(precision=15, scale=2))
     
-    status = Column(SQLEnum(AutoPay-OSStatus), default=AutoPay-OSStatus.DRAFT)
+    status = Column(SQLEnum(AutoPayOSStatus), default=AutoPayOSStatus.DRAFT)
     processed_at = Column(DateTime(timezone=True))
     paid_at = Column(DateTime(timezone=True))
     

@@ -7,7 +7,7 @@ from app.core.database import get_db
 from app.api import dependencies
 from app.models.user import User, UserRole
 from app.models.employee import Employee
-from app.models.payroll import AutoPayOSRecord, AutoPay-OSStatus
+from app.models.payroll import AutoPayOSRecord, AutoPayOSStatus
 from app.models.attendance import Attendance
 from app.models.leave import LeaveApplication, LeaveStatus
 from app.schemas.payroll import AutoPayOSRecord as AutoPayOSRecordSchema
@@ -29,7 +29,7 @@ def get_my_dashboard(
     # Get last payslip
     last_payslip = db.query(AutoPayOSRecord).filter(
         AutoPayOSRecord.employee_id == employee.id,
-        AutoPayOSRecord.status == AutoPay-OSStatus.PAID
+        AutoPayOSRecord.status == AutoPayOSStatus.PAID
     ).order_by(AutoPayOSRecord.year.desc(), AutoPayOSRecord.month.desc()).first()
 
     # Get recent attendance

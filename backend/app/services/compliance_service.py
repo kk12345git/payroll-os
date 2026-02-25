@@ -7,7 +7,7 @@ from datetime import datetime
 from decimal import Decimal
 
 from app.models.employee import Employee
-from app.models.payroll import AutoPayOSRecord, AutoPay-OSStatus
+from app.models.payroll import AutoPayOSRecord, AutoPayOSStatus
 
 class ComplianceService:
     @staticmethod
@@ -20,7 +20,7 @@ class ComplianceService:
             AutoPayOSRecord.company_id == company_id,
             AutoPayOSRecord.month == month,
             AutoPayOSRecord.year == year,
-            AutoPayOSRecord.status == AutoPay-OSStatus.PAID,
+            AutoPayOSRecord.status == AutoPayOSStatus.PAID,
             Employee.uan_number.isnot(None)
         ).all()
 
@@ -68,7 +68,7 @@ class ComplianceService:
             AutoPayOSRecord.company_id == company_id,
             AutoPayOSRecord.month == month,
             AutoPayOSRecord.year == year,
-            AutoPayOSRecord.status == AutoPay-OSStatus.PAID,
+            AutoPayOSRecord.status == AutoPayOSStatus.PAID,
             Employee.esi_number.isnot(None)
         ).all()
 

@@ -6,7 +6,7 @@ from decimal import Decimal
 import calendar
 
 from app.core.database import get_db
-from app.models.payroll import SalaryStructure, AutoPayOSRecord, AutoPay-OSStatus
+from app.models.payroll import SalaryStructure, AutoPayOSRecord, AutoPayOSStatus
 from app.models.employee import Employee
 from app.models.attendance import Attendance
 from app.schemas.payroll import (
@@ -148,7 +148,7 @@ def process_payroll(
             # Employer contribution is 3.25%
             employer_esi = gross_earnings * Decimal("0.0325")
 
-        # 5. Create or Update AutoPay-OS Record
+        # 5. Create or Update AutoPayOS Record
         db_record = db.query(AutoPayOSRecord).filter(
             AutoPayOSRecord.employee_id == emp_id,
             AutoPayOSRecord.month == request.month,
@@ -171,7 +171,7 @@ def process_payroll(
             db_record.pt_deduction = pt_deduction
             db_record.employer_pf_contribution = employer_pf
             db_record.employer_esi_contribution = employer_esi
-            db_record.status = AutoPay-OSStatus.PROCESSED
+            db_record.status = AutoPayOSStatus.PROCESSED
             db_record.processed_at = datetime.now()
         else:
             db_record = AutoPayOSRecord(
@@ -194,7 +194,7 @@ def process_payroll(
                 pt_deduction=pt_deduction,
                 employer_pf_contribution=employer_pf,
                 employer_esi_contribution=employer_esi,
-                status=AutoPay-OSStatus.PROCESSED,
+                status=AutoPayOSStatus.PROCESSED,
                 processed_at=datetime.now()
             )
             db.add(db_record)

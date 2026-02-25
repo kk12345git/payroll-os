@@ -66,7 +66,7 @@ class PDFService:
             
         # Footer
         p.setFont("Helvetica-Oblique", 8)
-        p.drawString(0.7*inch, 1*inch, f"Generated automatically by AI AutoPay-OS Engine on {date.today().strftime('%Y-%m-%d')}")
+        p.drawString(0.7*inch, 1*inch, f"Generated automatically by AI AutoPayOS Engine on {date.today().strftime('%Y-%m-%d')}")
         p.drawString(0.7*inch, 0.8*inch, "This is a computer generated certificate and does not require a physical signature.")
         
         p.showPage()

@@ -4,7 +4,7 @@ from decimal import Decimal
 from typing import Dict, Any, List, Optional
 import re
 from app.models.employee import Employee
-from app.models.payroll import AutoPayOSRecord, AutoPay-OSStatus
+from app.models.payroll import AutoPayOSRecord, AutoPayOSStatus
 from app.models.company import Department
 from app.models.attendance import Attendance
 from app.models.leave import LeaveApplication, LeaveStatus
@@ -53,7 +53,7 @@ class AICopilotService:
         if any(w in text for w in ["total salary", "total payroll", "total cost", "total spend"]):
             cost = db.query(func.sum(AutoPayOSRecord.net_pay)).filter(
                 AutoPayOSRecord.company_id == company_id,
-                AutoPayOSRecord.status == AutoPay-OSStatus.PAID
+                AutoPayOSRecord.status == AutoPayOSStatus.PAID
             ).scalar() or 0
             return {
                 "answer": f"The total net payroll cost across the company is *₹{float(cost):,.2f}*.",
@@ -149,7 +149,7 @@ class AICopilotService:
         # Simple forecasting: Avg of last 3 months + 5% overhead
         avg_cost = db.query(func.avg(AutoPayOSRecord.net_pay)).filter(
             AutoPayOSRecord.company_id == company_id,
-            AutoPayOSRecord.status == AutoPay-OSStatus.PAID
+            AutoPayOSRecord.status == AutoPayOSStatus.PAID
         ).scalar() or 0
         
         forecast = float(avg_cost) * 1.05 # 5% buffer
@@ -163,7 +163,7 @@ class AICopilotService:
     def _simulate_hike(db: Session, company_id: int, percent: int, dept_name: str = None) -> Dict[str, Any]:
         query = db.query(func.sum(AutoPayOSRecord.net_pay)).filter(
             AutoPayOSRecord.company_id == company_id,
-            AutoPayOSRecord.status == AutoPay-OSStatus.PAID
+            AutoPayOSRecord.status == AutoPayOSStatus.PAID
         )
         
         if dept_name:

@@ -2,7 +2,7 @@ from pydantic import BaseModel, ConfigDict
 from typing import Optional, List
 from datetime import datetime
 from decimal import Decimal
-from app.models.payroll import AutoPay-OSStatus
+from app.models.payroll import AutoPayOSStatus
 
 class SalaryStructureBase(BaseModel):
     basic: Decimal
@@ -61,7 +61,7 @@ class AutoPayOSRecordBase(BaseModel):
     income_tax_deduction: Decimal
     employer_pf_contribution: Decimal = Decimal("0.0")
     employer_esi_contribution: Decimal = Decimal("0.0")
-    status: AutoPay-OSStatus = AutoPay-OSStatus.DRAFT
+    status: AutoPayOSStatus = AutoPayOSStatus.DRAFT
 
 class AutoPayOSSummary(BaseModel):
     month: int

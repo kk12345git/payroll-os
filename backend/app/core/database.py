@@ -4,25 +4,14 @@ from sqlalchemy.orm import sessionmaker
 from app.core.config import settings
 
 # Create SQLAlchemy engine
-# Handle Railway/Render Postgres URL (postgres:// vs postgresql://)
-import os
-db_url = os.getenv("DATABASE_URL") or settings.DATABASE_URL
-print(f"--- DATABASE DIAGNOSTIC ---")
-print(f"Raw DB URL length: {len(db_url) if db_url else 0}")
+SQLALCHEMY_DATABASE_URL = settings.DATABASE_URL
+is_sqlite = "sqlite" in SQLALCHEMY_DATABASE_URL
 
-if not db_url or db_url.strip() == "":
-    print("❌ CRITICAL: DATABASE_URL is empty! Check Railway environment variables.")
-    # Use a safe fallback for local development if everything fails
-    SQLALCHEMY_DATABASE_URL = "sqlite:///./production_fallback.db"
-    print(f"📡 Using Database URL: {SQLALCHEMY_DATABASE_URL}")
-else:
-    if db_url.startswith("postgres://"):
-        SQLALCHEMY_DATABASE_URL = db_url.replace("postgres://", "postgresql://", 1)
-        print("✅ Corrected postgres:// to postgresql://")
-    else:
-        SQLALCHEMY_DATABASE_URL = db_url
-    print(f"📡 Database URL configured (scheme: {SQLALCHEMY_DATABASE_URL.split(':')[0]})")
-print(f"---------------------------")
+print(f"--- DATABASE INITIALIZATION ---")
+print(f"Engine Type: {'SQLite' if is_sqlite else 'PostgreSQL'}")
+if is_sqlite and settings.ENVIRONMENT == "production":
+    print("⚠️ WARNING: Running with SQLite in production environment!")
+print(f"--------------------------------")
 
 is_sqlite = "sqlite" in SQLALCHEMY_DATABASE_URL
 engine = create_engine(

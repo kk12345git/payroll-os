@@ -73,6 +73,38 @@ async def root():
     }
 
 
+from sqlalchemy import text
+from app.core.database import engine, Base, SessionLocal
+
+# ... rest of the imports ...
+
 @app.get("/health")
 async def health_check():
-    return {"status": "healthy"}
+    db_status = "unhealthy"
+    engine_type = "unknown"
+    try:
+        # Determine engine type
+        db_url = str(engine.url)
+        engine_type = "postgresql" if "postgresql" in db_status else "sqlite"
+        if "postgresql" in db_url:
+            engine_type = "postgresql"
+        elif "sqlite" in db_url:
+            engine_type = "sqlite"
+
+        # Active connection check
+        db = SessionLocal()
+        db.execute(text("SELECT 1"))
+        db.close()
+        db_status = "healthy"
+    except Exception as e:
+        db_status = f"error: {str(e)}"
+
+    return {
+        "status": "healthy" if db_status == "healthy" else "degraded",
+        "database": {
+            "status": db_status,
+            "engine": engine_type,
+            "environment": settings.ENVIRONMENT,
+            "is_railway": settings.IS_RAILWAY
+        }
+    }

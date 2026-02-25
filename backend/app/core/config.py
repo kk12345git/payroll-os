@@ -4,30 +4,42 @@ from typing import Optional
 
 class Settings(BaseSettings):
     # Database
-    DATABASE_URL: str = "sqlite:///./payroll.db"
+    IS_RAILWAY: bool = False
     
     # Custom init to debug environment variables in production
     def __init__(self, **values):
         super().__init__(**values)
         import os
         env_val = os.getenv("DATABASE_URL")
+        self.IS_RAILWAY = os.getenv("RAILWAY_SERVICE_ID") is not None
+        
         if env_val:
-            print(f"--- ENVIRONMENT DIAGNOSTIC ---")
-            print(f"DATABASE_URL found in OS env (length: {len(env_val)})")
-            # Force override if it starts with postgres or if currently using default sqlite
-            if env_val.startswith("postgres") or self.DATABASE_URL == "sqlite:///./payroll.db":
-                 self.DATABASE_URL = env_val
-                 print(f"Applied production DATABASE_URL from environment")
-            print(f"-----------------------------")
+            print(f"--- DATABASE CONNECTION DIAGNOSTIC ---")
+            print(f"DATABASE_URL detected with length: {len(env_val)}")
+            print(f"Platform: {'Railway' if self.IS_RAILWAY else 'Generic/Other'}")
+            
+            # Protocol check and correction
+            if env_val.startswith("postgres://"):
+                actual_val = env_val.replace("postgres://", "postgresql://", 1)
+                self.DATABASE_URL = actual_val
+                print(f"Updated protocol: postgresql://")
+            else:
+                self.DATABASE_URL = env_val
+            
+            print(f"Status: Production URL applied")
+            print(f"--------------------------------------")
         else:
-            print("--- ENVIRONMENT DIAGNOSTIC ---")
-            print("DATABASE_URL NOT FOUND in OS environment!")
+            print("--- DATABASE CONNECTION WARNING ---")
+            print("DATABASE_URL environment variable is MISSING!")
+            if self.ENVIRONMENT == "production":
+                print("CRITICAL: Running in PRODUCTION without a remote database!")
+            
             # Ensure it's not empty even if env is missing
             if not self.DATABASE_URL or self.DATABASE_URL.strip() == "":
                 self.DATABASE_URL = "sqlite:///./payroll.db"
-                print("Restored default sqlite path")
-            print(f"Current DATABASE_URL in settings: {self.DATABASE_URL}")
-            print(f"-----------------------------")
+                print("Action: Falling back to local SQLite (payroll.db)")
+            print(f"Active URL: {self.DATABASE_URL}")
+            print(f"-----------------------------------")
     
     # JWT
     SECRET_KEY: str = "your-secret-key-change-this-in-production"

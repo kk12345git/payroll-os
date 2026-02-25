@@ -11,10 +11,19 @@ import {
     Calculator,
     ArrowRight,
     DollarSign,
+    Gamepad2,
+    ShieldAlert,
+    HelpCircle,
 } from 'lucide-react';
 import Link from 'next/link';
+import { useSettingsStore } from '@/store/settingsStore';
+import { TutorialTooltip } from '@/components/TutorialTooltip';
+import { OnboardingWizard } from '@/components/OnboardingWizard';
 
 export default function AutoPayOSPage() {
+    const { companySettings, toggleSimpleMode } = useSettingsStore();
+    const isSimple = companySettings.simpleMode;
+    const [showOnboarding, setShowOnboarding] = useState(false);
     const stats = [
         {
             title: 'Total AutoPay-OS',
@@ -53,6 +62,7 @@ export default function AutoPayOSPage() {
             icon: Calculator,
             href: '/dashboard/autopay-os/salary-structure',
             color: 'from-indigo-500 to-purple-600',
+            tutorial: "Define how Basic, HRA, and other components are calculated for your team."
         },
         {
             title: 'Assign Salary',
@@ -60,6 +70,7 @@ export default function AutoPayOSPage() {
             icon: Users,
             href: '/dashboard/autopay-os/assign',
             color: 'from-pink-500 to-rose-600',
+            tutorial: "Apply specific pay structures to individual employees or groups."
         },
         {
             title: 'Run AutoPay-OS',
@@ -67,20 +78,7 @@ export default function AutoPayOSPage() {
             icon: DollarSign,
             href: '/dashboard/autopay-os/run',
             color: 'from-green-500 to-emerald-600',
-        },
-        {
-            title: 'Income Tax Calculator',
-            description: 'Calculate tax - Old vs New regime',
-            icon: Calculator,
-            href: '/dashboard/autopay-os/tax-calculator',
-            color: 'from-orange-500 to-amber-600',
-        },
-        {
-            title: 'TDS Forms (16 & 24Q)',
-            description: 'Generate Form 16 and Form 24Q',
-            icon: FileText,
-            href: '/dashboard/autopay-os/tds-forms',
-            color: 'from-red-500 to-pink-600',
+            tutorial: "The core engine. Calculate all salaries, deductions, and statutory PF/ESI in one batch."
         },
         {
             title: 'Salary Slips',
@@ -88,6 +86,7 @@ export default function AutoPayOSPage() {
             icon: FileText,
             href: '/dashboard/autopay-os/slips',
             color: 'from-blue-500 to-cyan-600',
+            tutorial: "Generate beautiful, compliant payslips for your employees to download."
         },
         {
             title: 'AutoPay-OS Calendar',
@@ -95,7 +94,27 @@ export default function AutoPayOSPage() {
             icon: Calendar,
             href: '/dashboard/autopay-os/calendar',
             color: 'from-purple-500 to-pink-600',
+            tutorial: "Track past payouts and upcoming scheduled runs."
         },
+        // Advanced items (only shown if not isSimple)
+        ...(!isSimple ? [
+            {
+                title: 'Income Tax Calculator',
+                description: 'Calculate tax - Old vs New regime',
+                icon: Calculator,
+                href: '/dashboard/autopay-os/tax-calculator',
+                color: 'from-orange-500 to-amber-600',
+                tutorial: ""
+            },
+            {
+                title: 'TDS Forms (16 & 24Q)',
+                description: 'Generate Form 16 and Form 24Q',
+                icon: FileText,
+                href: '/dashboard/autopay-os/tds-forms',
+                color: 'from-red-500 to-pink-600',
+                tutorial: ""
+            }
+        ] : []),
     ];
 
     return (
@@ -105,15 +124,61 @@ export default function AutoPayOSPage() {
                 <motion.div
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="mb-8"
+                    className="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4"
                 >
-                    <h1 className="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-2">
-                        AutoPay-OS Management
-                    </h1>
-                    <p className="text-slate-600">
-                        Manage salaries, process autopay-os, and ensure compliance
-                    </p>
+                    <div>
+                        <h1 className="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-2">
+                            AutoPay-OS Management
+                        </h1>
+                        <p className="text-slate-600 font-medium">
+                            {isSimple ? "Simplified payroll for small businesses" : "Enterprise-grade payroll engine"}
+                        </p>
+                    </div>
+
+                    <div className="flex items-center gap-3">
+                        <button
+                            onClick={() => setShowOnboarding(true)}
+                            className="p-3 bg-white border border-indigo-100 text-indigo-600 rounded-xl hover:bg-indigo-50 transition-all flex items-center gap-2 font-bold text-sm shadow-sm"
+                        >
+                            <Gamepad2 className="w-4 h-4" /> Start Tutorial
+                        </button>
+
+                        <div className="h-10 w-px bg-slate-200 mx-2 hidden md:block" />
+
+                        <div className="flex items-center gap-2 bg-white p-1.5 rounded-2xl border border-slate-200 shadow-sm">
+                            <button
+                                onClick={() => toggleSimpleMode(true)}
+                                className={`px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${isSimple ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-500 hover:bg-slate-50'}`}
+                            >
+                                SME Mode
+                            </button>
+                            <button
+                                onClick={() => toggleSimpleMode(false)}
+                                className={`px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${!isSimple ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-500 hover:bg-slate-50'}`}
+                            >
+                                Enterprise
+                            </button>
+                        </div>
+                    </div>
                 </motion.div>
+
+                {isSimple && (
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="mb-8 p-4 bg-gradient-to-r from-indigo-600/10 to-purple-600/10 border border-indigo-100 rounded-2xl flex items-center gap-4"
+                    >
+                        <div className="p-3 bg-white rounded-xl shadow-sm">
+                            <ShieldAlert className="w-6 h-6 text-indigo-600" />
+                        </div>
+                        <div className="flex-1">
+                            <h4 className="font-bold text-slate-900 text-sm">SME Optimization Active</h4>
+                            <p className="text-xs text-slate-500 font-medium">Advanced statutory filing and tax optimization modules are hidden. Switch to Enterprise mode if you need full controls.</p>
+                        </div>
+                    </motion.div>
+                )}
+
+                {showOnboarding && <OnboardingWizard />}
 
                 {/* Stats Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -165,10 +230,17 @@ export default function AutoPayOSPage() {
                                         <div className={`p-4 bg-gradient-to-br ${action.color} rounded-xl`}>
                                             <action.icon className="w-8 h-8 text-white" />
                                         </div>
+                                        {action.tutorial && (
+                                            <TutorialTooltip title={action.title} content={action.tutorial} placement="top">
+                                                <div className="p-2 bg-slate-100 rounded-lg text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                    <HelpCircle className="w-4 h-4" />
+                                                </div>
+                                            </TutorialTooltip>
+                                        )}
                                         <ArrowRight className="w-6 h-6 text-slate-400 group-hover:text-indigo-600 group-hover:translate-x-1 transition-all" />
                                     </div>
                                     <h3 className="text-xl font-bold text-slate-800 mb-2">{action.title}</h3>
-                                    <p className="text-slate-600">{action.description}</p>
+                                    <p className="text-slate-600 font-medium text-sm leading-relaxed">{action.description}</p>
                                 </motion.div>
                             </Link>
                         ))}

@@ -30,6 +30,8 @@ export default function LandingPage() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [activeFaq, setActiveFaq] = React.useState<number | null>(null);
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 });
+  const [currency, setCurrency] = React.useState({ symbol: '$', code: 'USD', rate: 1 });
+  const [loadingPricing, setLoadingPricing] = React.useState(true);
 
   const handleMouseMove = (e: React.MouseEvent) => {
     const { clientX, clientY } = e;
@@ -39,6 +41,27 @@ export default function LandingPage() {
       y: (clientY / innerHeight - 0.5) * 2
     });
   };
+
+  React.useEffect(() => {
+    const fetchGeoData = async () => {
+      try {
+        const response = await fetch('https://ipapi.co/json/');
+        const data = await response.json();
+
+        if (data.country_code === 'IN') {
+          setCurrency({ symbol: '₹', code: 'INR', rate: 80 }); // Simplified rate for demo
+        } else {
+          setCurrency({ symbol: '$', code: 'USD', rate: 1 });
+        }
+      } catch (error) {
+        console.error('Failed to fetch geo data:', error);
+      } finally {
+        setLoadingPricing(false);
+      }
+    };
+
+    fetchGeoData();
+  }, []);
 
   return (
     <div
@@ -371,8 +394,9 @@ export default function LandingPage() {
               <h3 className="text-2xl font-bold mb-2">Growth</h3>
               <p className="text-slate-400 mb-6 text-sm">Perfect for startups and scaling teams.</p>
               <div className="flex items-baseline gap-2 mb-8">
-                <span className="text-5xl font-bold">$12</span>
+                <span className="text-5xl font-bold">{currency.symbol}{Math.round(12 * currency.rate)}</span>
                 <span className="text-slate-500 font-medium">/user/mo</span>
+                {loadingPricing && <div className="w-4 h-4 rounded-full border-2 border-primary border-t-transparent animate-spin ml-2" />}
               </div>
               <Link href="/register" className="w-full block text-center py-3 bg-white hover:bg-slate-200 text-slate-900 rounded-xl font-semibold mb-8 transition-colors">
                 Start 14-day free trial
@@ -406,6 +430,23 @@ export default function LandingPage() {
                   </div>
                 ))}
               </div>
+            </div>
+          </div>
+
+          <div className="mt-12 flex justify-center">
+            <div className="inline-flex items-center gap-2 p-1 bg-white/5 border border-white/10 rounded-xl">
+              <button
+                onClick={() => setCurrency({ symbol: '$', code: 'USD', rate: 1 })}
+                className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${currency.code === 'USD' ? 'bg-white text-slate-900 shadow-lg' : 'text-slate-400 hover:text-white'}`}
+              >
+                USD ($)
+              </button>
+              <button
+                onClick={() => setCurrency({ symbol: '₹', code: 'INR', rate: 80 })}
+                className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${currency.code === 'INR' ? 'bg-white text-slate-900 shadow-lg' : 'text-slate-400 hover:text-white'}`}
+              >
+                INR (₹)
+              </button>
             </div>
           </div>
         </div>

@@ -16,9 +16,11 @@ import {
 import { useEmployeeStore } from '@/store/employeeStore';
 import { useAutoPayOSStore } from '@/store/autopay-osStore';
 import { useDepartmentStore } from '@/store/useDepartmentStore';
+import { useSettingsStore } from '@/store/settingsStore';
 import { LoadingOverlay } from '@/components/Loading';
 
 export default function RunAutoPayOSPage() {
+    const { isSimple } = useSettingsStore(state => ({ isSimple: state.companySettings.simpleMode }));
     const { employees, fetchEmployees, loading: empLoading } = useEmployeeStore();
     const { processAutoPayOS, loading: autopayOSLoading, autopayOSRecords, error } = useAutoPayOSStore();
     const [selectedMonth, setSelectedMonth] = useState(new Date().toISOString().substring(0, 7)); // YYYY-MM
@@ -242,28 +244,30 @@ export default function RunAutoPayOSPage() {
 
                             {!processed && stats.pending > 0 ? (
                                 <>
-                                    <div className="space-y-4 mb-8">
-                                        <div className="p-5 bg-white/5 rounded-2xl border border-white/10">
-                                            <div className="flex items-center gap-2 mb-4">
-                                                <AlertCircle className="w-4 h-4 text-indigo-400" />
-                                                <span className="text-[10px] font-black uppercase tracking-widest text-indigo-300">Pre-Process Checksum</span>
-                                            </div>
-                                            <div className="space-y-3">
-                                                <div className="flex items-center gap-2 text-xs font-bold text-slate-300">
-                                                    <Check className="w-3 h-3 text-green-400" />
-                                                    <span>Master Data Integrity</span>
+                                    {!isSimple && (
+                                        <div className="space-y-4 mb-8">
+                                            <div className="p-5 bg-white/5 rounded-2xl border border-white/10">
+                                                <div className="flex items-center gap-2 mb-4">
+                                                    <AlertCircle className="w-4 h-4 text-indigo-400" />
+                                                    <span className="text-[10px] font-black uppercase tracking-widest text-indigo-300">Pre-Process Checksum</span>
                                                 </div>
-                                                <div className="flex items-center gap-2 text-xs font-bold text-slate-300">
-                                                    <Check className="w-3 h-3 text-green-400" />
-                                                    <span>Attendance Normalization</span>
-                                                </div>
-                                                <div className="flex items-center gap-2 text-xs font-bold text-slate-300">
-                                                    <Check className="w-3 h-3 text-green-400" />
-                                                    <span>Compliance Constants Load</span>
+                                                <div className="space-y-3">
+                                                    <div className="flex items-center gap-2 text-xs font-bold text-slate-300">
+                                                        <Check className="w-3 h-3 text-green-400" />
+                                                        <span>Master Data Integrity</span>
+                                                    </div>
+                                                    <div className="flex items-center gap-2 text-xs font-bold text-slate-300">
+                                                        <Check className="w-3 h-3 text-green-400" />
+                                                        <span>Attendance Normalization</span>
+                                                    </div>
+                                                    <div className="flex items-center gap-2 text-xs font-bold text-slate-300">
+                                                        <Check className="w-3 h-3 text-green-400" />
+                                                        <span>Compliance Constants Load</span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    )}
 
                                     <motion.button
                                         onClick={handleRunAutoPayOS}
@@ -283,7 +287,7 @@ export default function RunAutoPayOSPage() {
                                         ) : (
                                             <>
                                                 <Play className="w-4 h-4" />
-                                                Run Full Batch
+                                                {isSimple ? 'Process Salaries Now' : 'Run Full Batch'}
                                             </>
                                         )}
                                     </motion.button>

@@ -12,6 +12,7 @@ interface CompanySettings {
     address: string;
     phone: string;
     email: string;
+    simpleMode: boolean;
 }
 
 interface StatutorySettings {
@@ -50,6 +51,7 @@ interface SettingsStore {
     updateESISettings: (settings: Partial<StatutorySettings['esi']>) => void;
     updatePTSettings: (settings: Partial<StatutorySettings['pt']>) => void;
     updateLWFSettings: (settings: Partial<StatutorySettings['lwf']>) => void;
+    toggleSimpleMode: (enabled: boolean) => void;
 }
 
 export const useSettingsStore = create<SettingsStore>()(
@@ -66,6 +68,7 @@ export const useSettingsStore = create<SettingsStore>()(
                 address: '',
                 phone: '',
                 email: '',
+                simpleMode: true,
             },
 
             statutorySettings: {
@@ -127,6 +130,9 @@ export const useSettingsStore = create<SettingsStore>()(
                     ...state.statutorySettings,
                     lwf: { ...state.statutorySettings.lwf, ...settings },
                 },
+            })),
+            toggleSimpleMode: (enabled) => set((state) => ({
+                companySettings: { ...state.companySettings, simpleMode: enabled },
             })),
         }),
         {

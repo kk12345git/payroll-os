@@ -17,7 +17,7 @@ import {
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { useEmployeeStore } from '@/store/employeeStore';
-import { useAutoPayOSStore } from '@/store/autopayOSStore';
+import { useAutoPayOSStore } from '@/store/autopay-osStore';
 import { useDepartmentStore } from '@/store/useDepartmentStore';
 import { LoadingOverlay } from '@/components/Loading';
 import type { AutoPayOSRecord } from '@/lib/api';

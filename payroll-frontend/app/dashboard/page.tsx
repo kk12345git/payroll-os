@@ -20,7 +20,7 @@ import {
 import Link from 'next/link';
 import { useEmployeeStore } from '@/store/employeeStore';
 import { useDepartmentStore } from '@/store/useDepartmentStore';
-import { useAutoPayOSStore } from '@/store/autopayOSStore';
+import { useAutoPayOSStore } from '@/store/autopay-osStore';
 import { useAnomalyStore } from '@/store/anomalyStore';
 
 import { DashboardCharts } from '@/components/DashboardCharts';

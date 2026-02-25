@@ -4,7 +4,7 @@ from typing import Optional
 
 class Settings(BaseSettings):
     # Database
-    DATABASE_URL: str = "sqlite:///./autopay_os.db"
+    DATABASE_URL: str = "sqlite:///./payroll.db"
     
     # Custom init to debug environment variables in production
     def __init__(self, **values):
@@ -15,7 +15,7 @@ class Settings(BaseSettings):
             print(f"--- ENVIRONMENT DIAGNOSTIC ---")
             print(f"DATABASE_URL found in OS env (length: {len(env_val)})")
             # Force override if it starts with postgres or if currently using default sqlite
-            if env_val.startswith("postgres") or self.DATABASE_URL == "sqlite:///./autopay_os.db":
+            if env_val.startswith("postgres") or self.DATABASE_URL == "sqlite:///./payroll.db":
                  self.DATABASE_URL = env_val
                  print(f"Applied production DATABASE_URL from environment")
             print(f"-----------------------------")
@@ -24,7 +24,7 @@ class Settings(BaseSettings):
             print("DATABASE_URL NOT FOUND in OS environment!")
             # Ensure it's not empty even if env is missing
             if not self.DATABASE_URL or self.DATABASE_URL.strip() == "":
-                self.DATABASE_URL = "sqlite:///./autopay_os.db"
+                self.DATABASE_URL = "sqlite:///./payroll.db"
                 print("Restored default sqlite path")
             print(f"Current DATABASE_URL in settings: {self.DATABASE_URL}")
             print(f"-----------------------------")

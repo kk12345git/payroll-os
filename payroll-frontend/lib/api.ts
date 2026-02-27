@@ -7,7 +7,7 @@ const getApiBaseUrl = () => {
         const isLocal = hostname === 'localhost' || hostname === '127.0.0.1' || hostname.startsWith('192.168.');
 
         if (!isLocal) {
-            return 'https://autopay-os-api-production-f97d.up.railway.app';
+            return 'https://payroll-api-production-f97d.up.railway.app';
         }
     }
 

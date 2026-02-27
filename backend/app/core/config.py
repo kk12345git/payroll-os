@@ -11,7 +11,8 @@ class Settings(BaseSettings):
     def __init__(self, **values):
         super().__init__(**values)
         import os
-        env_val = os.getenv("DATABASE_URL")
+        # Fallback check for DATABASE_URI (common typo/variation)
+        env_val = os.getenv("DATABASE_URL") or os.getenv("DATABASE_URI")
         self.IS_RAILWAY = os.getenv("RAILWAY_SERVICE_ID") is not None
         
         if env_val:

@@ -4,6 +4,7 @@ from typing import Optional
 
 class Settings(BaseSettings):
     # Database
+    DATABASE_URL: str = "sqlite:///./payroll.db"
     IS_RAILWAY: bool = False
     
     # Custom init to debug environment variables in production

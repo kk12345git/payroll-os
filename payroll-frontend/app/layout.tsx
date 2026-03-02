@@ -10,8 +10,8 @@ import InstallPrompt from "@/components/InstallPrompt";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "AutoPay-OS Management System - Indian Compliance",
-  description: "Enterprise autopay-os management with PF, ESI, TDS, and Tamil Nadu Professional Tax",
+  title: "AutoPay-OS | The Intelligent HR & Payroll Platform",
+  description: "Enterprise payroll, headcount planning, and HR management completely automated by AI.",
 };
 
 export default function RootLayout({

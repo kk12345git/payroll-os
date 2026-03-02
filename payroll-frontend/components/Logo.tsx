@@ -82,8 +82,8 @@ export default function Logo({ className = "", showText = true, size = 'md' }: L
                     transition={{ duration: 0.5, delay: 0.3 }}
                     className={`font-black tracking-tighter ${sizeClasses[size].text}`}
                 >
-                    <span className="text-slate-900 dark:text-white">PAY</span>
-                    <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">ROLL</span>
+                    <span className="text-slate-900 dark:text-white">AutoPay</span>
+                    <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent tracking-tighter">-OS</span>
                 </motion.div>
             )}
         </div>

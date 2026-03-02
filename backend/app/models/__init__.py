@@ -8,6 +8,7 @@ from app.models.autopay_os import SalaryStructure, AutoPayOSRecord, AutoPayOSSta
 from app.models.engagement import EngagementPost, PostReaction, PostComment, PostType, ReactionType
 from app.models.pulse import PulseSurvey, PulseResponse, PulseStatus
 from app.models.performance import OKRGoal, FeedbackReview, GoalStatus, ReviewCycle, ReviewType, OKRLevel, ReviewCycleStatus
+from app.models.learning import Course, Lesson, Enrollment, LessonProgress, SkillPath, Certificate
 
 # Import all models here so Alembic can discover them
 __all__ = [

@@ -102,7 +102,7 @@ function MessageBubble({ msg }: { msg: Message }) {
         error: 'border-red-500/30 bg-red-500/10',
     }[msg.type || 'insight'] || 'border-white/10 bg-white/5';
 
-    const typeLabel = {
+    const typeLabel = ({
         metric: { label: 'Metric', color: 'text-blue-400', icon: <BarChart3 size={11} /> },
         alert: { label: 'Risk Alert', color: 'text-red-400', icon: <AlertTriangle size={11} /> },
         insight: { label: 'Insight', color: 'text-indigo-400', icon: <Lightbulb size={11} /> },
@@ -112,7 +112,8 @@ function MessageBubble({ msg }: { msg: Message }) {
         report: { label: 'Report', color: 'text-teal-400', icon: <Shield size={11} /> },
         help: { label: 'Help', color: 'text-white/40', icon: <Sparkles size={11} /> },
         error: { label: 'Error', color: 'text-red-400', icon: <AlertTriangle size={11} /> },
-    }[msg.type || ''];
+    } as Record<string, any>)[msg.type || 'insight'];
+
 
     return (
         <motion.div

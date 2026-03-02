@@ -104,39 +104,35 @@ export default function DashboardLayout({
         }
     }, [isAuthenticated, loading, router]);
 
-    const navItems = [
-        // Admin/HR Items
+    const navItems: any[] = [
+        // --- CORE ---
+        { title: 'CORE', isSection: true, roles: ['admin', 'hr_manager', 'employee', 'accountant'] },
         { title: 'Overview', icon: LayoutDashboard, href: '/dashboard', roles: ['admin', 'hr_manager'] },
-        { title: 'AI Copilot', icon: Brain, href: '/dashboard/copilot', roles: ['admin', 'hr_manager'] },
-        { title: 'Cash Flow AI', icon: TrendingUp, href: '/dashboard/analytics/forecast', roles: ['admin', 'hr_manager'] },
-        { title: 'Compliance', icon: ShieldCheck, href: '/dashboard/compliance', roles: ['admin', 'hr_manager'] },
-        { title: 'Attrition Risk', icon: Brain, href: '/dashboard/talent/attrition', roles: ['admin', 'hr_manager'] },
-        { title: 'Lifecycle', icon: TrendingDown, href: '/dashboard/talent/lifecycle', roles: ['admin', 'hr_manager'] },
-        { title: 'Doc Vault', icon: ShieldCheck, href: '/dashboard/talent/vault', roles: ['admin', 'hr_manager'] },
-        { title: 'Performance', icon: Trophy, href: '/dashboard/talent/performance', roles: ['admin', 'hr_manager'] },
-        { title: 'Gig Board', icon: Rocket, href: '/dashboard/talent/gigs', roles: ['admin', 'hr_manager', 'employee'] },
-        { title: 'Group Admin', icon: Globe, href: '/dashboard/admin/group', roles: ['admin'] },
-        { title: 'Billing', icon: CreditCard, href: '/dashboard/billing', roles: ['admin', 'hr_manager'] },
-        { title: 'Sales Admin', icon: TrendingUp, href: '/admin/sales', roles: ['admin'] },
-        { title: 'Recruit & Invite', icon: UserPlus, href: '/dashboard/settings/invites', roles: ['admin', 'hr_manager'] },
-        { title: 'Employees', icon: Users, href: '/dashboard/employees', roles: ['admin', 'hr_manager'] },
+        { title: 'Employee Portal', icon: UserIcon, href: '/dashboard/ess', roles: ['admin', 'hr_manager', 'employee', 'accountant'] },
         { title: 'People Hub', icon: Heart, href: '/dashboard/people', roles: ['admin', 'hr_manager', 'employee'] },
-        { title: 'Learning (LMS)', icon: GraduationCap, href: '/dashboard/learning', roles: ['admin', 'hr_manager', 'employee', 'accountant'] },
-        { title: 'Headcount Planning', icon: Map, href: '/dashboard/headcount', roles: ['admin', 'hr_manager'] },
-        { title: 'Departments', icon: Building2, href: '/dashboard/departments', roles: ['admin', 'hr_manager'] },
-        { title: 'AutoPay-OS', icon: Wallet, href: '/dashboard/autopay-os', roles: ['admin', 'hr_manager', 'accountant'] },
+        { title: 'AI Copilot', icon: Brain, href: '/dashboard/copilot', roles: ['admin', 'hr_manager'] },
+
+        // --- HR & TALENT ---
+        { title: 'HR & TALENT', isSection: true, roles: ['admin', 'hr_manager'] },
+        { title: 'Directory', icon: Users, href: '/dashboard/employees', roles: ['admin', 'hr_manager'] },
         { title: 'Attendance', icon: ClipboardCheck, href: '/dashboard/attendance', roles: ['admin', 'hr_manager'] },
+        { title: 'Performance', icon: Trophy, href: '/dashboard/talent/performance', roles: ['admin', 'hr_manager'] },
+        { title: 'Learning (LMS)', icon: GraduationCap, href: '/dashboard/learning', roles: ['admin', 'hr_manager', 'employee', 'accountant'] },
+        { title: 'Headcount', icon: Map, href: '/dashboard/headcount', roles: ['admin', 'hr_manager'] },
+        { title: 'Recruit', icon: UserPlus, href: '/dashboard/settings/invites', roles: ['admin', 'hr_manager'] },
+
+        // --- PAYROLL & FINANCE ---
+        { title: 'PAYROLL', isSection: true, roles: ['admin', 'hr_manager', 'employee', 'accountant'] },
+        { title: 'Run Payroll', icon: Wallet, href: '/dashboard/autopay-os', roles: ['admin', 'hr_manager', 'accountant'] },
+        { title: 'InstaPay (EWA)', icon: CreditCard, href: '/dashboard/ewa', roles: ['admin', 'hr_manager', 'employee'] },
+        { title: 'Tax Optimizer', icon: FileText, href: '/dashboard/autopay-os/tax-optimizer', roles: ['admin', 'hr_manager', 'employee'] },
         { title: 'Reports', icon: PieChart, href: '/dashboard/reports', roles: ['admin', 'hr_manager', 'accountant'] },
 
-        // Universal / Employee Items
-        { title: 'Employee Portal', icon: UserIcon, href: '/dashboard/ess', roles: ['admin', 'hr_manager', 'employee', 'accountant'] },
-        { title: 'EWA (Salary Access)', icon: Wallet, href: '/dashboard/ewa', roles: ['admin', 'hr_manager', 'employee'] },
-        { title: 'Tax Optimizer (AI)', icon: Brain, href: '/dashboard/autopay-os/tax-optimizer', roles: ['admin', 'hr_manager', 'employee'] },
-
-        // Admin Settings
-        { title: 'WhatsApp (Beta)', icon: MessageSquare, href: '/dashboard/integrations/whatsapp', roles: ['admin'] },
-        { title: 'Subscription', icon: Gem, href: '/dashboard/settings/subscription', roles: ['admin'] },
+        // --- SYS ADMIN ---
+        { title: 'SETTINGS', isSection: true, roles: ['admin'] },
+        { title: 'Departments', icon: Building2, href: '/dashboard/departments', roles: ['admin', 'hr_manager'] },
         { title: 'Control Panel', icon: Settings, href: '/dashboard/settings', roles: ['admin'] },
+        { title: 'Billing', icon: Gem, href: '/dashboard/billing', roles: ['admin'] },
     ];
 
     const filteredNavItems = navItems.filter(item =>
@@ -192,15 +188,25 @@ export default function DashboardLayout({
                         </div>
 
                         {/* Navigation Items */}
-                        <nav className="flex-1 px-4 space-y-2 py-8">
-                            {filteredNavItems.map((item) => {
+                        <nav className="flex-1 px-4 py-6 overflow-y-auto scrollbar-hide pb-20">
+                            {filteredNavItems.map((item, index) => {
+                                if (item.isSection) {
+                                    return sidebarOpen ? (
+                                        <div key={`section-${index}`} className="px-5 pt-6 pb-2">
+                                            <p className="text-[10px] font-black tracking-widest text-muted-foreground/60 uppercase">{item.title}</p>
+                                        </div>
+                                    ) : (
+                                        <div key={`section-${index}`} className="w-full h-px bg-border/50 my-4" />
+                                    );
+                                }
+
                                 const isActive = pathname === item.href;
                                 return (
                                     <Link
                                         key={item.title}
-                                        href={item.href}
+                                        href={item.href || '#'}
                                         className={cn(
-                                            "flex items-center gap-4 px-5 py-4 rounded-[1.25rem] transition-all duration-300 group relative overflow-hidden",
+                                            "flex items-center gap-4 px-5 py-3.5 mt-1 rounded-[1.25rem] transition-all duration-300 group relative overflow-hidden",
                                             isActive
                                                 ? "bg-primary text-primary-foreground shadow-xl shadow-primary/20"
                                                 : "text-muted-foreground hover:bg-accent/10 hover:text-foreground hover:shadow-lg hover:shadow-accent/5"
@@ -257,16 +263,24 @@ export default function DashboardLayout({
                             </div>
 
                             {/* Mobile Navigation */}
-                            <nav className="flex-1 px-4 space-y-2 py-8">
-                                {filteredNavItems.map((item) => {
+                            <nav className="flex-1 px-4 py-6 overflow-y-auto pb-20">
+                                {filteredNavItems.map((item, index) => {
+                                    if (item.isSection) {
+                                        return (
+                                            <div key={`mob-section-${index}`} className="px-5 pt-6 pb-2">
+                                                <p className="text-[10px] font-black tracking-widest text-slate-400 uppercase">{item.title}</p>
+                                            </div>
+                                        );
+                                    }
+
                                     const isActive = pathname === item.href;
                                     return (
                                         <Link
                                             key={item.title}
-                                            href={item.href}
+                                            href={item.href || '#'}
                                             onClick={() => setMobileMenuOpen(false)}
                                             className={cn(
-                                                "flex items-center gap-4 px-5 py-4 rounded-[1.25rem] transition-all duration-300",
+                                                "flex items-center gap-4 px-5 py-3.5 mt-1 rounded-[1.25rem] transition-all duration-300",
                                                 isActive
                                                     ? "bg-indigo-600 text-white shadow-xl shadow-indigo-600/20"
                                                     : "text-slate-500 hover:bg-slate-50 hover:text-slate-900"

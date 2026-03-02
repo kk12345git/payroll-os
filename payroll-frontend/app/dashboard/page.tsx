@@ -21,7 +21,6 @@ import Link from 'next/link';
 import { useEmployeeStore } from '@/store/employeeStore';
 import { useDepartmentStore } from '@/store/useDepartmentStore';
 import { useAutoPayOSStore } from '@/store/autopay-osStore';
-import { useAnomalyStore } from '@/store/anomalyStore';
 
 import { DashboardCharts } from '@/components/DashboardCharts';
 import { Skeleton, CardSkeleton } from '@/components/ui/Skeleton';
@@ -55,12 +54,10 @@ export default function DashboardPage() {
     const { employees } = useEmployeeStore();
     const { departments } = useDepartmentStore();
     const { autopayOSRecords, monthlySummaries, fetchAutoPayOSSummaries, loading: autopayOSLoading } = useAutoPayOSStore();
-    const { anomalies, fetchAnomalies } = useAnomalyStore();
 
     React.useEffect(() => {
         fetchAutoPayOSSummaries();
-        fetchAnomalies(false); // Fetch unresolved anomalies
-    }, [fetchAutoPayOSSummaries, fetchAnomalies]);
+    }, [fetchAutoPayOSSummaries]);
 
     // Calculate department cost allocation for pie chart
     const deptCosts = React.useMemo(() => {
@@ -189,66 +186,8 @@ export default function DashboardPage() {
                 </button>
             </motion.div>
 
-            {/* AI Intelligence Center */}
-            {anomalies.length > 0 && (
-                <motion.div
-                    variants={itemVariants}
-                    className="p-1 rounded-[2rem] bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 shadow-2xl shadow-indigo-500/10"
-                >
-                    {/* ... (rest of AI Center stays same) ... */}
-                    <div className="bg-card/95 backdrop-blur-xl rounded-[1.85rem] p-8">
-                        {/* (I'll keep the inner content for brevity or replace carefully) */}
-                        <div className="flex items-center justify-between mb-8">
-                            <div className="flex items-center gap-4">
-                                <div className="w-14 h-14 rounded-2xl bg-indigo-600 flex items-center justify-center text-white shadow-lg shadow-indigo-600/30">
-                                    <Brain className="w-7 h-7" />
-                                </div>
-                                <div>
-                                    <h2 className="text-2xl font-black uppercase tracking-tight text-foreground">AI Intelligence <span className="text-indigo-600">Center</span></h2>
-                                    <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest italic">Automated Risk & Anomaly Audit Active</p>
-                                </div>
-                            </div>
-                            <div className="px-5 py-2.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-xs font-black text-indigo-600 uppercase tracking-widest flex items-center gap-2">
-                                <div className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse" />
-                                {anomalies.length} Critical Observations
-                            </div>
-                        </div>
+            {/* Simplistic Header spacing maintained */}
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {anomalies.slice(0, 3).map((anomaly) => (
-                                <div
-                                    key={anomaly.id}
-                                    className="p-6 rounded-2xl bg-muted/40 border-2 border-transparent hover:border-indigo-500/30 transition-all group overflow-hidden relative"
-                                >
-                                    <div className="relative z-10">
-                                        <div className="flex items-center gap-3 mb-4">
-                                            <div className={cn(
-                                                "w-10 h-10 rounded-xl flex items-center justify-center",
-                                                anomaly.severity === 'high' || anomaly.severity === 'critical' ? "bg-red-500/10 text-red-500" : "bg-amber-500/10 text-amber-500"
-                                            )}>
-                                                <ShieldAlert className="w-5 h-5 transition-transform group-hover:scale-110" />
-                                            </div>
-                                            <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">{anomaly.type.replace('_', ' ')}</span>
-                                        </div>
-                                        <h4 className="font-black text-foreground mb-2 line-clamp-1">{anomaly.title}</h4>
-                                        <p className="text-xs font-medium text-muted-foreground mb-6 line-clamp-2 italic">{anomaly.description}</p>
-                                        <Link
-                                            href={`/dashboard/autopay-os`}
-                                            className="text-[10px] font-black uppercase tracking-widest text-indigo-600 hover:text-indigo-700 flex items-center gap-1 group/link"
-                                        >
-                                            Investigate Now
-                                            <ChevronRight className="w-3 h-3 group-hover/link:translate-x-1 transition-transform" />
-                                        </Link>
-                                    </div>
-                                    <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-indigo-500/5 blur-2xl rounded-full" />
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </motion.div>
-            )}
-
-            {/* Stats Grid */}
             <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {stats.map((stat) => (
                     <div

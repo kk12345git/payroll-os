@@ -9,6 +9,7 @@ from app.models.engagement import EngagementPost, PostReaction, PostComment, Pos
 from app.models.pulse import PulseSurvey, PulseResponse, PulseStatus
 from app.models.performance import OKRGoal, FeedbackReview, GoalStatus, ReviewCycle, ReviewType, OKRLevel, ReviewCycleStatus
 from app.models.learning import Course, Lesson, Enrollment, LessonProgress, SkillPath, Certificate
+from app.models.headcount import HeadcountPlan, RoleRequisition, WorkforceScenario
 
 # Import all models here so Alembic can discover them
 __all__ = [

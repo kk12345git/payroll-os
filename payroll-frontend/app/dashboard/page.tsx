@@ -120,15 +120,15 @@ export default function DashboardPage() {
                     { title: "Pending Approvals", value: pendingLeaves, sub: "Leave requests waiting", icon: FileClock, color: "text-amber-400 bg-amber-500/10 border-amber-500/20" },
                     { title: "Payroll Run Rate", value: fmt(estBurn), sub: "Est. monthly cost", icon: DollarSign, color: "text-violet-400 bg-violet-500/10 border-violet-500/20" },
                 ].map((stat, i) => (
-                    <div key={i} className="group relative rounded-2xl bg-white/[0.6] dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 p-4 sm:p-5 lg:p-6 transition-all shadow-sm">
+                    <div key={i} className="group relative rounded-2xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 p-4 sm:p-5 lg:p-6 transition-all shadow-sm">
                         <div className="absolute top-0 right-0 p-4 sm:p-5 md:p-6 opacity-30 md:opacity-20 group-hover:opacity-100 transition-opacity">
                             <div className={`p-2 sm:p-3 rounded-xl sm:rounded-2xl ${stat.color}`}>
                                 <stat.icon className="w-5 h-5 sm:w-6 sm:h-6" />
                             </div>
                         </div>
-                        <h3 className="text-[10px] sm:text-xs font-bold tracking-wider text-slate-500 dark:text-white/40 uppercase mb-1 md:mb-2">{stat.title}</h3>
+                        <h3 className="text-[10px] sm:text-xs font-bold tracking-wider text-slate-500 dark:text-zinc-400 uppercase mb-1 md:mb-2">{stat.title}</h3>
                         <p className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 dark:text-white tracking-tight mb-1 sm:mb-2">{stat.value}</p>
-                        <p className="text-[9px] sm:text-xs text-slate-500 dark:text-white/40 font-medium">{stat.sub}</p>
+                        <p className="text-[9px] sm:text-xs text-slate-500 dark:text-zinc-500 font-medium">{stat.sub}</p>
                     </div>
                 ))}
             </motion.div>
@@ -136,11 +136,11 @@ export default function DashboardPage() {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
                 {/* CHARTS / ANALYTICS (Takes up 2/3 on desktop) */}
                 <motion.div variants={itemVariants} className="lg:col-span-2 space-y-6">
-                    <div className="rounded-3xl bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 p-5 sm:p-6 lg:p-8 shadow-sm">
+                    <div className="rounded-3xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 p-5 sm:p-6 lg:p-8 shadow-sm">
                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 sm:mb-8">
                             <div>
                                 <h2 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mb-1">Payroll Disbursements</h2>
-                                <p className="text-xs sm:text-sm text-slate-500 dark:text-white/40">Historical trend tracking over the last 6 months</p>
+                                <p className="text-xs sm:text-sm text-slate-500 dark:text-zinc-400">Historical trend tracking over the last 6 months</p>
                             </div>
                             <div className="px-3 py-1.5 rounded-full bg-emerald-100 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-bold flex items-center gap-1.5 self-start sm:self-auto w-max">
                                 <TrendingUp size={12} /> Stable
@@ -196,20 +196,20 @@ export default function DashboardPage() {
                     </div>
 
                     {/* QUICK LINKS COMPACT MENU */}
-                    <div className="rounded-3xl bg-white dark:bg-white/[0.02] border border-slate-200 dark:border-white/5 p-5 sm:p-6 space-y-3 shadow-sm">
-                        <h3 className="text-xs font-black uppercase tracking-widest text-slate-400 dark:text-white/40 mb-4 px-1">Quick Company Links</h3>
+                    <div className="rounded-3xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 p-5 sm:p-6 space-y-3 shadow-sm">
+                        <h3 className="text-xs font-black uppercase tracking-widest text-slate-400 dark:text-zinc-500 mb-4 px-1">Quick Company Links</h3>
                         {[
-                            { label: "Hire Employee", href: "/dashboard/employees", icon: UserPlus, bg: "bg-blue-50 text-blue-600 dark:bg-blue-500/10 dark:text-blue-400" },
-                            { label: "Company Structure", href: "/dashboard/settings", icon: Building2, bg: "bg-purple-50 text-purple-600 dark:bg-purple-500/10 dark:text-purple-400" },
-                            { label: "Attendance & Leaves", href: "/dashboard/attendance", icon: Calendar, bg: "bg-orange-50 text-orange-600 dark:bg-orange-500/10 dark:text-orange-400" },
-                            { label: "Ask HR AI Copilot", href: "/dashboard/copilot", icon: Brain, bg: "bg-indigo-50 text-indigo-600 dark:bg-indigo-500/10 dark:text-indigo-400" },
+                            { label: "Hire Employee", href: "/dashboard/employees", icon: UserPlus, bg: "bg-blue-50 text-blue-600 dark:bg-blue-900/40 dark:text-blue-400" },
+                            { label: "Company Structure", href: "/dashboard/settings", icon: Building2, bg: "bg-purple-50 text-purple-600 dark:bg-purple-900/40 dark:text-purple-400" },
+                            { label: "Attendance & Leaves", href: "/dashboard/attendance", icon: Calendar, bg: "bg-orange-50 text-orange-600 dark:bg-orange-900/40 dark:text-orange-400" },
+                            { label: "Ask HR AI Copilot", href: "/dashboard/copilot", icon: Brain, bg: "bg-indigo-50 text-indigo-600 dark:bg-indigo-900/40 dark:text-indigo-400" },
                         ].map((link, i) => (
-                            <Link key={i} href={link.href} className="flex items-center p-3 rounded-xl bg-slate-50 dark:bg-white/[0.02] hover:bg-slate-100 dark:hover:bg-white/[0.05] border border-transparent transition-all group">
+                            <Link key={i} href={link.href} className="flex items-center p-3 rounded-xl bg-slate-50 dark:bg-zinc-800/50 hover:bg-slate-100 dark:hover:bg-zinc-800 border border-transparent transition-all group">
                                 <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${link.bg} transition-colors shrink-0`}>
                                     <link.icon size={16} />
                                 </div>
-                                <span className="font-semibold text-sm text-slate-700 dark:text-white/80 ml-3 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">{link.label}</span>
-                                <ChevronRight size={16} className="text-slate-400 dark:text-white/20 ml-auto group-hover:translate-x-1 transition-all" />
+                                <span className="font-semibold text-sm text-slate-700 dark:text-zinc-200 ml-3 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">{link.label}</span>
+                                <ChevronRight size={16} className="text-slate-400 dark:text-zinc-500 ml-auto group-hover:translate-x-1 transition-all" />
                             </Link>
                         ))}
                     </div>

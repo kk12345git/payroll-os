@@ -338,15 +338,6 @@ export default function DashboardLayout({
                     </div>
 
                     <div className="flex items-center gap-3 lg:gap-6">
-                        {/* Dark Mode Toggle */}
-                        <button
-                            onClick={toggleTheme}
-                            className="w-10 h-10 lg:w-12 lg:h-12 flex items-center justify-center text-muted-foreground hover:bg-card hover:text-primary rounded-2xl transition-all hover:shadow-lg border border-transparent hover:border-border"
-                            aria-label="Toggle Dark Mode"
-                        >
-                            {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-                        </button>
-
                         <button className="relative w-10 h-10 lg:w-12 lg:h-12 flex items-center justify-center text-muted-foreground hover:bg-card hover:text-primary rounded-2xl transition-all hover:shadow-lg border border-transparent hover:border-border">
                             <Bell className="w-5 h-5" />
                             <span className="absolute top-2 lg:top-3.5 right-2 lg:right-3.5 w-2 h-2 bg-destructive rounded-full ring-2 lg:ring-4 ring-card" />
